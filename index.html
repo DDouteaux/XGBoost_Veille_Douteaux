@@ -1,36 +1,86 @@
 <!DOCTYPE html>
 
+<!--
+	Plan du site :
+		- Accueil
+		- XGBoost au sein des méthodes d'apprentissage
+			* Généralités (apprentissage supervisé ou non,...)
+			* Historique
+			* Méthodes parents
+		- Spécificités techniques de XGBoost
+			* Principe de l'algo
+			* Aspects mathématiques
+		- Implémentations de la méthode
+			* R
+			* Python
+			* C++
+			* Autres
+		- Configurer un appel à XGBoost
+			* R
+			* Python
+			* Bonnes pratiques
+		- Exemples d'applications
+			* Kaggle
+			* Données médicales
+			* Autres
+		- Références
+		- Crédits
+-->
+
 <html>
 	<head>
 		<meta charset="utf8"/>
-		<title>Recydrèches</title>
-		<link rel="stylesheet" type="text/css" href="style/progress_arrows.css">
-		<link rel="stylesheet" type="text/css" href="style/layout.css">
-		<link rel="stylesheet" type="text/css" href="style/font-awesome.min.css">
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="assets/style/font-awesome.min.css">
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="languages/fr.js"></script>
 		<script src="languages/en.js"></script>
-		<script src="languages/ru.js"></script>
 	</head>
 	<body>
 		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
 			<div class="sidebar-part" data-load="accueil"><div class="text-content"></div></div>
-			<div class="sidebar-part" data-load="main_quest"><div class="text-content"></div></div>
-			<div class="sidebar-part sidebar-with-children" data-load="recycle_methods" data-section-name="recycling_modes"><div class="text-content"></div><i class="icon fa fa-chevron-down"></i></div>
-			<div class="sidebar-subpart-container" data-section="recycling_modes">
-				<div class="sidebar-subpart" data-load="methane"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="bioethanol1g"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="bioethanol2g"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="animal_feed"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="human_feed"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="combustion"><div class="text-content"></div></div>
+			<div class="sidebar-part sidebar-with-children" data-load="learning_methods" data-section-name="learning_methods"><div class="text-content"></div></div>
+			<div class="sidebar-subpart-container" data-section="learning_methods">
+				<div class="sidebar-subpart" data-load="lm_generality"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="lm_historic"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="lm_parent_methods"><div class="text-content"></div></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-load="technical_specificity" data-section-name="technical_specificity"><div class="text-content"></div></div>
+			<div class="sidebar-subpart-container" data-section="technical_specificity">
+				<div class="sidebar-subpart" data-load="ts_algo_principle"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="ts_maths"><div class="text-content"></div></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-load="implementations" data-section-name="implementations"><div class="text-content"></div></div>
+			<div class="sidebar-subpart-container" data-section="implementations">
+				<div class="sidebar-subpart" data-load="impl_r"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="impl_python"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="impl_cpp"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="impl_other"><div class="text-content"></div></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-load="configure" data-section-name="configure"><div class="text-content"></div></div>
+			<div class="sidebar-subpart-container" data-section="configure">
+				<div class="sidebar-subpart" data-load="conf_r"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="conf_python"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="conf_best_practice"><div class="text-content"></div></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-load="uses" data-section-name="uses"><div class="text-content"></div></div>
+			<div class="sidebar-subpart-container" data-section="uses">
+				<div class="sidebar-subpart" data-load="uses_kaggle"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="uses_medical"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="uses_other_uses"><div class="text-content"></div></div>
 			</div>
 			<div class="sidebar-part" data-load="ressources"><div class="text-content"></div></div>
 			<div class="sidebar-part" data-load="credits"><div class="text-content"></div></div>
 			<div id="languages">
 			<div class="language-choice language-current" data-language="fr">fr</div>
 			<div class="language-choice" data-language="en">en</div>
-			<!--<div class="language-choice" data-language="ru">ru</div>-->
 			</div>
 		</div>
 		<div id="inner_content">
@@ -46,7 +96,7 @@
 
 /*
  *
- * Méthodes et objets globaux utilisés dans toute l'application.
+ * Gestion de la navigation
  * 
  */
 
@@ -55,7 +105,7 @@ var _current_section = 'accueil';
 var _current_subsection = '';
 
 // Labels globaux à réutiliser sur toute l'application
-var _recycle_part_name = 'Solutions de recyclage';
+var _recycle_part_name = '';
 
 // Variables globales pour connaître le langage courrant.
 var _language = 'fr';
@@ -65,26 +115,181 @@ var _language_array = fr_strings
 var set_sidebar_text = function(){
 	var sidebar_parts = $('.sidebar-part, .sidebar-subpart');
 	sidebar_parts.filter('[data-load="accueil"]').find('.text-content').text(_language_array.sections.accueil);
-	sidebar_parts.filter('[data-load="main_quest"]').find('.text-content').text(_language_array.sections.aide_decision);
-	sidebar_parts.filter('[data-load="recycle_methods"]').find('.text-content').text(_language_array.sections.mode_recyclage);
-	sidebar_parts.filter('[data-load="methane"]').find('.text-content').text(_language_array.sections.recyclage_methane);
-	sidebar_parts.filter('[data-load="bioethanol1g"]').find('.text-content').text(_language_array.sections.recyclage_bioethanol1g);
-	sidebar_parts.filter('[data-load="bioethanol2g"]').find('.text-content').text(_language_array.sections.recyclage_bioethanol2g);
-	sidebar_parts.filter('[data-load="animal_feed"]').find('.text-content').text(_language_array.sections.recyclage_feed_animal);
-	sidebar_parts.filter('[data-load="human_feed"]').find('.text-content').text(_language_array.sections.recyclage_feed_homme);
-	sidebar_parts.filter('[data-load="combustion"]').find('.text-content').text(_language_array.sections.recyclage_combustion);
+	sidebar_parts.filter('[data-load="learning_methods"]').find('.text-content').text(_language_array.sections.learning_methods);
+	sidebar_parts.filter('[data-load="technical_specificity"]').find('.text-content').text(_language_array.sections.technical_specificity);
+	sidebar_parts.filter('[data-load="implementations"]').find('.text-content').text(_language_array.sections.implementations);
+	sidebar_parts.filter('[data-load="configure"]').find('.text-content').text(_language_array.sections.configure);
+	sidebar_parts.filter('[data-load="uses"]').find('.text-content').text(_language_array.sections.uses);
 	sidebar_parts.filter('[data-load="ressources"]').find('.text-content').text(_language_array.sections.ressources);
 	sidebar_parts.filter('[data-load="credits"]').find('.text-content').text(_language_array.sections.credits);
+	sidebar_parts.filter('[data-load="lm_generality"]').find('.text-content').text(_language_array.sections.lm_generality);
+	sidebar_parts.filter('[data-load="lm_historic"]').find('.text-content').text(_language_array.sections.lm_historic);
+	sidebar_parts.filter('[data-load="lm_parent_methods"]').find('.text-content').text(_language_array.sections.lm_parent_methods);
+	sidebar_parts.filter('[data-load="ts_algo_principle"]').find('.text-content').text(_language_array.sections.ts_algo_principle);
+	sidebar_parts.filter('[data-load="ts_maths"]').find('.text-content').text(_language_array.sections.ts_maths);
+	sidebar_parts.filter('[data-load="impl_r"]').find('.text-content').text(_language_array.sections.impl_r);
+	sidebar_parts.filter('[data-load="impl_python"]').find('.text-content').text(_language_array.sections.impl_python);
+	sidebar_parts.filter('[data-load="impl_cpp"]').find('.text-content').text(_language_array.sections.impl_cpp);
+	sidebar_parts.filter('[data-load="impl_other"]').find('.text-content').text(_language_array.sections.impl_other);
+	sidebar_parts.filter('[data-load="conf_r"]').find('.text-content').text(_language_array.sections.conf_r);
+	sidebar_parts.filter('[data-load="conf_python"]').find('.text-content').text(_language_array.sections.conf_python);
+	sidebar_parts.filter('[data-load="conf_best_practice"]').find('.text-content').text(_language_array.sections.conf_best_practice);
+	sidebar_parts.filter('[data-load="uses_kaggle"]').find('.text-content').text(_language_array.sections.uses_kaggle);
+	sidebar_parts.filter('[data-load="uses_medical"]').find('.text-content').text(_language_array.sections.uses_medical);
+	sidebar_parts.filter('[data-load="uses_other_uses"]').find('.text-content').text(_language_array.sections.uses_other_uses);
+	sidebar_parts.filter('.sidebar-with-children').find('.text-content').append('<i class="icon fa fa-chevron-down"></i>')
 }
+
+/*var click_on_recycle_methods = function(){
+	var recycle_method_div = $('[data-load="recycle_methods"]');
+	if(recycle_method_div.find('.icon')[0].className == 'icon fa fa-chevron-down'){
+		recycle_method_div.click();
+	}
+}
+*/
+// Fonction pour savoir quelle méthode de mise à jour du visuel 
+// exécuter, les méthodes appelées proviennent de scripts externes
+//
+// Params :
+// 		- val : la clé de la section pour laquelle on veut réaliser
+//					la mise à jour du contenu
+// Par défaut on charge l'accueil.
+var execute_setter_method = function (val, reinit=false){
+	_current_section = val;
+	_current_subsection = '';
+	switch(val){
+		case 'accueil':
+			set_accueil();
+			break;
+		case 'learning_methods':
+		case 'technical_specificity':
+		case 'implementations':
+		case 'configure':
+		case 'uses':
+			break;
+		case 'ressources':
+			set_ressources();
+			break;
+		case 'credits':
+			set_credits();
+			break;
+		case 'lm_generality':
+			_current_section = 'learning_methods';
+			_current_subsection = val;
+			set_lm_generality();
+			break;
+		case 'lm_historic':
+			_current_section = 'learning_methods';
+			_current_subsection = val;
+			set_lm_historic();
+			break;
+		case 'lm_parent_methods':
+			_current_section = 'learning_methods';
+			_current_subsection = val;
+			set_lm_parent_methods();
+			break;
+		case 'ts_algo_principle':
+			_current_section = 'technical_specificity';
+			_current_subsection = val;
+			set_ts_algo_principle();
+			break;
+		case 'ts_maths':
+			_current_section = 'technical_specificity';
+			_current_subsection = val;
+			set_ts_maths();
+			break;
+		case 'impl_r': 
+			_current_section = 'implementations';
+			_current_subsection = val;
+			set_impl_r();
+			break;
+		case 'impl_python': 
+			_current_section = 'implementations';
+			_current_subsection = val;
+			set_impl_python();
+			break;
+		case 'impl_cpp': 
+			_current_section = 'implementations';
+			_current_subsection = val;
+			set_impl_cpp();
+			break;
+		case 'impl_other': 
+			_current_section = 'implementations';
+			_current_subsection = val;
+			set_impl_other();
+			break;
+		case 'conf_r':
+			_current_section = 'configure';
+			_current_subsection = val;
+			set_conf_r();
+			break;
+		case 'conf_python':
+			_current_section = 'configure';
+			_current_subsection = val;
+			set_conf_python();
+			break;
+		case 'conf_best_practice':
+			_current_section = 'configure';
+			_current_subsection = val;
+			set_conf_best_practice();
+			break;
+		case 'uses_kaggle':
+			_current_section = 'uses';
+			_current_subsection = val;
+			set_uses_kaggle();
+			break;		
+		case 'uses_medical':
+			_current_section = 'uses';
+			_current_subsection = val;
+			set_uses_medical();
+			break;
+		case 'uses_other_uses':
+			_current_section = 'uses';
+			_current_subsection = val;
+			set_uses_other_uses();
+			break;
+		case 'ressources':
+			set_ressources();
+			break;
+		case 'credits':
+			set_credits();
+			break;
+		default:
+			console.log('[WARNING] Un cas qui ne devait pas se produire est arrivé dans execute_setter_method -- index.html');
+			console.log('          Valeur problématique : ' + val);
+			_current_section = 'accueil';
+			set_accueil();
+			break;
+	}
+}
+
+var load_section = function(key, header, subheader, content){
+	init_common_divs(header, subheader, content);
+	select_section(key)
+}
+
+/*
+ *
+ *  Méthodes pour créer autmatiquement des éléments avec des styles donnés
+ *
+ */
 
 // Génération d'un sous titre (bleu gras avec petit soulignement)
 var create_subtitle = function(content){
-	return '<div class="credit-title">' + content + '</div>';
+	return '<div class="subtitle">' + content + '</div>';
 }
 
 var create_list_item = function(class_name, content, onclick_method){
 	return '<div class="' + class_name + '" ' + (typeof onclick_method == 'undefined' ? '' : 'onclick="' + onclick_method + '"') + '><i class="icon fa fa-beer"></i>' + content + '</div>';
 }
+
+/*
+ *
+ *  Gestion des langues
+ *
+ */
+
+// Attention, language_array est défini un peu plus haut, car nécessaire pour afficher les labels de navigation.
 
 // Fonction pour la gestion des langues
 $('.language-choice').on('click', function(){
@@ -95,9 +300,6 @@ $('.language-choice').on('click', function(){
 	switch(this.getAttribute('data-language')){
 		case 'fr':
 			_language_array = fr_strings;
-			break;
-		case 'ru':
-			_language_array = ru_strings;
 			break;
 		case 'en':
 			_language_array = en_strings;
@@ -123,298 +325,6 @@ $('.language-choice').on('click', function(){
 			break;
 	}
 });
-
-var click_on_recycle_methods = function(){
-	var recycle_method_div = $('[data-load="recycle_methods"]');
-	if(recycle_method_div.find('.icon')[0].className == 'icon fa fa-chevron-down'){
-		recycle_method_div.click();
-	}
-}
-
-var load_aide_decision = function(){
-	load_section('main_quest');
-	if(questions.current_question == 'end'){
-		//console.log('[INFO] Rechargement de la page de réponse');
-		set_result_page();
-	} else {
-		questions.current_question == 'init' ? questions.load_question('area') : questions.load_question(questions.current_question)
-	}
-}
-
-// Fonction pour savoir quelle méthode de mise à jour du visuel 
-// exécuter, les méthodes appelées proviennent de scripts externes
-//
-// Params :
-// 		- val : la clé de la section pour laquelle on veut réaliser
-//					la mise à jour du contenu
-// Par défaut on charge l'accueil.
-var execute_setter_method = function (val, reinit=false){
-	_current_section = val;
-	_current_subsection = '';
-	switch(val){
-		case 'accueil':
-			set_accueil();
-			break;
-		case 'main_quest':
-			load_aide_decision();
-			break;
-		case 'recycle_methods':
-			// rien, car on veut juste dérouler les éléments
-			break;
-		case 'methane':
-			_current_section = 'recycle_methods';
-			_current_subsection = val;
-			set_methane_method(reinit);
-			break;
-		case 'bioethanol1g':
-			_current_section = 'recycle_methods';
-			_current_subsection = val;		
-			set_bioethanol1g_method(reinit);
-			break;
-		case 'bioethanol2g':
-			_current_section = 'recycle_methods';
-			_current_subsection = val;		
-			set_bioethanol2g_method(reinit);
-			break;
-		case 'feed_animal':
-		case 'animal_feed': 
-			_current_section = 'recycle_methods';
-			_current_subsection = val;		
-			set_animal_feed_method(reinit);
-			break;
-		case 'feed_homme':
-		case 'human_feed':
-			_current_section = 'recycle_methods';
-			_current_subsection = val;		
-			set_human_feed_method(reinit);
-			break;
-		case 'combustion':
-			_current_section = 'recycle_methods';
-			_current_subsection = val;		
-			set_combustion_method(reinit);
-			break;
-		case 'ressources':
-			set_ressources();
-			break;
-		case 'credits':
-			set_credits();
-			break;
-		default:
-			console.log('[WARNING] Un cas qui ne devait pas se produire est arrivé dans execute_setter_method -- index.html');
-			_current_section = 'accueil';
-			set_accueil();
-			break;
-	}
-}
-
-// Objet pour enregistrer les réponses aux questions posées dans la
-// partie d'aide à la décision. Il permet de persister les réponses
-// dans l'application et de connecter ainsi des possibles retours entre
-// détails d'une solution et résultat du questionnaire.
-// C'est également cet objet qui sera utilisé pour réaliser la straté-
-// -gie de choix en fonction de ses réponses.
-var answers = {
-	continent: 'default',
-	country: 'default',
-	production_volume: 'default',
-	percent_crop: 'default',
-	focus: 'default',
-	common_infra: 'default',
-	common_infra_invest_percent: 'default',
-	common_infra_payback_percent: 'default',
-	payback: 'default',
-	investments: 'default',
-	cows_proximity: 'default',
-	cows_distance: 'default',
-	cows_volume: 'default',
-    profile: 'default',
-	number_of_answered_questions: 0,
-	answer: function(){
-		this.number_of_answered_questions++;
-	},
-	previous: function(){
-		this.number_of_answered_questions > 0 ? this.number_of_answered_questions-- : '';
-	},
-	reset: function(){
-		this.number_of_answered_questions = 0;
-		this.set_all_values('default','default','default','default','default','default','default','default','default','default','default','default','default','default');
-	},
-	set_value: function(key, val){
-		switch(key){
-			case 'continent':
-				this.continent = val;
-				break;
-			case 'country':
-				this.country = val;
-				break;
-			case 'production_volume':
-				this.production_volume = val;
-				break;
-			case 'percent_crop':
-				this.percent_crop = val;
-				break;
-			case 'focus':
-				this.focus = val;
-				break;
-			case 'common_infra':
-				this.common_infra = val;
-				break;
-			case 'common_infra_invest_percent':
-				this.common_infra_invest_percent = val;
-				break;
-			case 'common_infra_payback_percent':
-				this.common_infra_payback_percent = val;
-				break;
-			case 'payback':
-				this.payback = val;
-				break;
-			case 'investments':
-				this.investments = val;
-				break;
-			case 'cows_proximity':
-				this.cows_proximity = val;
-				break;
-			case 'cow_distance':
-				this.cows_distance = val;
-				break;
-			case 'cow_volume':
-				this.cows_volume = val;
-				break;
-            case 'profile':
-                this.profile = val;
-                break;
-		}
-	},
-	set_all_values: function(continent_, country_, production_volume_, percent_crop_, focus_, common_infra_, common_infra_invest_percent_, common_infra_payback_percent_, payback_, investments_, cows_proximity_, cows_distance_, cows_volume_, profile_){
-		this.continent = continent_;
-		this.country = country_;
-		this.production_volume = production_volume_;
-		this.percent_crop = percent_crop_;
-		this.focus = focus_;
-		this.common_infra = common_infra_;
-		this.common_infra_invest_percent = common_infra_invest_percent_;
-		this.common_infra_payback_percent = common_infra_invest_percent_;
-		this.payback = payback_;
-		this.investments = investments_;
-		this.cows_proximity = cows_proximity_;
-		this.cows_distance = cows_distance_;
-		this.cows_volume = cows_volume_;
-        this.profile = profile_;
-	},
-	compute_json_of_answer: function(key, val){
-		if(val != 'default'){
-			var label = '';
-			var disp_val = '';
-			switch(key){
-				case 'continent':
-					label = _language_array.aide_decision.choix_labels.continent;
-					disp_val = _language_array.aide_decision.continents[val];
-					break;
-				case 'country':
-					switch(this.continent){
-						case 'afrique':
-							disp_val = _language_array.aide_decision.pays_afrique[val];
-							break;
-						case 'europe':
-							disp_val = _language_array.aide_decision.pays_europe[val];
-							break;
-						case 'asie':
-							disp_val = _language_array.aide_decision.pays_asie[val];
-							break;
-						case 'amerique':
-							disp_val = _language_array.aide_decision.pays_amerique[val];
-							break;
-						case 'oceanie':
-							disp_val = _language_array.aide_decision.pays_oceanie[val];
-							break;
-					}
-					label = _language_array.aide_decision.choix_labels.pays;
-					break;
-				case 'production_volume':
-					label = _language_array.aide_decision.choix_labels.volume_production;
-					disp_val = val + ' ' + _language_array.aide_decision.choix_labels.volume_production_tx;
-					break;
-				case 'percent_crop':
-					label = _language_array.aide_decision.choix_labels.percent_crop ;
-					disp_val = val + '%';
-					break;
-				case 'focus':
-					label = _language_array.aide_decision.choix_labels.focus;
-					disp_val = _language_array.aide_decision.focus[val];
-					break;
-				case 'common_infra':
-					label = _language_array.aide_decision.choix_labels.mise_en_commun_infra;
-					disp_val = ((val == 'oui') ? _language_array.validation.oui : _language_array.validation.non);
-					break;
-				case 'common_infra_invest_percent':
-					if(this.common_infra != 'default' && this.common_infra){
-						label = _language_array.aide_decision.choix_labels.invest_percent_mise_en_commun;
-						disp_val = val + '%';
-					} else {
-						label = disp_val = '';
-					}
-					break;
-				case 'common_infra_payback_percent':
-					if(this.common_infra != 'default' && this.common_infra){
-						label = _language_array.aide_decision.choix_labels.payback_percent_mise_en_commun;
-						disp_val = val + '%';
-					} else {
-						label = disp_val = '';
-					}	
-					break;
-				case 'payback':
-					label = _language_array.aide_decision.choix_labels.payback;
-					disp_val = val + ' ' + _language_array.aide_decision.choix_labels.payback_tx;
-					break;
-				case 'investments':
-					label = _language_array.aide_decision.choix_labels.investments;
-					disp_val = val + '$';
-					break;
-				case 'cows_proximity':
-					label = _language_array.aide_decision.choix_labels.proximite_agricole;
-					disp_val = ((val == 'oui') ? _language_array.validation.oui : _language_array.validation.non);
-					break;
-				case 'cows_distance':
-					label = _language_array.aide_decision.choix_labels.distance_agricole;
-					disp_val = val + 'km';
-					break;
-				case 'cows_volume':
-					label = _language_array.aide_decision.choix_labels.volume_ecoulable;
-					disp_val = val + ' ' + _language_array.aide_decision.choix_labels.volume_ecoulable_tx;
-					break;
-                case 'profile':
-                    label = _language_array.aide_decision.choix_labels.profile;
-                    if(_language == 'fr' && val == 'proteine'){
-                        disp_val = 'Protéine';
-                    } else {
-                        disp_val = val.charAt(0).toUpperCase() + val.slice(1);   
-                    }
-                    break;
-			}
-			return '<div class="recall-label">' + label + '</div>' + disp_val + '<br>';
-		} else {
-			return '';
-		}
-	},
-	compute_json_of_answers: function(){
-		return this.compute_json_of_answer('continent', this.continent) +
-		this.compute_json_of_answer('country', this.country) +
-		this.compute_json_of_answer('production_volume', this.production_volume) +
-		this.compute_json_of_answer('cows_proximity', this.cows_proximity) +
-		this.compute_json_of_answer('cows_distance', this.cows_distance) +
-		this.compute_json_of_answer('cows_volume', this.cows_volume) +
-		this.compute_json_of_answer('percent_crop', this.percent_crop) +
-        this.compute_json_of_answer('profile', this.profile) +
-		this.compute_json_of_answer('focus', this.focus) +
-		this.compute_json_of_answer('investments', this.investments) +
-		this.compute_json_of_answer('payback', this.payback);
-	}
-}
-
-var load_section = function(key, header, subheader, content){
-	init_common_divs(header, subheader, content);
-	select_section(key)
-}
 
 // Méthode pour le nettoyage des divs communes à toutes les sections.
 // Après le nettoyage, on met à jour avec les nouvelles valeurs.
@@ -459,7 +369,7 @@ var select_section = function(key){
 // clic sur une sous-section. 
 $('.sidebar-with-children').on('click', function(e){
 	var section_name = this.getAttribute('data-section-name');
-	var associated_sections = $('.sidebar-subpart-container[data-section="recycling_modes"]');
+	var associated_sections = $('.sidebar-subpart-container[data-section="' + section_name + '"]');
 	if(associated_sections.css('display') == 'none' || associated_sections.css('display') == ''){
 		$(this).find('.icon')[0].className = 'icon fa fa-chevron-up';
 		associated_sections.css('display', 'block');
@@ -493,60 +403,6 @@ var swap = function(json){
   return ret;
 }
 
-// Fonction pour générer un formulaire de sélection HTML à partir d'un objet
-// JSON fourni par l'utilisateur. Le formulaire créé ordonne les valeurs.
-//
-// Params :
-//		- obj : l'objet à partir duquel on créé le formulaire.
-//		- id : l'identifiant à donner au formulaire.
-//		- name : le nom du formulaire. 
-//		- def_val : la valeur par défaut du formulaire.
-var generate_select_option_form = function(obj, id, name, def_val){
-	form = '<select id="' + id + '" name="' + name + '">'; 
-	names = Object.values(obj).sort();
-	swap_array = swap(obj);
-	for(i=0 ; i<names.length; i++){
-		form += '<option value="' + swap_array[names[i]] + '" ' + ((swap_array[names[i]] == def_val) ? 'selected' : '') + '>' + names[i] + '</option>';
-	}
-	return (form + '</select><br>');	
-}
-
-// Fonction pour générer la div d'un label de formulaire.
-//
-// Params :
-//		- label : le texte à afficher dans le label.
-var generate_form_label = function(label){
-	return '<div class="form-label main-label">' + label + '</div>';
-}
-
-// Fonction pour générer un formulaire numérique.
-//
-// Params :
-//		- name : le nom de la variable déterminée dans le formulaire.
-//		- min : valeur minimale autorisée.
-//		- max : valeur maximale autorisée.
-//		- def_val : valeur par défaut.
-var generate_number_input = function(name, min, max, def_val=0, unit){
-	return '<input type="number" step="any" name="' + name + '" min="' + min + '" max="' + max + '" value="' + def_val + '">' + (typeof unit != 'undefined' ? '<div class="unit-prepend">' + unit + '</div>' : '') + '<br>';
-}
-
-// Fonction pour générer un ensemble de radio buttons pour un groupe donné.
-//
-// Params :
-//		- obj : le JSON avec les clés et les labels à utiliser.
-//		- group_name : le nom à utiliser pour le groupe de boutons.
-//		- id : l'id de la div entourant le groupe de boutons.
-//		- def_val : la valeur par défaut à sélectionner.
-var generate_radio_buttons_group = function(obj, group_name, id, def_val){
-	var form = '<div id="' + id + '">';
-	var keys = Object.keys(obj);
-	for(i=0; i<keys.length; i++){
-		form += '<label><input class="radio-button" type="radio" name="' + group_name + '" value= "' + keys[i] + '" ' + ((keys[i] == def_val) ? 'checked' : '') + '>' + obj[keys[i]] + ((i == keys.length -1) ? '' : '<br>') + '</label>';
-	}
-	return form + '</div><br>';
-
-}
-
 Array.prototype.insert = function (index, item) {
   this.splice(index, 0, item);
 };
@@ -561,21 +417,24 @@ set_sidebar_text();
 
 <script src="contents/accueil.js"></script>
 <script src="contents/credits.js"></script>
-<script src="contents/main_quest.js"></script>
 <script src="contents/ressources.js"></script>
-<script src="contents/recycle_methods/animal_feed.js"></script>
-<script src="contents/recycle_methods/bioethanol1g.js"></script>
-<script src="contents/recycle_methods/bioethanol2g.js"></script>
-<script src="contents/recycle_methods/combustion.js"></script>
-<script src="contents/recycle_methods/human_feed.js"></script>
-<script src="contents/recycle_methods/methane.js"></script>
-<script src="contents/quest_parts/quest_area.js"></script>
-<script src="contents/quest_parts/quest_common_infra.js"></script>
-<script src="contents/quest_parts/quest_cows_proximity.js"></script>
-<script src="contents/quest_parts/quest_focus.js"></script>
-<script src="contents/quest_parts/quest_investments.js"></script>
-<script src="contents/quest_parts/quest_payback.js"></script>
-<script src="contents/quest_parts/quest_percent_crop.js"></script>
-<script src="contents/quest_parts/quest_production_volume.js"></script>
-<script src="contents/quest_parts/result_page.js"></script>
-<script src="contents/recycle_methods.js"></script>
+<script src="contents/learning_methods.js"></script>
+<script src="contents/learning_methods/lm_historic.js"></script>
+<script src="contents/learning_methods/lm_generality.js"></script>
+<script src="contents/learning_methods/lm_parent_methods.js"></script>
+<script src="contents/technical_specificity.js"></script>
+<script src="contents/technical_specificity/ts_algo_principle.js"></script>
+<script src="contents/technical_specificity/ts_maths.js"></script>
+<script src="contents/implementations.js"></script>
+<script src="contents/implementations/impl_r.js"></script>
+<script src="contents/implementations/impl_python.js"></script>
+<script src="contents/implementations/impl_cpp.js"></script>
+<script src="contents/implementations/impl_other.js"></script>
+<script src="contents/configure.js"></script>
+<script src="contents/configure/conf_r.js"></script>
+<script src="contents/configure/conf_python.js"></script>
+<script src="contents/configure/conf_best_practice.js"></script>
+<script src="contents/uses.js"></script>
+<script src="contents/uses/uses_kaggle.js"></script>
+<script src="contents/uses/uses_medical.js"></script>
+<script src="contents/uses/uses_other_uses.js"></script>
