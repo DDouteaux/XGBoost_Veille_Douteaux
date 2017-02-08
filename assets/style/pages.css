@@ -1,0 +1,117 @@
+/*
+
+	Structure générale d'une page (titre, sous-titre, éléments,...).	
+
+*/
+
+/* Styles des headers */
+#main_header{
+	font-weight: bold;
+	font-size: 40px;
+	color: rgb(100,100,100);
+	display: inline-block;
+}
+
+#main_subheader{
+	font-weight: bold;
+	font-size: 19px;
+	color: rgb(125,125,125);
+	display: inline-block;
+	margin-left: 5px;
+}
+
+/* Contenu de la page */
+#main_content{
+	margin-top: 5px;
+}
+
+#inner_content{
+	position: absolute;
+	margin-left: 230px;
+	top: 5px;
+	width: calc(100% - 250px);
+}
+
+/* Boîte pour side note */
+.side-note{
+	border: 2px solid rgb(0,82,148);
+	box-shadow: 1px 1px 12px #555;
+	width: 250px;
+	display: block;
+	float: right;
+	min-height: 250px;
+	margin-left: 20px;
+	padding-left: 10px;
+}
+
+.side-note-content{
+	font-size: 10pt;
+}
+
+.side-note-item{
+	display: inline-block;
+	font-weight: bold;
+}
+
+.side-note-item:after{
+	content: " ";
+	display: inline-block;
+}
+
+/* Sous titres avec juste une partie du soulignement*/
+.subtitle{
+	font-weight: bold;
+	padding-top: 15px;
+	margin-bottom: 10px;
+	color: rgb(0,82,148);
+	border-bottom: 1px solid rgb(0,82,148);
+	max-width: 200px;
+}
+
+/* Morceaux de text avec marge mise en avant et petit trait en bas */
+.emphasize-small-title{
+	color: rgb(0,82,148);
+	font-weight: bold;
+	border-bottom: 1px solid;
+}
+
+.emphasize-small-body{
+	margin-left: 15px;
+	border-left: 1px solid rgb(0,82,148);
+	display: inline-block;
+	padding-left: 15px;
+	width: calc(100% - 30px);
+}
+
+.emphasize-small-after{
+	width: 10px;
+	border-bottom: 1px solid rgb(0,82,148);
+	margin-left: 15px;
+	margin-bottom: 15px;
+}
+
+.emphasize-small-div{
+	width: calc(100% - 300px);
+	font-size: 12pt;
+}
+
+/* Mettre du texte en indice */
+.sub-text{
+	display: inline;
+	vertical-align: sub;
+	font-size: 8pt;
+}
+
+/* Redirection discrète dans le texte sans utiliser a */
+.inline-relocation{
+	width:95%;
+	border-left: 4px solid #fff;
+	padding-left: 10px;
+	margin-bottom: 10px;
+
+}
+
+.inline-relocation:hover{
+	border-left-color: rgb(0,82,148);
+	cursor: pointer;
+}

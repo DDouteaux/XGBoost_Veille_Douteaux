@@ -1,0 +1,20 @@
+/*
+
+	Éléments généraux de styles pour la page ou le body.
+	Ne concerne que des balises "par défaut" de HTML
+
+*/
+
+body{
+	font-family: 'Lucida Sans Unicode';
+	font-size: 12pt;
+}
+
+a{
+	color: black;
+	text-decoration: none;
+}
+
+a:hover{
+	color: rgb(13,186,27);
+}
