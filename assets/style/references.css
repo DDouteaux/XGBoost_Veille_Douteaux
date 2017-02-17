@@ -1,0 +1,26 @@
+/*
+
+	Styles pour les références (info bulles qui apparaissent au survol)
+
+*/
+
+.ref_details{
+	color: dodgerblue;
+    border: 1px solid;
+    position: absolute;
+    border-radius: 5px;
+    padding: 5px 10px;
+    box-shadow: 5px 5px 5px 0px #656565;
+    display: inline-block;
+    max-width: 40%;
+}
+
+.ref_details_link:hover{
+	color: blue;
+}
+
+#left_col{
+	width: 50%;
+    max-width: 50%;
+    float: left;
+}

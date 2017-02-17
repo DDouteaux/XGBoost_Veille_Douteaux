@@ -1,0 +1,33 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+
+\usepackage{fontspec}
+\usepackage{sfmath}
+
+\usetikzlibrary{arrows}
+
+\begin{document}
+
+\definecolor{ccqqqq}{rgb}{0.8,0.,0.}
+
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45, domain=-.52:7, scale=1]
+\tikzset{
+    ultra thin/.style= {line width=0.1pt},
+    very thin/.style=  {line width=0.2pt},
+    thin/.style=       {line width=0.4pt},% thin is the default
+    semithick/.style=  {line width=0.6pt},
+    thick/.style=      {line width=0.8pt},
+    very thick/.style= {line width=1.2pt},
+    ultra thick/.style={line width=1.6pt}
+}
+\clip(2.9821256318947755,4.446240364057812) rectangle (4.668328212117644,5.5351833541480735);
+\draw [->] (3.75,5.5) -- (3.75,5.);
+\draw [->] (3.75,5.) -- (3.25,4.5);
+\draw [->] (3.75,5.) -- (3.75,4.5);
+\draw [->] (3.75,5.) -- (4.25,4.5);
+\draw [fill=ccqqqq] (3.75,5.) circle (.05);
+
+\end{tikzpicture}
+
+\end{document}

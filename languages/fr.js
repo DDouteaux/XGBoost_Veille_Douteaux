@@ -8,9 +8,9 @@ var fr_strings = {
 		uses: 'Utilisations',
 		ressources: 'Ressources utiles',
 		credits: 'Crédits',
-		lm_generality: 'Où se situe XGBoost?',
+		lm_generality: 'Grandes méthodes',
+		lm_xgboost: 'Et XGBoost?',
 		lm_historic: 'Origines',
-		lm_parent_methods: 'Méthodes parentes',
 		ts_algo_principle: 'Principe de l\'algorithme',
 		ts_maths: 'Aspects mathématiques',
 		impl_r: 'R',
@@ -41,9 +41,9 @@ var fr_strings = {
 			main: 'Une méthode d\'apprentissage',
 			sub: {
 				learning_methods_index: 'Index de la partie',
-				lm_generality: 'Où se situe XGBoost?',
+				lm_generality: 'Grandes méthodes',
+				lm_xgboost: 'Et XGBoost?',
 				lm_historic: 'Origines',
-				lm_parent_methods: 'Méthodes parentes'
 			}
 		},
 		implementations: {

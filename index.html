@@ -35,6 +35,8 @@
 		<link rel="stylesheet" type="text/css" href="assets/style/sidebar.css">
 		<link rel="stylesheet" type="text/css" href="assets/style/pages.css">
 		<link rel="stylesheet" type="text/css" href="assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="assets/style/collapsable_box.css">
 		<link rel="stylesheet" type="text/css" href="assets/style/font-awesome.min.css">
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="languages/fr.js"></script>
@@ -49,8 +51,8 @@
 			<div class="sidebar-part sidebar-with-children" data-load="learning_methods" data-section-name="learning_methods"><div class="text-content"></div></div>
 			<div class="sidebar-subpart-container" data-section="learning_methods">
 				<div class="sidebar-subpart" data-load="lm_generality"><div class="text-content"></div></div>
+				<div class="sidebar-subpart" data-load="lm_xgboost"><div class="text-content"></div></div>
 				<div class="sidebar-subpart" data-load="lm_historic"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="lm_parent_methods"><div class="text-content"></div></div>
 			</div>
 			<div class="sidebar-part sidebar-with-children" data-load="technical_specificity" data-section-name="technical_specificity"><div class="text-content"></div></div>
 			<div class="sidebar-subpart-container" data-section="technical_specificity">
@@ -124,6 +126,7 @@ var set_sidebar_text = function(){
 	sidebar_parts.filter('[data-load="credits"]').find('.text-content').text(_language_array.sections.credits);
 	sidebar_parts.filter('[data-load="lm_generality"]').find('.text-content').text(_language_array.sections.lm_generality);
 	sidebar_parts.filter('[data-load="lm_historic"]').find('.text-content').text(_language_array.sections.lm_historic);
+	sidebar_parts.filter('[data-load="lm_xgboost"]').find('.text-content').text(_language_array.sections.lm_xgboost);
 	sidebar_parts.filter('[data-load="lm_parent_methods"]').find('.text-content').text(_language_array.sections.lm_parent_methods);
 	sidebar_parts.filter('[data-load="ts_algo_principle"]').find('.text-content').text(_language_array.sections.ts_algo_principle);
 	sidebar_parts.filter('[data-load="ts_maths"]').find('.text-content').text(_language_array.sections.ts_maths);
@@ -178,15 +181,15 @@ var execute_setter_method = function (val, reinit=false){
 			_current_subsection = val;
 			set_lm_generality();
 			break;
+		case 'lm_xgboost':
+			_current_section = 'learning_methods';
+			_current_subsection = val;
+			set_lm_xgboost();
+			break;
 		case 'lm_historic':
 			_current_section = 'learning_methods';
 			_current_subsection = val;
 			set_lm_historic();
-			break;
-		case 'lm_parent_methods':
-			_current_section = 'learning_methods';
-			_current_subsection = val;
-			set_lm_parent_methods();
 			break;
 		case 'ts_algo_principle':
 			_current_section = 'technical_specificity';
@@ -277,6 +280,23 @@ var load_section = function(key, header, subheader, content){
 // Génération d'un sous titre (bleu gras avec petit soulignement)
 var create_subtitle = function(content){
 	return '<div class="subtitle">' + content + '</div>';
+}
+
+var create_collapsable_box = function(title, content){
+	return '<div class="collapsable_container"><div class="collapse_title">' + title + '<i class="icon fa fa-chevron-up collapse_arrow"></i></div><div class="collapse_content">' + content + '</div></div>';
+}
+
+var init_collapsable_box = function(){
+	$('.collapse_title').on('click', function(e){
+		$(e.target.parentNode).find('.collapse_content').toggle();
+		var arrow = $(e.target).find('.collapse_arrow')[0];
+		if(arrow.className.search('down') != -1){
+			arrow.setAttribute('class', arrow.className.replace('down', 'up'));
+		} else {
+			arrow.setAttribute('class', arrow.className.replace('up', 'down'));
+		}
+	});
+	$('.collapse_title').click();
 }
 
 var create_list_item = function(class_name, content, onclick_method){
@@ -420,8 +440,8 @@ set_sidebar_text();
 <script src="contents/ressources.js"></script>
 <script src="contents/learning_methods.js"></script>
 <script src="contents/learning_methods/lm_historic.js"></script>
+<script src="contents/learning_methods/lm_xgboost.js"></script>
 <script src="contents/learning_methods/lm_generality.js"></script>
-<script src="contents/learning_methods/lm_parent_methods.js"></script>
 <script src="contents/technical_specificity.js"></script>
 <script src="contents/technical_specificity/ts_algo_principle.js"></script>
 <script src="contents/technical_specificity/ts_maths.js"></script>

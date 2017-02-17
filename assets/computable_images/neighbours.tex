@@ -1,0 +1,39 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+
+\usepackage{fontspec}
+\usepackage{sfmath}
+
+\begin{document}
+
+\definecolor{ccqqqq}{rgb}{0.8,0.,0.}
+
+\begin{tikzpicture}[domain=-.52:7, scale=1]
+\clip(1,.5) rectangle (6,5);
+\tikzset{
+    ultra thin/.style= {line width=0.1pt},
+    very thin/.style=  {line width=0.2pt},
+    thin/.style=       {line width=0.4pt},% thin is the default
+    semithick/.style=  {line width=0.6pt},
+    thick/.style=      {line width=0.8pt},
+    very thick/.style= {line width=1.2pt},
+    ultra thick/.style={line width=1.6pt}
+}
+
+\draw (3.25,2.75) to (2.,4.);
+\draw (3.25,2.75) to (2.,2.);
+\draw (3.25,2.75) to (4.,4.);
+\draw (3.25,2.75) to (5.,3.);
+\draw (3.25,2.75) to (4.,1.);
+
+\draw [fill=black] (2.,4.) circle (.05);
+\draw [fill=black] (5.,3.) circle (.05);
+\draw [fill=black] (2.,2.) circle (.05);
+\draw [fill=black] (4.,1.) circle (.05);
+\draw [fill=black] (4.,4.) circle (.05);
+\draw [fill=ccqqqq] (3.25,2.75) circle (.05);
+
+\end{tikzpicture}
+
+\end{document}

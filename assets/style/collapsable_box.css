@@ -1,0 +1,27 @@
+.collapse_title{
+	background-color: lightgrey;
+    padding: 5px;
+    color: darkslategrey;
+    font-weight: bolder;
+    border: 1px solid lightgrey;
+    margin-top: 10px;
+	user-select: none;
+	cursor: pointer;
+}
+
+.collapse_arrow{
+	color: darkslategrey;
+}
+
+.collapse_content{
+    border: 1px solid lightgrey;
+    border-top: 0px;
+    padding: 5px;
+}
+
+.half_screen{
+	width: 48%;
+	max-width: 48%;
+	display: inline-block;
+	margin-right: 10px;
+}

@@ -1,0 +1,61 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+
+\usepackage{fontspec}
+\usepackage{sfmath}
+
+\usetikzlibrary{arrows}
+
+\begin{document}
+
+\definecolor{ccqqqq}{rgb}{0.8,0.,0.}
+
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45, domain=-.52:7, scale=1]
+\tikzset{
+    ultra thin/.style= {line width=0.1pt},
+    very thin/.style=  {line width=0.2pt},
+    thin/.style=       {line width=0.4pt},% thin is the default
+    semithick/.style=  {line width=0.6pt},
+    thick/.style=      {line width=0.8pt},
+    very thick/.style= {line width=1.2pt},
+    ultra thick/.style={line width=1.6pt}
+}
+\clip(1.7068937575864485,4.312945513371342) rectangle (5.631490942716493,6.658607076007016);
+\draw (2.25,5.75)-- (3.25,6.25);
+\draw (2.25,5.75)-- (3.25,5.75);
+\draw (2.25,5.75)-- (3.25,5.25);
+\draw (2.25,5.75)-- (3.25,4.75);
+\draw (2.25,5.25)-- (3.25,6.25);
+\draw (2.25,5.25)-- (3.25,5.75);
+\draw (2.25,5.25)-- (3.25,5.25);
+\draw (2.25,5.25)-- (3.25,4.75);
+\draw (3.25,6.25)-- (4.25,6.);
+\draw (3.25,6.25)-- (4.25,5.5);
+\draw (3.25,6.25)-- (4.25,5.);
+\draw (3.25,4.75)-- (4.25,5.);
+\draw (3.25,5.25)-- (4.25,5.5);
+\draw (3.25,5.75)-- (4.25,6.);
+\draw (3.25,4.75)-- (4.25,5.5);
+\draw (3.25,4.75)-- (4.25,6.);
+\draw (3.25,5.25)-- (4.25,6.);
+\draw (3.25,5.25)-- (4.25,5.);
+\draw (3.25,5.75)-- (4.25,5.5);
+\draw (3.25,5.75)-- (4.25,5.);
+\draw (4.25,6.)-- (5.25,5.5);
+\draw (4.25,5.5)-- (5.25,5.5);
+\draw (4.25,5.)-- (5.25,5.5);
+
+\draw [fill=ccqqqq] (2.25,5.25) circle (2.5pt);
+\draw [fill=ccqqqq] (3.25,5.75) circle (2.5pt);
+\draw [fill=ccqqqq] (3.25,5.25) circle (2.5pt);
+\draw [fill=ccqqqq] (3.25,4.75) circle (2.5pt);
+\draw [fill=ccqqqq] (4.25,6.) circle (2.5pt);
+\draw [fill=ccqqqq] (4.25,5.5) circle (2.5pt);
+\draw [fill=ccqqqq] (4.25,5.) circle (2.5pt);
+\draw [fill=ccqqqq] (5.25,5.5) circle (2.5pt);
+\draw [fill=ccqqqq] (2.25,5.75) circle (2.5pt);
+\draw [fill=ccqqqq] (3.25,6.25) circle (2.5pt);
+\end{tikzpicture}
+
+\end{document}
