@@ -1,0 +1,67 @@
+\iffalse
+\documentclass{article}
+
+\usepackage{fontspec}
+\setmainfont{AR CENA}
+
+\begin{document}
+	Bonjour en Arial
+\end{document}
+\fi
+
+
+
+
+
+
+\documentclass{beamer}
+
+\newcommand{\paraTitle}[1]{\textcolor{themeColor}{\textbf{\MakeUppercase #1}}\newline}
+
+\usepackage[no-math]{fontspec}
+
+\defaultfontfeatures{Ligatures=TeX}
+\frenchspacing
+
+\setsansfont[Path=./fonts/, Extension=.otf,
+Numbers=OldStyle,
+BoldFont=FiraSans-Medium,
+ItalicFont=FiraSans-LightItalic,
+BoldItalicFont=FiraSans-MediumItalic
+]{FiraSans-Light}
+% Normal font
+\setmainfont[Path=./fonts/,	Extension=.otf,
+Numbers=OldStyle,
+BoldFont=FiraSans-Medium,
+ItalicFont=FiraSans-LightItalic,
+BoldItalicFont=FiraSans-MediumItalic
+]{FiraSans-Light}
+
+\title{MOS x.x -- Veille technologique}
+\subtitle{XGBoost, origine et applications}
+\author{Damien \textsc{Douteaux}}
+\date{Vendredi 3 mars 2017}
+
+\usetheme{texsx}
+
+\begin{document}
+
+\begin{frame}[plain]
+	\titlepage
+\end{frame}
+
+\section{Sommaire}
+
+\begin{frame}
+	\frametitle{Sommaire}
+	\tableofcontents
+\end{frame}
+
+\section{Qu'est-ce que XGBoost?}
+\begin{frame}
+	\frametitle{Orgines}
+	salut
+\end{frame}
+
+
+\end{document}

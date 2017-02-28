@@ -1,0 +1,56 @@
+%
+% Application du style de la section.
+% Params : 
+%    1 - Le format de la section
+%    2 - Le numéro de section
+%    3 - Le label de la section
+%
+\makeatletter
+\newcommand{\applySectionFormat}[3]{
+  \ifnum\pdf@strcmp{#1}{withImage}=0
+  \sectionWithImage{#2}{#3}
+  \else\ifnum\pdf@strcmp{#1}{default}=0
+  \sectionDefault{#2}{#3}
+}
+\makeatother
+
+%
+% Redéfinition de l'appel à la création d'une section
+%
+\titleformat{\section}
+{\normalfont}{}{0em}
+{\applySectionFormat{\sectionFormat}{\thesection}{#1}}[\addvspace{0ex}]
+
+%
+% Style de section [withImage]
+% Affichage avec une image et un cartouche contenant le numéro + label
+%
+\newcommand\sectionWithImage[2]{\noindent\vspace*{-2.9cm}\begin{changemargin}{-1.5cm}{1.5cm}%
+    \noindent\begin{tikzpicture}%
+      \pgfdeclarelayer{background}%
+      \pgfdeclarelayer{foreground}%
+      \pgfsetlayers{background,foreground}%
+      \begin{pgfonlayer}{foreground}%
+        \node (separator) [color=\currentColor, fill=\currentColor, draw, rectangle, minimum width=21cm, inner sep=1pt] at (-10.5,0) {};%
+        \node (section_name) [fill=white, font=\fontsize{25}{1}\selectfont, inner sep=.3cm, text depth=.35ex] at (separator.center) {\printIfNotZero{#1}{#1~~\raisebox{2pt}{$\bullet$}~~}\textbf{#2}\hspace*{.2cm}};%
+        \fill [white] ([xshift=-2pt]section_name.north east) -- (section_name.north east) -- ([xshift=.5cm]section_name.east) -- (section_name.south east) --([xshift=-2pt]section_name.south east) -- cycle ;%
+        \fill [white] ([xshift=2pt]section_name.north west) -- (section_name.north west) -- ([xshift=-.5cm]section_name.west) -- (section_name.south west)  --([xshift=2pt]section_name.south west) -- cycle ;%
+        \draw [color=\currentColor, line width=2pt] (section_name.north east) -- ([xshift=.5cm]section_name.east) -- (section_name.south east) -- (section_name.south west) -- ([xshift=-.5cm]section_name.west) -- (section_name.north west) -- cycle;%
+      \end{pgfonlayer}%
+      \begin{pgfonlayer}{background}%
+        \path [fill tile image*={width=21cm}{images/PagesPresentation/\sectionImage}] (-21,10) rectangle (0,0);%
+      \end{pgfonlayer}%
+    \end{tikzpicture}%
+  \end{changemargin}
+}
+
+%
+% Style de section [default]
+% Affichage simplifié avec nom souligné
+%
+\newcommand\sectionDefault[2]{\fontsize{15}{1}\selectfont\vspace{0.3cm}\noindent\tikz{%
+    \node (sec_number) [left] at (0,0) {\printIfNotZero{\applyFormat{\sectionNumberStyle}{#1~~}}{#1}\textbf{#2}};%
+    \draw [color=\currentColor, line width=1pt] (sec_number.south west) -- ([xshift=\textwidth]sec_number.south west);%
+  }\vspace*{-.3cm}\par
+  \applyFormat{\sectionNumberStyle}{#1~~}
+}

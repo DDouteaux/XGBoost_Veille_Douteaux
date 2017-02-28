@@ -1,0 +1,40 @@
+%% Font recommendations
+%\usepackage{fontspec}
+%\usepackage[math]{kurier} % main font
+%\usepackage[T1]{fontenc} % font encoding
+%\DeclareTextCommandDefault{\nobreakspace}{\leavevmode\nobreak\ } % Because T1 disable this command, we redefine it
+%\usepackage{fontawesome} % to have web fonts
+
+\usepackage{fontspec}
+\usepackage[T1]{fontenc} % font encoding
+\usepackage[sfdefault,light]{FiraSans}
+
+
+\iffalse
+\usepackage[sfdefault,light]{FiraSans}
+\usepackage[nomap]{FiraMono}
+
+\defaultfontfeatures{Ligatures=TeX}
+\frenchspacing
+
+
+% Normal font
+\setmainfont{Fira Sans}[
+Numbers=OldStyle,
+BoldFont=Fira Sans Medium,
+ItalicFont=Fira Sans Light Italic,
+BoldItalicFont=Fira Sans Medium Italic
+]
+\newfontfamily{\normalFont}{Fira Sans Light}
+\newfontfamily{\lightBoldFont}{Fira Sans}
+\newfontfamily{\heavyFont}{Fira Sans Heavy}
+\newfontfamily{\myTitleFont}{Canter Bold}
+\newfontfamily{\headingFont}{Fira Sans Book}
+\newfontfamily{\chapterNumberFont}{Canter Bold 3D}
+\newfontfamily{\myChapterFont}{Canter Bold}
+\fi
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../XGBoost"
+%%% End:

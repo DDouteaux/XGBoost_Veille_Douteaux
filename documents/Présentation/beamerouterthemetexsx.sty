@@ -1,0 +1,45 @@
+\mode<presentation>
+
+\newlength{\sidebarwidth}
+\setlength{\sidebarwidth}{2cm}
+
+\useoutertheme[width=2cm, height=0cm]{sidebar}%
+\setbeamertemplate{sidebar left}{%
+	\begin{tikzpicture}
+		\fill [themeColor] (0,0) rectangle (\sidebarwidth,-.94);
+		\fill [themeColor] (0,-1.44) rectangle (\sidebarwidth,-\paperwidth);
+		\node [anchor=north west] (salut) at (0,-1.44) {\hspace{-.05cm}\insertverticalnavigation{\beamer@sidebarwidth}};
+		\node [anchor=south west] at (0,-{\paperheight+1.44}) {\hspace*{-.1cm}\includegraphics[width=2cm]{logopng}};
+	\end{tikzpicture}
+}
+
+% Frame title
+\defbeamertemplate*{frametitle}{texsx}[1][] {%
+	\begin{beamercolorbox}[wd=\paperwidth,ht=1.4cm]{frametitle} 
+	    \begin{tikzpicture}
+	      	\useasboundingbox[fill=white](0,0) rectangle(\the\paperwidth,1.4);
+	        \fill[themeColor] (0,0) rectangle (\the\paperwidth,.5);
+		  	\ifx\insertframesubtitle\@empty%
+	       		{
+	       			\node[anchor=west, themeColor, minimum width={\the\paperwidth-2cm}] at (0,1) {\textsc{\MakeLowercase{\protect\insertframetitle}}};
+	   			}
+	     	\else%
+		       	{
+		       		\node[anchor= west, themeColor, minimum width={\the\paperwidth-2cm}] at (0,1) {\textsc{\MakeLowercase{\protect\insertframetitle}}~~{\small\insertframesubtitle}};%
+	          	}%
+	        \fi
+	  	\end{tikzpicture}
+	\end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}[text line]{%
+	\begin{beamercolorbox}[wd=\the\paperwidth, ht=2.5ex, dp=2ex, rightskip=.5cm]{white}
+		\textcolor{gris!50!black}{\scriptsize\textit{\hfill\hfill\insertdate\hfill\insertframenumber\hspace{2cm}}}
+	\end{beamercolorbox}
+}
+
+\setbeamertemplate{headline}{}
+
+\setbeamersize{text margin left=.5cm,text margin right=.5cm}
+
+\mode<all>
