@@ -1,67 +1,41 @@
-\iffalse
-\documentclass{article}
-
-\usepackage{fontspec}
-\setmainfont{AR CENA}
-
-\begin{document}
-	Bonjour en Arial
-\end{document}
-\fi
-
-
-
-
-
-
 \documentclass{beamer}
 
-\newcommand{\paraTitle}[1]{\textcolor{themeColor}{\textbf{\MakeUppercase #1}}\newline}
+% Thème personnalisé
+\usetheme{lines}
 
-\usepackage[no-math]{fontspec}
+\input{models/imports}
+\input{models/fonts}
+\input{models/vars}
 
-\defaultfontfeatures{Ligatures=TeX}
-\frenchspacing
-
-\setsansfont[Path=./fonts/, Extension=.otf,
-Numbers=OldStyle,
-BoldFont=FiraSans-Medium,
-ItalicFont=FiraSans-LightItalic,
-BoldItalicFont=FiraSans-MediumItalic
-]{FiraSans-Light}
-% Normal font
-\setmainfont[Path=./fonts/,	Extension=.otf,
-Numbers=OldStyle,
-BoldFont=FiraSans-Medium,
-ItalicFont=FiraSans-LightItalic,
-BoldItalicFont=FiraSans-MediumItalic
-]{FiraSans-Light}
-
-\title{MOS x.x -- Veille technologique}
-\subtitle{XGBoost, origine et applications}
-\author{Damien \textsc{Douteaux}}
-\date{Vendredi 3 mars 2017}
-
-\usetheme{texsx}
-
+% Contenu de la présentation
+% Le choix est ici de séparer chaque section dans un fichier contenu
+% dans le répertoire text/. Cela permet d'y voir plus clair et de s'y
+% retrouver plus vite dans le document
 \begin{document}
 
+% Slide de titre
 \begin{frame}[plain]
 	\titlepage
 \end{frame}
 
+% Sommaire
 \section{Sommaire}
+\input{text/sommaire}
 
-\begin{frame}
-	\frametitle{Sommaire}
-	\tableofcontents
-\end{frame}
+% Méthodes de boosting
+\section{Aspects théoriques}
+\input{text/theorie}
 
-\section{Qu'est-ce que XGBoost?}
-\begin{frame}
-	\frametitle{Orgines}
-	salut
-\end{frame}
+% Implémentations de XGBoost
+\section{Mise en \oe uvre}
+\input{text/implementations}
 
+% Applications de XGBoost
+\section{Applications}
+\input{text/applications}
+
+% Conclusion du rapport
+\section{Conclusion}
+\input{text/conclusion}
 
 \end{document}
