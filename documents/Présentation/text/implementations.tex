@@ -14,7 +14,7 @@
 		\begin{itemize}
 	}
 		\only<2->{
-			\itemperso{Mars 2014}Premières release
+			\itemperso{Mars 2014}Première release
 			\itemperso{Mai 2014}Python
 		}
 		\only<3->{
@@ -22,8 +22,8 @@
 			\itemperso{Mai 2015}YARN, gestion HDFS, SKLearn wrapper
 		}
 		\only<4->{
-			\itemperso{Janvier 2016}API JAVA, amélioration R et Python
-			\itemperso{Juillet 2016}C++11, JVM Package (JAVA et Scala)
+			\itemperso{Janvier 2016}API JAVA, Flink, Spark, améliorations
+			\itemperso{Juillet 2016}Totale compatibilité JVM (Spark,...)
 		}
 	\only<2->{
 		\end{itemize}\vspace*{\fill}
@@ -40,17 +40,8 @@
 	\only<2->{
 		\vspace*{\fill}\rule{0pt}{0pt}
 
-		\rule{0pt}{0pt}\hfill{\fontsize{.15cm}{0cm}\selectfont{\textit{Source : \texttt{http://homes.cs.washington.edu/\~tqchen/2016/03/10/story-and-lessons-behind-the-evolution-of-xgboost.html}}}}
+		\rule{0pt}{0pt}\hfill{\fontsize{.15cm}{0cm}\selectfont{\textit{Source : \texttt{http://homes.cs.washington.edu/\textasciitilde tqchen/2016/03/10/story-and-lessons-behind-the-evolution-of-xgboost.html}}}}
 	}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Des syntaxes proches}
-	%bst = xgb.train(param, dtrain, num_round, watchlist)
-	%bst <- xgboost(data = train$data, label = train$label, max_depth = 2, eta = 1, nrounds = 2,
-    %           nthread = 2, objective = "binary:logistic")
-    %bst = xgboost(dtrain, num_round, param = param, watchlist = watchlist,
-    %          metrics = ["logloss", "error"])
 \end{frame}
 
 \begin{frame}
@@ -82,11 +73,11 @@
 	\textit{Pour celui sur les arbres. Douze paramètres utiles...}\vspace*{.2cm}
 
 	\begin{itemize}
-		\itemperso{\texttt{eta}}Contrôle du niveau d'apprentissage.
+		\itemperso{\texttt{Eta}}Contrôle du niveau d'apprentissage.
 		\itemperso{\texttt{Min\_child\_weight}}Pour contrôler l'over/under-fitting
 		\itemperso{\texttt{Max\_depth}}Pour contrôler l'over-fitting.
-		\itemperso{\texttt{Subsample}}Fraction d'observations à utiliser pour les arbres.
 		\itemperso{\texttt{Lambda}}Pour de la régularisation.
+		\itemperso{\texttt{Gamma}}Valeur minimale de gain pour diviser.
 		\itemperso{...}
 	\end{itemize}
 \end{frame}
@@ -94,19 +85,79 @@
 \begin{frame}
 	\frametitle{Paramètres liés à l'apprentissage}
 	\begin{itemize}
-		\itemperso{\texttt{Objective}}Fonction objectif à minimiser (linéaire, softmax, softprob,...).
-		\itemperso{\texttt{Eval\_metric}}Métrique d'évaluation (erreur MSE, MAE, LogLoss, AUC,...).
-		\itemperso{\texttt{Seed}}Pour l'aléatoire.
+		\itemperso{\texttt{Objective}}Fonction objectif à minimiser (linéaire, softmax, softprob,...).\vspace*{.2cm}
+		\itemperso{\texttt{Eval\_metric}}Métrique d'évaluation (erreur MSE, MAE, LogLoss, AUC,...).\vspace*{.2cm}
+		\itemperso{\texttt{Seed}}Pour l'aléatoire.\vspace*{.2cm}
 	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Utilisation avec Spark et Scala}
+	\begin{lstlisting}[language=Scala]
+val spark = SparkSession.builder().appName("SimpleXGBoost Application").config("spark.executor.memory", "2G").config("spark.executor.cores", "4").config("spark.default.parallelism", "4").master("local[*]").getOrCreate()
+
+// number of iterations
+val numRound = 10
+val numWorkers = 4
+// training parameters
+val paramMap = List(
+      "eta" -> 0.023f,
+      "max_depth" -> 10,
+      "min_child_weight" -> 3.0,
+      "subsample" -> 1.0,
+      "colsample_bytree" -> 0.82,
+      "colsample_bylevel" -> 0.9,
+      "base_score" -> 0.005,
+      "eval_metric" -> "auc",
+      "seed" -> 49,
+      "silent" -> 1,
+      "objective" -> "binary:logistic").toMap
+println("Starting Xgboost ")
+val xgBoostModelWithDF = XGBoost.trainWithDataFrame(trainingData, paramMap,round = numRound, nWorkers = numWorkers, useExternalMemory = true)
+
+val predictions = xgBoostModelWithDF.setExternalMemory(true).transform(testData).select("label", "probabilities")\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{R et fonction de perte personnalisée}
+	\begin{lstlisting}[language=R]
+loglossobj <- function(preds, dtrain) {
+  # dtrain is the internal format of the training data
+  # We extract the labels from the training data
+  labels <- getinfo(dtrain, "label")
+  # We compute the 1st and 2nd gradient, as grad and hess
+  preds <- 1/(1 + exp(-preds))
+  grad <- preds - labels
+  hess <- preds * (1 - preds)
+  # Return the result as a list
+  return(list(grad = grad, hess = hess))
+}
+
+model <- xgboost(data = train$data, label = train$label,
+             nrounds = 2, objective = loglossobj, eval_metric = "error")\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Sélection de variables}
+	\begin{lstlisting}[language=R]
+bst <- xgboost(data = train$data, label = train$label, max.depth = 2,
+           eta = 1, nthread = 2, nround = 2,objective = "binary:logistic")
+importance_matrix <- xgb.importance(agaricus.train$data@Dimnames[[2]], model = bst)
+xgb.plot.importance(importance_matrix)\end{lstlisting}
+	\begin{center}
+		\includegraphics[width=.25\textwidth]{images/implementation/importance}
+	\end{center}
+	\rule{0pt}{0pt}\hfill{\fontsize{.15cm}{0cm}\selectfont{\textit{Source : \texttt{http://dmlc.ml/rstats/2016/03/10/xgboost.html} et cours d'apprentissage statistique (C. \textsc{Helbert})}}}	
 \end{frame}
 
 \begin{frame}
 	\frametitle{Quelques bonnes pratique}
 	\begin{itemize}
-		\itemperso{1.}Fixer un niveau d'apprentissage élevé
-		\itemperso{2.}Trouver le nombre optimal d'arbres
-		\itemperso{3.}Gérer les paramètres des arbres.
-		\itemperso{4.}Gérer les paramètres de régularisation.
-		\itemperso{5.}Réduire le niveau d'apprentissage.
+		\itemperso{1.}Fixer un niveau d'apprentissage élevé.\vspace*{.2cm}
+		\itemperso{2.}Trouver le nombre optimal d'arbres.\vspace*{.2cm}
+		\itemperso{3.}Gérer les paramètres des arbres.\vspace*{.2cm}
+		\itemperso{4.}Gérer les paramètres de régularisation.\vspace*{.2cm}
+		\itemperso{5.}Réduire le niveau d'apprentissage.\vspace*{.2cm}
+		\itemperso{6.}Utiliser l'AUC pour estimer les modèles.\vspace*{.2cm}
 	\end{itemize}
 \end{frame}

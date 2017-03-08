@@ -76,6 +76,7 @@
 
 % Commande personnalisée pour un item afin de raccourcir le code d'appel
 \newcommand\itemperso[1]{\item[\mybullet]~\textbf{\textcolor{\currentColor}{#1}}\ifthenelse{\equal{#1}{}}{}{\hspace{0.5cm}}}
+\newcommand\subitemperso[1]{\item[\textcolor{\currentColor}{$\triangleright$}] \textit{\textcolor{\currentColor}{#1}}\ifthenelse{\equal{#1}{}}{}{\hspace{0.2cm}}}
 
 % Compléments pour les styles des items
 \setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\mybullet}}

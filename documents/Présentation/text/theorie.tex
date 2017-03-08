@@ -15,11 +15,11 @@
 \begin{frame}
 	\frametitle{Le boosting}
 	\begin{itemize}
-		\itemperso{}Une stratégie adaptative.
-		\itemperso{}Convertir des règles peu performantes en (très) bonne prédiction.
-		\itemperso{}Réduction variance et biais.
-		\itemperso{}Convergence rapide.
-		\itemperso{}Sensible au bruit.
+		\itemperso{}Une stratégie adaptative.\vspace*{.2cm}
+		\itemperso{}Convertir des règles peu performantes en (très) bonne prédiction.\vspace*{.2cm}
+		\itemperso{}Réduction variance et biais.\vspace*{.2cm}
+		\itemperso{}Convergence rapide.\vspace*{.2cm}
+		\itemperso{}Sensible au bruit.\vspace*{.2cm}
 	\end{itemize}
 \end{frame}
 
@@ -56,7 +56,7 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Boosting et arbres}
+	\frametitle{Gradient Boosting et arbres}
 	\only<1>{
 		\paraTitle{Un arbre simple (CART)}
 		\begin{center}
@@ -68,15 +68,17 @@
 		\paraTitle{Plusieurs arbres vallent mieux qu'un}
 		\begin{center}
 			\includegraphics[height=4.5cm]{images/theorie/arbres2}
+
+			Additive training (Boosting)
 		\end{center}
 		\rule{0pt}{0pt}\hfill{\fontsize{.15cm}{0cm}\selectfont\textit{Source : \texttt{https://xgboost.readthedocs.io/en/latest/model.html}}}
 	}%
-	\only<3-5>{
+	\only<3-7>{
 		\paraTitle{Choix de l'arbre à ajouter}
 	}%
 	\only<3>{
 		\begin{itemize}
-			\itemperso{Fonction objectif}$\textnormal{obj}(\theta)=L(\theta)+\Omega(\theta)$
+			\itemperso{Fonction objectif}$\textnormal{obj}(\Theta)=\mathcal{L}(\Theta)+\Omega(\Theta)$
 		\end{itemize}
 		\begin{center}
 			\includegraphics[width=.6\textwidth]{images/theorie/reg}
@@ -85,20 +87,33 @@
 	}%
 	\only<4>{
 		\begin{itemize}
-			\itemperso{Fonction de perte}$\displaystyle{L(t) = \sum_{i=1}^n\left[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)\right]}$
-			\itemperso{Complexité}$\displaystyle{\Omega(t)=\gamma T + \frac{1}{2}\lambda\sum_{j=1}{T}\omega_j^2}$
+			\itemperso{Fonction de perte}$\displaystyle{\mathcal{L}(t) = \sum_{i=1}^n\left[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)\right]}$
+			\itemperso{Complexité}$\displaystyle{\Omega(t)=\gamma T + \frac{1}{2}\lambda\sum_{j=1}^{T}\omega_j^2}$
 		\end{itemize}
 		\begin{center}
 			\includegraphics[width=.6\textwidth]{images/theorie/arbres3}
 		\end{center}
 		\rule{0pt}{0pt}\hfill{\fontsize{.15cm}{0cm}\selectfont\textit{Source : \texttt{https://xgboost.readthedocs.io/en/latest/model.html}}}
 	}%
-	\only<5>{
+	\only<5-6>{
+		\begin{itemize}
+			\itemperso{}\'Enumérer toutes les structures d'arbres possibles.
+			\itemperso{}Calculer l'objectif pour chaque structure.
+			\itemperso{}Trouver l'optimal et optimiser les feuilles.
+		\end{itemize}
+	}%
+	\only<6>{
+		\vspace*{.5cm}
+		\textbf{En pratique, construction des arbres au coup par coup.}
+	}
+	\only<7>{
 		\begin{itemize}
 			\itemperso{Le gain}$\displaystyle{\frac{1}{2}\left[\frac{G_L^2}{H_L+\lambda} + \frac{G_R^2}{H_R+\lambda}-\frac{(G_L+G_R)^2}{H_L+H_R+\lambda}\right]-\gamma}$
 		\end{itemize}
 		\begin{center}
 			\includegraphics[width=.6\textwidth]{images/theorie/arbres4}
+
+			On ne s'arrête pas si Gain$<$0.
 		\end{center}
 		\rule{0pt}{0pt}\hfill{\fontsize{.15cm}{0cm}\selectfont\textit{Source : \texttt{https://xgboost.readthedocs.io/en/latest/model.html}}}
 	}
@@ -118,15 +133,36 @@
 \end{frame}
 
 \begin{frame}
+	\frametitle{Importance des variables}
+	\begin{itemize}
+		\itemperso{}Entraîner les arbres.\vspace*{.2cm}
+		\itemperso{}Pour chaque chaque variable :
+		\begin{itemize}
+			\subitemperso{}Compter le nombre de fois où elle est sélectionnée.
+			\subitemperso{}Pondérer par la diminution d'erreur engendrée.
+			\subitemperso{}Moyenner sur les arbres.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
 	\frametitle{Performances}
 	La rapidité est le but initial de XGBoost :
 	\begin{itemize}
 		\itemperso{Mémoire}Pas de mémoire dynamique.
-		\itemperso{Cache}Utilisation respectueuse.
+		\itemperso{Cache}\'Eviter de surcharger la mémoire.
 		\itemperso{Amélioration modèle}Voir précédemment.
 		\itemperso{Conception}Parallélisation en arrière plan.
+		\itemperso{Données externalisées}Si mémoire insuffisante.
 	\end{itemize}
-	\rule{0pt}{0pt}\hfill\includegraphics[width=.5\textwidth]{images/theorie/speed}\hfill\rule{0pt}{0pt}
+	\only<1>{
+		\rule{0pt}{0pt}\hfill\includegraphics[height=3.5cm]{images/theorie/speed}\hfill\rule{0pt}{0pt}
 
-	\rule{0pt}{0pt}\hfill{\fontsize{.15cm}{0cm}\selectfont\textit{Source : \texttt{http://www.jmlr.org/proceedings/papers/v42/chen14.pdf}}}
+		\rule{0pt}{0pt}\hfill{\fontsize{.15cm}{0cm}\selectfont\textit{Source : \texttt{http://www.jmlr.org/proceedings/papers/v42/chen14.pdf}}}
+	}%
+	\only<2>{
+		\includegraphics[height=3.2cm]{images/theorie/perf_rf1}
+
+		\rule{0pt}{0pt}\hfill{\fontsize{.15cm}{0cm}\selectfont\textit{Source : \texttt{http://datascience.la/benchmarking-random-forest-implementations/} [2015]}}	
+	}
 \end{frame}
