@@ -26,7 +26,9 @@
   \textscc{#2}%
   \else\ifnum\pdf@strcmp{#1}{thColor}=0%
   \thColor{#2}%
-  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%
+  \else\ifnum\pdf@strcmp{#1}{textbfgray}=0%
+  \textbfgray{#2}%
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%
 }
 \makeatother
 
@@ -40,6 +42,10 @@
 
 \newcommand\textbfc[1]{%
   \textbf{\thColor{#1}}%
+}
+
+\newcommand\textbfgray[1]{%
+  \textbf{\textcolor{gray}{#1}}%
 }
 
 \newcommand\textscic[1]{%

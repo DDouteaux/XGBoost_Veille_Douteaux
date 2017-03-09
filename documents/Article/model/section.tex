@@ -11,13 +11,17 @@
   \sectionWithImage{#2}{#3}%
   \else\ifnum\pdf@strcmp{#1}{default}=0%
   \sectionDefault{#2}{#3}%
-  \fi\fi
+  \else\ifnum\pdf@strcmp{#1}{greatNumber}=0%
+  \sectionGreatNumber{#2}{#3}%
+  \fi\fi\fi
 }
 
 \newcommand{\applySubsectionFormat}[3]{%
   \ifnum\pdf@strcmp{#1}{default}=0%
   \subsectionDefault{#2}{#3}%
-  \fi
+  \else\ifnum\pdf@strcmp{#1}{light}=0%
+  \subsectionLight{#2}{#3}%
+  \fi\fi
 }
 
 \newcommand{\applySubsubsectionFormat}[3]{%

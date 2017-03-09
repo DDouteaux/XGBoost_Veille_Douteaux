@@ -48,6 +48,19 @@
   }\vspace*{-.3cm}\par
 }
 
+\newcommand\sectionGreatNumber[2]{%
+  \vspace{.3cm}\noindent%
+  \printIfNotZero{%
+      \fontsize{30}{1}\selectfont%
+      \textit{\Huge{%
+        \applyFormat{\sectionNumberStyle}{#1.~~}%
+      }}%
+    \applyFormat{\sectionSeparatorStyle}{\sectionSeparator}%
+  }{#1}%
+  \fontsize{15}{1}\selectfont%
+  \applyFormat{\sectionTextStyle}{\textbf{#2}}\par%
+}
+
 %
 % Style de subsection [default]
 % Affichage simplifié avec nom souligné
@@ -60,8 +73,10 @@
   }\vspace*{-.3cm}\par
 }
 
+\newcommand\subsectionLight[2]{\fontsize{13}{1}\selectfont\vspace{.3cm}\noindent\applyFormat{\subsectionNumberStyle}{#1}\applyFormat{\subsectionSeparatorStyle}{\subsectionSeparator}\applyFormat{\subsectionTextStyle}{#2}\vspace*{-.3cm}\par}
+
 %
 % Style de subsubsection [default]
 % Affichage gras italique avec un peu de couleur
 %
-\newcommand\subsubsectionDefault[2]{\fontsize{13}{1}\selectfont\vspace{.15cm}\noindent\textbf{\applyFormat{\subsubsectionNumberStyle}{#1}~\applyFormat{\subsubsectionTextStyle}{#2}}}
+\newcommand\subsubsectionDefault[2]{\fontsize{11}{1}\selectfont\vspace{.15cm}\noindent\textbf{\applyFormat{\subsubsectionNumberStyle}{#1}\applyFormat{\subsubsectionSeparatorStyle}{\subsubsectionSeparator}\applyFormat{\subsubsectionTextStyle}{#2}}}
