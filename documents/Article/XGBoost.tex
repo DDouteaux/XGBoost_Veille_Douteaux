@@ -98,58 +98,20 @@
 \includeIntroduction{}
 
 \section{XGBoost en deux mots}\marginpar{\tableOfContents}
-L'objectif de cet article est de présenter XGBoost. Mais qu'est-ce que XGBoost? Il s'agit d'une méthode de machine learning apparue il y a trois ans et dérivant des méthodes dites de boosting. Cette méthode est présentée par ses créateurs comme étant :
-\begin{itemize}
-	\item[\thColor{\faFlag~~Flexible}]Prise en compte de plusieurs thématiques de machine learning.
-	\item[\thColor{\faCube~~Portable}]Utilisable sous toutes les plateformes (Windows, Linux, MAC)
-	\item[\thColor{\faCommentsO~~Multi-langages}]L'algorithme a été porté en Python, JAVA (Spark), C++,...
-	\item[\thColor{\faCloud~~Distribuée}]Depuis deux ans, l'algorithme est utilisable avec Hadoop et Spark.
-	\item[\thColor{\faRocket~~Perfomante}]Cet algorithme est donné pour être plus rapide que les algorithmes de sa famille et fournir de même meilleurs résultats.
-\end{itemize}
-Mais avant toute chose, que veut exactement dire l'acronyme \og XGBoost\fg?
-\begin{center}
-E\textbf{\textcolor{bluenight}{X}}treme \textbf{\textcolor{bluenight}{G}}radiant \textbf{\textcolor{bluenight}{Boost}}ing
-\end{center}
-Ainsi, la méthode XGBoost s'organise autours de trois points essentiels :
-\begin{itemize}
-	\itemperso{Boosting}Il s'agit d'une famille d'algorithme utilisés initiallement en apprentissage supervisé. Le principe du boosting sera détaillé en Section~\ref{sec:boosting}.
-	\itemperso{Gradient Boosting}Il s'agit d'une version du boosting dans laquelle l'objectif sera d'optimiser une fonctione faisant apparaître des gradients. Les détails de cette idée seront détaillées en Section~\ref{sec:gradient-boosting}.
-	\itemperso{\og Extreme\fg}Ce qualificatif signifie que la recherche de performances est poussée au maximum pour cette méthode, comme nous l'étudierons en Section~\ref{sec:perf}.
-\end{itemize}
-Ainsi, nous allons dans un premier temps présenter les grandes lignes théoriques derrière cet algorithme avant de partir dans l'étude des implémentations et des applications de XGBoost.
+\input{text/XGBoost/generalites}
 
 \section{Le boosting}
-\subsection{Qu'est-ce que le boosting?}
-Le boosting est une méthode de Machine Learning apparue à la fin des années 1980 et ayant évoluée au fil du temps en plusieurs version, les principales étant AdaBoost ou encore les GBM (\textit{Gradient Boosted Models})\mysidenote{\thColor{Historique du Boosting}\newline\textbf{1989}\newline Premier algorithme de Boosting par R. \textsc{Schapire} \newline\textbf{1996}Première implémentation d'AdaBoost par Y. \textsc{Freund} et R. \textsc{Schapire} \newline\textbf{1999}Apparition des modèles de boosting de gradient (GBM) par L. \textsc{Breiman} et J. \textsc{Freidman} \newline\textbf{2014}Implémentation et apparition de XGBoost par T. \textsc{Chen}}. 
 
-Le succès de ces méthodes provient de leur manière originale d'utiliser des algorithmes déjà existant au sein d'une stratégie adaptative. Cette stratégie leur permet alors de convertir un ensemble de règles et modèles peu performant en les combinant pour obtenir de (très) bonnes prédictions. L'idée principale est en effet d'ajouter de nouveaux modèles au fur et à mesure, mais de réaliser ces ajouts en accord avec un critère donné. En ce sens, cette famille de méthodes se différencie des Random Forest qui vont elles miser sur l'aléatoire pour moyenner l'erreur.
+\input{text/Boosting/generalites}
+\input{text/Boosting/premierAlgo}
+\input{text/Boosting/lossComplexity}
+\input{text/Boosting/gradientBoosting}
 
-Cet aspect fondamental du boosting permet ainsi une forte réduction du biais et de la variance de l'estimation, mais surtout garanti une convergence rapide. La contrepartie se fait au niveau de la sensibilité au bruit comme nous le verrons dans la description des algorithmes.
-
-\subsection{Premier algorithme}
-\label{sec:boosting}
-Pour commencer, nous allons présenter l'idée originale de l'algorithme de Boosting présenté par R.~\textsc{Schapire} en 1989. Comme nous l'avons précisé, l'idée est de construire de \og mauvais\fg{} classifieurs au fur et à mesure qui combiné fourniront un excellent classifieur.
-
-Pour l'exemple, prenons la situation suivante :
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=.5\textwidth]{images/Boosting/init}
-	\begin{sidecaption}
-		Deux ensembles à séparer par le modèle que l'on entraîne d'après~\cite{bib:elghazel}
-	\end{sidecaption}
-	\label{fig:boosting_init}
-\end{figure}
-
-\subsection{Gradient Boosting}
-\label{sec:gradient-boosting}
 \section{XGBoost, plus loins que le boosting}
-\subsection{Importance des variables}
-\subsection{Performances}
-\label{sec:perf}
+\input{text/More/importanceVars}
+\input{text/More/perf}
 
 \section{Mise en \oe uvre}
-\subsection{Boosting}
 \subsection{XGBoost}
 \subsection{Les paramètres}
 \subsubsection{Paramètres génériques}
