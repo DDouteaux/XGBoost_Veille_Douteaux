@@ -1,0 +1,31 @@
+\subsection{Perte et complexité}
+Avant d'aborder la question des GBM, nous allons nous intéresser à deux grands concepts importants en machine learning et qui sont tout particulièrement gardés à l'\oe il dans le cas de XGBoost et du boosting de manière générale.
+
+Nous avons vu que l'idée du Boosting est d'adapter l'ensemble d'apprentissage à chaque étape pour chercher des classifieurs qui vont se compléter, ie. moyenner leurs erreurs. Il s'agit en fait de \og coller aux données\fg{} du mieux que possible (mais sans sur-apprendre!). Nous verrons que cet aspect est lié à la notion de perte.
+
+De même, nous avons vu que l'idée n'est pas d'apprendre des modèles intermédiaires très puissants, mais que l'ensemble soit performant. Ainsi, nous verrons que le fait de prendre des modèles simples est lié à la notion de complexité.
+
+\subsection{Fonction de perte}
+Avant d'aller plus loin, regardons formellement quelle est l'idée théorique derrière le Boosting. Ce dernier cherche en fait à optimiser (minimiser) une fonction objectif. Cette fonction peut s'écrire en deux termes :
+\begin{equation}
+\textnormal{objectif}(\Theta)=\mathcal{L}(\Theta)+\Omega(\Theta)}
+\label{eqn:obj}
+\end{equation}
+La relation~(\ref{eqn:obj}) fait apparaître deux termes :\begin{itemize}
+	\itemperso{$\mathcal{L}(\Theta)$}La fonction de perte
+	\itemperso{$\Omega(\Theta)$}La fonction de complexité
+\end{itemize}
+Ce sont ces deux fonctions (et leur intérêt!) qui vons nous intéresser par la suite. Pour cela, nous allons considérer la situation cobaye de la Figure~\ref{fig:cobaye}.
+
+\begin{figure}[h]
+	\centering
+	\input{images/Boosting/cobaye}
+	\sidecaption{Situation de test pour comprendre les notions de perte et complexité (d'après~\cite{bib:xgboost_main})}
+	\label{fig:cobaye}
+\end{figure}
+
+
+
+\subsubsection{Notion de perte}
+
+\subsubsection{Notion de complexité}

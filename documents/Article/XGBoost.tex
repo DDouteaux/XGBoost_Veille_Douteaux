@@ -79,7 +79,7 @@
 \setcounter{page}{1}
 \renewcommand*{\thepage}{\Roman{page}}
 
-\includeTOC{beginning}
+%\includeTOC{beginning}
 \includeLOF{beginning}
 \includeLOT{beginning}
   
@@ -97,7 +97,21 @@
 %
 \includeIntroduction{}
 
-\section{XGBoost en deux mots}\marginpar{\tableOfContents}
+\section{XGBoost en deux mots}
+\marginpar{\begin{mdframed}[skipabove=\baselineskip,
+	skipbelow=\baselineskip,
+	innertopmargin=4mm,
+	innerbottommargin=\baselineskip,
+	innerleftmargin=4mm,
+	innerrightmargin=4mm,
+	leftmargin=0mm,
+	rightmargin=0mm,
+	rightline=false,
+	topline=false,
+	bottomline=false,
+	leftline=false,
+	linewidth=1mm,
+	backgroundcolor=gray!10]\tableofcontents\end{mdframed}}
 \input{text/XGBoost/generalites}
 
 \section{Le boosting}
@@ -107,7 +121,7 @@
 \input{text/Boosting/lossComplexity}
 \input{text/Boosting/gradientBoosting}
 
-\section{XGBoost, plus loins que le boosting}
+\section{Plus que du boosting}
 \input{text/More/importanceVars}
 \input{text/More/perf}
 
@@ -150,7 +164,6 @@
 \clearpage
 \fi\fi\fi
 
-\renewcommand{\sectionbreak}{}
 \includeTOC{end}
 \includeLOF{end}
 \includeLOT{end}

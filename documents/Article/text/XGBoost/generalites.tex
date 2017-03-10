@@ -1,0 +1,19 @@
+L'objectif de cet article est de présenter XGBoost. Mais qu'est-ce que XGBoost? Il s'agit d'une méthode de machine learning apparue il y a trois ans et dérivant des méthodes dites de boosting. Cette méthode est présentée par ses créateurs comme étant :
+\begin{itemize}
+	\item[\thColor{\faFlag~~Flexible}]Prise en compte de plusieurs thématiques de machine learning.
+	\item[\thColor{\faCube~~Portable}]Utilisable sous toutes les plateformes (Windows, Linux, MAC)
+	\item[\thColor{\faCommentsO~~Multi-langages}]L'algorithme a été porté en Python, JAVA (Spark), C++,...
+	\item[\thColor{\faCloud~~Distribuée}]Depuis deux ans, l'algorithme est utilisable avec Hadoop et Spark.
+	\item[\thColor{\faRocket~~Perfomante}]Cet algorithme est donné pour être plus rapide que les algorithmes de sa famille et fournir de même meilleurs résultats.
+\end{itemize}
+Mais avant toute chose, que veut exactement dire l'acronyme \og XGBoost\fg?
+\begin{center}
+E\textbf{\textcolor{bluenight}{X}}treme \textbf{\textcolor{bluenight}{G}}radiant \textbf{\textcolor{bluenight}{Boost}}ing
+\end{center}
+Ainsi, la méthode XGBoost s'organise autours de trois points essentiels :
+\begin{itemize}
+	\itemperso{Boosting}Il s'agit d'une famille d'algorithme utilisés initiallement en apprentissage supervisé. Le principe du boosting sera détaillé en Section~\ref{sec:boosting}.
+	\itemperso{Gradient Boosting}Il s'agit d'une version du boosting dans laquelle l'objectif sera d'optimiser une fonctione faisant apparaître des gradients. Les détails de cette idée seront détaillées en Section~\ref{sec:gradient-boosting}.
+	\itemperso{\og Extreme\fg}Ce qualificatif signifie que la recherche de performances est poussée au maximum pour cette méthode, comme nous l'étudierons en Section~\ref{sec:perf}.
+\end{itemize}
+Ainsi, nous allons dans un premier temps présenter les grandes lignes théoriques derrière cet algorithme avant de partir dans l'étude des implémentations et des applications de XGBoost.

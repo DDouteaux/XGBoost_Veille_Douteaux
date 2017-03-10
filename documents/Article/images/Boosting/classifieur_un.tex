@@ -1,0 +1,28 @@
+\begin{tikzpicture}[x=0.4cm,y=0.4cm,]
+\newcommand\Square[1]{+(-#1,-#1) rectangle +(#1,#1)}
+\draw [very thin, lightgray] (0,0) grid (13,15.5);
+
+\fill [black] (8,3.1) circle (4pt);
+\fill [black] (8.8,3.1) circle (4pt);
+\fill [black] (9,4) circle (4pt);
+\fill [black] (12.2,4.6) circle (4pt);
+\fill [themeColor] (1.8,5.8) circle (4pt);
+\fill [black] (5,5.2) circle (4pt);
+\fill [themeColor] (8,5.6) \Square{4pt};
+\fill [themeColor] (8.1, 6.25) \Square{4pt};
+\fill [black] (2.75, 7.7) \Square{4pt};
+\fill [black] (4.5,7.6) \Square{4pt};
+\fill [black] (11.6,7.7) circle (4pt);
+\fill [black] (1.9,8.7) \Square{4pt};
+\fill [black] (3.2,8.7) \Square{4pt};
+\fill [black] (8.9,8.1) circle (4pt);
+\fill [black] (10.1,8.25) circle (4pt);
+\fill [black] (5.4,9.8) \Square{4pt};
+\fill [black] (3,10.9) \Square{4pt};
+\fill [black] (11.2,10.6) circle (4pt);
+\fill [black] (4.8,11.8) \Square{4pt};
+\fill [black] (1.8,14.5) \Square{4pt};
+
+\draw [themeColor](0,3.5) -- (13,13.25);
+\node [themeColor, above left] at (13,13.25) {$h_1$};
+\end{tikzpicture}
