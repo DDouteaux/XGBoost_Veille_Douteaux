@@ -4,16 +4,20 @@ Pour commencer, nous allons présenter l'idée originale de l'algorithme de Boos
 
 Pour nos exemples, nous allons considérer la situation de la Figure~\ref{fig:boosting_situation}. Le problème a traiter ici est un problème de classification supervisé, c'est-à-dire que l'on désire entraîner un classifieur pour pouvoir séparer les carrés des cercles.
 
+
 \begin{figure}[h]
-	\centering
-	\input{images/Boosting/init}
-	\sidecaption[fig:boosting_situation]{Deux ensembles à séparer par le modèle que l'on entraîne (d'après~\cite{bib:elghazel})}
-	\label{fig:boosting_situation}
+	\begin{margincap}
+	  	\centering
+		\input{images/Boosting/init}
+		\caption[fig:boosting_situation]{Deux ensembles à séparer par le modèle que l'on entraîne (d'après~\cite{bib:elghazel})}
+		\label{fig:boosting_situation}
+	\end{margincap}
 \end{figure}
 
 Pour commencer, l'idée est d'entraîner un premier classifieur. Cependant, pour retirer une partie du biais des données, ce dernier ne sera entraînée que sur une partie des données (choisie arbitrairement). Nous retrouvons ainsi en Figure~\ref{fig:boosting_un_app} l'ensemble d'apprentissage qui est en rouge, et en Figure~\ref{fig:boosting_un_modele} le classifieur appris sur ces données, notés $h_1$.
 
 \begin{figure}[h]
+	\begin{margincap}
 	\begin{subfigure}{.45\textwidth}
 		\input{images/Boosting/ensemble_app_un}
 		\caption{Données d'apprentissage choisies aléatoirement ($\blacksquare$ \large{$\bullet$})}
@@ -24,7 +28,8 @@ Pour commencer, l'idée est d'entraîner un premier classifieur. Cependant, pour
 		\caption{Classifieur $h_1$ obtenu par entraînement sur l'ensemble $\blacksquare$ \large{$\bullet$}}
 		\label{fig:boosting_un_modele}
 	\end{subfigure}\hfill
-	\sidecaption{Premier modèle appris sur les données (d'après~\cite{bib:elghazel})}
+	\caption{Premier modèle appris sur les données (d'après~\cite{bib:elghazel})}
+	\end{margincap}
 \end{figure}
 
 Sans surprise, ce classifieur n'est pas parfait et réalise un certain nombre d'erreurs (indiquées en rouge sur la Figure~\ref{fig:boosting_un_modele}). Toute l'idée du Boosting est alors de créer de nouveaux modèles en changeant l'ensemble d'apprentissage de manière \og intelligente\fg. 
@@ -32,17 +37,19 @@ Sans surprise, ce classifieur n'est pas parfait et réalise un certain nombre d'
 Dans notre cas, nous allons choisir un nouvel ensemble d'apprentissage qui regroupe des éléments n'étant pas dans l'ensemble initial et pour lesquels les prévisions de $h_1$ sont équiprobablement correctes et incorrectes. Cet ensemble est représenté sur la Figure~\ref{fig:boosting_deux_app}. On apprend alors à partir de cet ensemble un nouveau classifieur $h_2$ présenté à la Figure~\ref{fig:boosting_deux_modele}.
 
 \begin{figure}[h]
+	\begin{margincap}
 	\begin{subfigure}{.45\textwidth}
-		\input{images/Boosting/ensemble_app_un}
+		\input{images/Boosting/ensemble_app_deux}
 		\caption{Données d'apprentissage pour le deuxième classifieur ($\blacksquare$ \large{$\bullet$})}
 		\label{fig:boosting_deux_app}
 	\end{subfigure}\hfill
 	\begin{subfigure}{.45\textwidth}
-		\input{images/Boosting/classifieur_un}
+		\input{images/Boosting/classifieur_deux}
 		\caption{Classifieur $h_2$ obtenu par entraînement sur l'ensemble $\blacksquare$ \large{$\bullet$}}
 		\label{fig:boosting_deux_modele}
 	\end{subfigure}\hfill
-	\sidecaption{Deuxième modèle appris sur les données (d'après~\cite{bib:elghazel})}
+	\caption{Deuxième modèle appris sur les données (d'après~\cite{bib:elghazel})}
+	\end{margincap}
 \end{figure}
 
 On remarque qu'ici le modèle $h_2$ ne fait pas d'erreurs sur son ensemble d'apprentissage (qui est cependant peu fourni), ceci est un cas particulier et n'est pas automatique. À cette étape, nous disposons donc de deux modèles, le second permettant de \og rattraper\fg{} des erreurs du premier.
@@ -50,24 +57,30 @@ On remarque qu'ici le modèle $h_2$ ne fait pas d'erreurs sur son ensemble d'app
 Nous continuons alors sur le même principe, en entraînant un troisième classifieur. Son ensemble d'apprentissage sera choisit dans les points n'ayant pas encore servis à l'apprentissage, et pour lesquels les deux autres classifieurs sont en désaccord, voir la Figure~\ref{fig:boosting_trois_app}. Le troisième classifieur, noté $h_3$ est représenté à la Figure~\ref{fig:boosting_trois_modele}.
 
 \begin{figure}[h]
+	\begin{margincap}
 	\begin{subfigure}{.45\textwidth}
-		\input{images/Boosting/ensemble_app_un}
+		\input{images/Boosting/ensemble_app_trois}
 		\caption{Données d'apprentissage pour le deuxième classifieur ($\blacksquare$ \large{$\bullet$})}
 		\label{fig:boosting_trois_app}
 	\end{subfigure}\hfill
 	\begin{subfigure}{.45\textwidth}
-		\input{images/Boosting/classifieur_un}
+		\input{images/Boosting/classifieur_trois}
 		\caption{Classifieur $h_2$ obtenu par entraînement sur l'ensemble $\blacksquare$ \large{$\bullet$}}
 		\label{fig:boosting_trois_modele}
 	\end{subfigure}\hfill
-	\sidecaption{Troisième modèle appris sur les données (d'après~\cite{bib:elghazel})}
+	\caption{Troisième modèle appris sur les données (d'après~\cite{bib:elghazel})}
+	\end{margincap}
 \end{figure}
 
 À la fin de ce processus (qui aurait pu durer plus longtemps si nous l'avions désiré), nous obtenons trois classifieurs. Comme cela a été vu, ces derniers ont été créés de manière à ce qu'ils corrigent leurs erreurs entre eux, ce paramètre étant pris en compte par la construction des ensembles d'apprentissage. Ainsi, l'utilisation de tous ces classifieurs revient pour chaque point à réaliser une prédiction avec tous les classifieurs et d'attribuer la classe ayant le plus de vote. On moyenne ainsi les erreurs des classifieurs entre eux et on réduit ainsi le biais de la prédiction. Cette décision finale est illustrée à la Figure~\ref{fig:boosting_final}, où les erreurs sont précisées en rouge.
 
 \begin{figure}[h]
-	\sidecaption{Prévision finale conjointe des trois classifieurs entraînés par Boosting (d'après~\cite{bib:elghazel})}
+	\begin{margincap}
+	\centering
+	\input{images/Boosting/boosting_final}
+	\caption{Prévision finale conjointe des trois classifieurs entraînés par Boosting (d'après~\cite{bib:elghazel})}
 	\label{fig:boosting_final}
+	\end{margincap}
 \end{figure}
 
 Cette première version de l'algorithme de Boosting a subit de nombreuses améliorations jusqu'à aujourd'hui, les plus notables étant :
