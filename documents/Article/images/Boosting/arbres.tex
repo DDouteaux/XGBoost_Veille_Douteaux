@@ -1,0 +1,10 @@
+\noindent%
+\begin{tikzpicture}
+  \node [fill=bluenight, text=white, text width=3.5cm, align=center, anchor=north, draw, rectangle with rounded corners] (racine) at (0,0) {\textbf{Utilise un ordinateur tous les jours}};
+  \node [fill=white, anchor=north, draw, text=white, rectangle with rounded corners, text width=3cm, align=center] (jeunes) at ([yshift=-1.5cm, xshift=-2.5cm]racine) {\includegraphics[width=1cm]{images/Boosting/mother}\includegraphics[width=1cm]{images/Boosting/son}};  
+  \node [fill=white, anchor=north, draw, text=white, rectangle with rounded corners, text width=3cm, align=center] (ages) at ([yshift=-1.5cm, xshift=2.5cm]racine) {\includegraphics[width=1cm]{images/Boosting/girl}\includegraphics[width=1cm]{images/Boosting/grandmother}\includegraphics[width=1cm]{images/Boosting/grandfather}};
+  \draw [-] ([xshift=1.5pt,yshift=1.5pt]racine.south west) -- (jeunes.north) node[midway, above, sloped] {Oui};
+  \draw [-] (racine.south east) -- (ages.north) node[midway, above, sloped] {Non};
+  \node [text=themeColor] at ([yshift=-.25cm]jeunes.south) {\textbf{+0,9}};
+  \node [text=violet] at ([yshift=-.25cm]ages.south) {\textbf{-0,9}};
+\end{tikzpicture}

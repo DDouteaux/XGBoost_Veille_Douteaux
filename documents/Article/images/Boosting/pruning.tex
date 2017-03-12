@@ -1,0 +1,23 @@
+\noindent%
+\begin{tikzpicture}
+  \node (son) at (0,0) {\includegraphics[height=1cm]{images/Boosting/son}};
+  \node (girl) at ([xshift=1cm]son.east) {\includegraphics[height=1cm]{images/Boosting/girl}};
+  \node (mother) at ([xshift=1.75cm]girl.east) {\includegraphics[height=1cm]{images/Boosting/mother}};
+  \node (grandmother) at ([xshift=1cm]mother.east) {\includegraphics[height=1cm]{images/Boosting/grandmother}};
+  \node (grandfather) at ([xshift=1cm]grandmother.east) {\includegraphics[height=1cm]{images/Boosting/grandfather}};
+  
+  \draw [gray!50, thick, -{Latex[length=2mm]}] ([xshift=-.75cm, yshift=-.25cm]son.south) -- ([xshift=1cm, yshift=-.25cm]grandfather.south);
+  
+  \node at ([yshift=-.75cm]son.south) {$g_1, h_1$};
+  \node at ([yshift=-.75cm]girl.south) {$g_4, h_4$};
+  \node at ([yshift=-.75cm]mother.south) {$g_2, h_2$};
+  \node at ([yshift=-.75cm]grandmother.south) {$g_5, h_5$};
+  \node at ([yshift=-.75cm]grandfather.south) {$g_3, h_3$};
+  
+  \node (songirl) at ($(son.south)!0.5!(girl.south)$) {};
+  \node at ([yshift=-1.5cm]songirl) {$G_L=g_1+g_4$};
+  \node at ([yshift=-1.5cm]grandmother.south) {$G_R=g_2+g_3+g_5$};
+
+  \coordinate (middle) at ($(girl)!0.5!(mother)$);
+  \draw ([yshift=.75cm]middle) -- ([yshift=-2.5cm]middle);
+\end{tikzpicture}

@@ -1,0 +1,15 @@
+\noindent%
+\begin{tikzpicture}
+  \node [fill=bluenight, text=white, anchor=north, draw, rectangle with rounded corners] (racine) at (0,0) {\textbf{age < 15}};
+  \node [fill=bluenight, text=white, anchor=north, draw, rectangle with rounded corners, text width=1.5cm, align=center] (fils_qdeux) at ([yshift=-1.5cm, xshift=-2.5cm]racine) {\textbf{garçon ?}};
+  \node [fill=white, anchor=north, draw, rectangle with rounded corners, text width=1.5cm, align=center] (garcon) at ([yshift=-1.5cm, xshift=-2cm]fils_qdeux) {\includegraphics[width=1cm]{images/Boosting/son}};
+  \node [fill=white, anchor=north, draw, rectangle with rounded corners, text width=1.5cm, align=center] (fille) at ([yshift=-1.5cm, xshift=2cm]fils_qdeux) {\includegraphics[width=1cm]{images/Boosting/girl}};
+  \node [fill=white, anchor=north, draw, text=white, rectangle with rounded corners, text width=3cm, align=center] (ages) at ([yshift=-1.5cm, xshift=2.5cm]racine) {\includegraphics[width=1cm]{images/Boosting/grandfather}\includegraphics[width=1cm]{images/Boosting/grandmother}\includegraphics[width=1cm]{images/Boosting/mother}};
+  \draw [-] ([xshift=1.5pt,yshift=1.5pt]racine.south west) -- (fils_qdeux.north) node[midway, above, sloped] {Oui};
+  \draw [-] (racine.south east) -- (ages.north) node[midway, above, sloped] {Non};
+  \draw [-] ([xshift=1.5pt,yshift=1.5pt]fils_qdeux.south west) -- (garcon.north) node[midway, above, sloped] {Oui};
+  \draw [-] (fils_qdeux.south east) -- (fille.north) node[midway, above, sloped] {Non};  
+  \node [text=themeColor] at ([yshift=-.25cm]garcon.south) {\textbf{+2}};
+  \node [text=themeColor] at ([yshift=-.25cm]fille.south) {\textbf{+0,1}};
+  \node [text=violet] at ([yshift=-.25cm]ages.south) {\textbf{-1}};
+\end{tikzpicture}

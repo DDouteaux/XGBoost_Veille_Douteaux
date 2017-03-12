@@ -1,2 +1,107 @@
-\subsection{Gradient Boosting}
+\subsection{Gradient Boosting et arbres}
 \label{sec:gradient-boosting}
+
+Désormais que nous venons de voire l'importance de la perte et de la complexité engendrées par les modèles, nous allons voir comment les utiliser dans le cas du gradient boosting appliqué aux arbres.
+
+\subsubsection{Modèles à base d'arbres}
+Pour cette partie, nous considérerons un exemple proposé par les concepteurs de XGBoost et repris dans la documentation~\ref{bib:xgboost_main} et \ref{bib:xgboost-paper}. On considère donc la situation où on essaie de créer un modèle pour savoir si les membres d'une famille apprécient les jeux vidéos.
+
+Les modèles qui seront pris en exemple sont des modèles à base d'arbre, car ils seront plus simple à visualiser et expliquer.
+
+Un modèle pouvant convenir et obtenu par exemple avec la méthode CART est représenté à la Figure~\ref{fig:arbre}.
+
+\begin{figure}[h]
+	\begin{margincap}
+	  \centering
+	  \input{images/Boosting/arbre}
+	  \caption{Arbre pouvant convenir pour expliquer la goût des jeux vidéos dans la famille (d'après~\cite{bib:xgboost_paper})}
+	  \label{fig:arbre}
+	\end{margincap}
+\end{figure}
+
+Ce modèle nous apprend par exemple que des garçons de moins de 15 ans devraient avoir un fort attrait pour les jeux vidéos, ce qui n'est par exemple pas le cas des individus de plus de 15 ans. Pour réduire le taux d'erreur et obtenir de meilleurs résultats, on peut comme nous l'avons vu à la Section~\ref{sec:boosting} utiliser plusieurs de ces modèles simples et les combiner.
+
+Par exemple, à la Figure~\ref{fig:arbres}, nous avons entraîné deux arbres, et les résultats en prédiction consistent à sommer les prédictions (scores) obtenus avec chaque arbre. Ceci permet d'obtenir des résultats plus sûrs et de combiner plus d'informations qu'un seul modèle ne le permettrait.
+
+\begin{figure}[h]
+	\begin{margincap}
+	  \centering
+	  \resizebox{.48\textwidth}{!}{\input{images/Boosting/arbre}}\hfill\resizebox{.48\textwidth}{!}{\input{images/Boosting/arbres}}
+	  \caption{Deux arbres utilisés conjointement pour obtenir le résultat (d'après~\cite{bib:xgboost_paper})}
+	  \label{fig:arbres}
+	\end{margincap}
+\end{figure}
+
+Avec les deux arbres de la Figure~\ref{fig:arbres}, on peut alors calculer une nouvelle prédiction\mysidenote{La formule théorique donnant la prédiction $\hat{y}_i$ est $\displaystyle{\hat{y}_i=\sum_{k=1}^K f_k(x_i)}$, où on utilise $K$ arbres notés chacun $f_k$. L'individu pour lequel on cherche une prédiction est noté $x_i$.} :
+\begin{center}
+$f\Bigg(\raisebox{-.25cm}{\includegraphics[height=1cm]{images/Boosting/son}}\Bigg)=2+0,9=\textcolor{bluenight}{2,9}\hspace{1.5cm}f\Bigg(\raisebox{-.25cm}{\includegraphics[height=1cm]{images/Boosting/grandfather}}\Bigg)=-1-0,9=\textcolor{violet}{-1,9}$
+\end{center}
+
+Pour construire tous les arbres nécessaires, on pourrait fonctionner comme dans la Section~\ref{sec:boosting}. Cependant, ceci permettrait de bien optimier la partie coût des erreurs (fonction $\mathcal{L}$ de la fonction objectif), mais en aucun cas de limiter la complexité finale. Nous allons donc voir dans la suite un algorithme permettant de prendre en compte ses deux aspects simultanément.
+
+\subsubsection{Ajouter des arbres en optimisant le coût}
+L'objectif est de construire $K$ arbres. Pour cela, la méthode retenue est dite additive, dans la mesure où nous allons ajouter un arbre par itération de l'algorithme. L'objectif est alors d'optimiser l'arbre ajouté à chaque étape. Quand on passe de l'étape $t-1$ (ie. avec $t-1$ arbres) à l'étape $t$, l'objectif devient :
+\begin{equation}
+\textnormal{objectif}^{(t)}=\sum_{i=1}^n\ell\left(y_i, \hat{y}_i^{(t-1)}+f_t(x_i)\right)+\Omega(f_t)+\textnormal{constante}
+\label{eqn:loss_n}
+\end{equation}
+La fonction $\ell$ représente la perte entre la théorie ($y_i$) et la prédiction à l'étape $t$ qui est obtenue en ajoutant la prédiction de l'arbre $f_t$. Une solution courrante est de prendre l'erreur MSE pour $\ell$.
+
+Dans le cas de l'erreur MSE, la relation~(\ref{eqn:loss_n}) peut s'écrire \og simplement\fg, ce qui n'est pas toujours le cas. Ainsi, l'usage veut que l'on utiliser un développement de Taylor pour remanier la relation~(\ref{eqn:loss_n}), on obtient alors la relation~(\ref{eqn:obj_final})\mysidenote{Dans la relation~(\ref{eqn:obj_final}), la fonction $g_i$ représente la dérivée première de $\ell$ et $h_i$ sa dérivée seconde selon $\hat{y}_i^{(t-1)}$.}.
+
+\begin{equation}
+\textnormal{objectif}^{(t)}=\sum_{i=1}^n\left[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)\right]+\Omega(f_t)
+\label{eqn:obj_final}
+\end{equation}
+
+Quelle est la particularité de la relation~(\ref{eqn:obj_final})? Il s'agit de sa seule dépendance en les dérivée de la fonction de perte, il est donc simple d'utiliser des fonctions de perte particulières sans devoir changer tout le code. Ces dérivées sont donc tout simplement des paramètres du modèle final. Un exemple d'utilisation de ces fonctions de coûts personnalisées sera proposé à la Section~\ref{sec:couts-perso}.
+
+\subsubsection{Optimiser la complexité}
+\label{sec:opt_complexity}
+Dans la relation~(\ref{eqn:obj_final}), nous avons déjà traité la question de la fonction de coût, reste à traiter le cas de la complexité du modèle (aussi appelée régularisation). Si l'on note $\omega_j$ le score prévu par la feuille $j$ de l'arbre, une expression de la complexité $\Omega$ courrament utilisée est alors\mysidenote{Cette formule, assez simple à analyser tire sa légitimité de ses performances jugées (très) bonnes en pratique. Bien entendu, d'autres expressions seraient possibles!} :
+\begin{equation}
+\Omega(f_t)=\gamma T+\frac{1}{2}\lambda\sum_{j=1}^T\omega_j^2\hspace{1cm}\textnormal{$T$ est le nombre de feuilles de $f_t$}
+\label{eqn:complexity_expr}
+\end{equation}
+On remarque que la relation~(\ref{eqn:complexity_expr}) a la particularité de proposer deux nouveaux paramètres :
+\begin{itemize}
+	\itemperso{$\gamma$}Ce paramètre permet de porter plus ou moins l'accent sur le nombre de feuilles de l'arbre.
+	\itemperso{$\lambda$}Ce paramètre permet de porter plus ou moins l'accent sur les poids des feuilles, pour éviter qu'ils prennent des valeurs irréalistes.
+\end{itemize}
+
+\subsubsection{Choix de l'arbre}
+Nous savons désormais quelle fonction optimiser. Reste à savoir comment filtrer les arbres en fonction de cette formule.
+
+\subParagraphe{Solution naïve}
+La solution naïve consisterait à envisager \textit{toutes} les structures d'arbres possibles. Une fois cette énumération réalisée, on calculer la fonction objectif pour chacune de ces structures et on trouve ensuite celle fournissant la meilleure valeur pour l'objectif. Il resterait alors à optimiser les poids des feuilles pour cette structure. Des formules adaptées à ce cas existent et sont détaillées dans~\cite{bib:xgboost_article}.
+
+\subParagraphe{Construction au coup par coup}
+Cependant, on se rend compte qu'en pratique cette solution est coûteuse en temps de calcul et n'est donc pas réaliste. La démarche proposée à la place est alors de construire les arbres au coût par coût.
+
+L'idée est alors de commencer à la racine. À partir de cette dernière, on énumère tous les découpages possibles, et on garde celui de meilleur gain. On fait ensuite de même pour le fils gauche et le fils droit et ainsi de suite. Ce algorithme nécessite donc de calculer un gain pour les découpages proposés. Dans le nouvel arbre, chaque individu va être associé (comme auparavant) à un $g_i$ et un $h_i$. Le gain s'écrit alors\mysidenote{Les termes indexés par $L$ représentent des sommes sur les $g_i$ ou les $h_i$ pour la feuille de gauche. Ceux indexés par $R$ représentent des sommes pour la feuille de droite. Les c\oe fficients $\lambda$ et $\gamma$ correspondent à ceux présentés Section~\ref{sec:opt_complexity}.} :
+\begin{equation}
+\textnormal{Gain}=\frac{1}{2}\left[\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{\left(G_L+G_R\right)^2}{H_L+H_R+\lambda}\right]-\gamma
+\label{eqn:gain}
+\end{equation}
+Les termes de l'expression~(\ref{eqn:gain}) sont dans l'ordre :\begin{itemize}
+	\itemperso{}Le score de la nouvelle feuille gauche.
+	\itemperso{}Le score de la nouvelle feuille droite.
+	\itemperso{}Le score de la feuille initiale (celle que l'on découpe).
+	\itemperso{}Un terme de régularisation sur le nombre de feuilles, voir~(\ref{eqn:complexity_expr}).
+\end{itemize}
+Une première remarque est que le gain peut être négatif. Là où des méthodes d'élagage arrêteraient l'algorithme, l'idée pour XGBoost est de continuer autant que possible (jusqu'à épuisement des instances ou que l'on ait atteint une profondeur/nombre de feuilles demandés). Procéder ainsi, peut par exemple permettre de retrouver des découpage très intéressants que nous aurions éventuellement pu oublier si on coupait au premier gain négatif.
+
+Un exemple de découpage et une partie des calculs associés vous est présenté à la Figure~\ref{fig:pruning}.
+
+\begin{figure}[h]
+	\begin{margincap}
+	  \centering
+	  \input{images/Boosting/pruning}
+	  \caption{Comment déterminer le meilleur découpage à une étape donné (d'après~\cite{bib:xgboost_paper})}
+	  \label{fig:pruning}
+	\end{margincap}
+\end{figure}
+
+En pratique, on ne teste même pas tous les découpages possibles. À la place, on procède comme à la Figure~\ref{fig:pruning}, ie. on ordonne les instances par valeur attendue (le $y_i$ théorique). On regarde alors juste les découpages obtenus en coupant entre les éléments de la gauche vers la droite\mysidenote{On regarde ainsi uniquement $n_l$ découpages possibles, où $n_l$ est le nombre d'éléments de la feuille, ce qui est bien mieux que de regarder tous les découpages possibles, c'est-à-dire $\displaystyle{\approx\sum_{i=1}^{\left\lfloor\frac{n_l}{2}\right\rfloor}\binom{i}{n_l}}$ solutions.}.
+
+En résumé, l'algorithme revient à construire les $n$ arbres un à un. Ces derniers sont alors construits au coup par coup en calculant les gains des différents découpages possibles. Les arbres sont ensuite élagués après avoir été totalement construits. On optimise ainsi à chaque étape de l'algorithme une fonction de objectif influant sur la qualité du modèle (fonction de coût/perte) aussi bien que sur sa complexité.

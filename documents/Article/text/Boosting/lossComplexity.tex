@@ -11,7 +11,7 @@ Avant d'aller plus loin, regardons formellement quelle est l'idée théorique de
 \textnormal{objectif}(\Theta)=\mathcal{L}(\Theta)+\Omega(\Theta)}
 \label{eqn:obj}
 \end{equation}
-La relation~(\ref{eqn:obj}) fait apparaître deux termes :\begin{itemize}
+La relation~(\ref{eqn:obj}) fait apparaître deux termes \mysidenote{Dans la relation~(\ref{eqn:obj}), la variable $\Theta$ représente juste le modèle pour lequel on fait les calculs.}:\begin{itemize}
 	\itemperso{$\mathcal{L}(\Theta)$}La fonction de perte
 	\itemperso{$\Omega(\Theta)$}La fonction de complexité
 \end{itemize}
@@ -26,7 +26,36 @@ Ce sont ces deux fonctions (et leur intérêt!) qui vons nous intéresser par la
 	\end{margincap}
 \end{figure}
 
+Sur la Figure~\ref{fig:cobaye}, nous avons également représenté en \raisebox{4pt}{\tikz{\draw[dashed, gray](0,0) -- (.75,0);}} un modèle qui représenterait un bon compromis.
 
 \subsubsection{Notion de perte}
 
+Cette fonction (notée $\mathcal{L}$ dans la relation~(\ref{eqn:obj})), représente la qualité prédictive du modèle sur l'ensemble d'apprentissage. Attention, il est important de voir qu'on s'intéresse ici à l'adéquation à l'ensemble d'apprentissage, mais pas sur l'ensemble de test (puisqu'on ne le connaît pas à priori). Les fonctions communément utilisées sont par exemple l'erreur MSE (liée à la norme $\mathcal{L}_2$) ou une expression de perte logistique.
+
+\begin{figure}[h]
+	\begin{margincap}
+	  \centering
+	  \input{images/Boosting/loss}
+	  \caption{Une situation où la perte n'est pas optimisée (d'après~\cite{bib:xgboost_main})}
+	  \label{fig:loss}
+	\end{margincap}
+\end{figure}
+
+La Figure~\ref{fig:loss} propose une situation où la perte induite pas le modèle est plus importante que ce qu'il est possible de dans le cas optimal. L'idée de cette fonction $\mathcal{L}$ est donc de pouvoir détecter ces situations et d'estimer si un nouveau modèle améliore ou non cette situation.
+
 \subsubsection{Notion de complexité}
+
+Cette fonction (notée $\Omega$ dans la relation~(\ref{eqn:obj})), est aussi appelée terme de régularisation. Elle permet de représenter la complexité du modèle. L'idée est ici qu'un modèle trop précis (\textit{overfitting}) sera généralement trop complexe. Ainsi, ce terme permettra de contrôler la complexité du modèle pour éviter les phénomènes d'\textit{overfitting} sur les données d'apprentissage et éviter une chute importante de la qualité prédictive du modèle sur l'ensemble d'apprentissage.
+
+Un exemple de fonction de complexité vous sera proposé lors de la Section~\ref{sec:gradient-boosting}.
+
+\begin{figure}[h]
+	\begin{margincap}
+	  \centering
+	  \input{images/Boosting/complexity}
+	  \caption{Une situation où la complexité n'est pas optimisée (d'après~\cite{bib:xgboost_main})}
+	  \label{fig:complexity}
+	\end{margincap}
+\end{figure}
+
+Le modèle qui était représenté en gris sur les Figures~\ref{fig:cobaye} à~\ref{fig:complexity} correspondait en fait à un bon compromis entre $\mathcal{L}$ et $\Omage$.

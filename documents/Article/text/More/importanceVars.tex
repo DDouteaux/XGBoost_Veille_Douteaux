@@ -1,1 +1,13 @@
+Nous venons de voir les idées générales et les algorithmes de base derrière XGBoost. En particulier, nous avons vu que cette méthode porte une attention toute particulière à la régularisation, ie. la complexité du modèle. Nous allons désormais voir d'autres éléments annexes donnant toute sa puissance à cette méthode.
+
 \subsection{Importance des variables}
+Dans un premier temps, XGBoost permet à l'instar des autres méthodes de Boosting ou de type Random Forest\mysidenote{Attention, si le résultat est le même, la manière de l'obtenir sera différente. En effet, pour ces calculs, les méthodes de type Random Forest vont s'appuyer sur des individus dis \og\textit{out of bag}\fg, ce qui ne sera pas le cas ici puisque tous les individus ont été utilisés lors de l'apprentissage.} de calculer une importance relative pour les variables.
+
+La solution est alors d'entraîner tous les arbres prévus. Pour chaque variable, il s'agit alors de procéder en trois temps :
+\begin{itemize}
+	\itemperso{1.}On compte le nombre de fois où la variable a été sélectionnée pour créer deux arbres fils dans tous nos arbres.
+	\itemperso{2.}Pour chaque cas où la variable a été sélectionnée, on calcule la diminution d'erreur qu'elle a engendrée dans l'arbre.
+	\itemperso{3.}On moyenne tous les résultats obtenus \textit{sur le nombre d'arbres} pour obtenir l'indication final d'importance.
+\end{itemize}
+
+Ce calcule fournit ainsi une idée de l'importance de la variable, mais ce calcule n'a de valeur qu'en comparaison avec d'autres valeurs calculées, mais aucunement de manière indépendante.
