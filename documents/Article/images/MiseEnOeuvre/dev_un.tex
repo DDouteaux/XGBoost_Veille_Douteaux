@@ -1,0 +1,17 @@
+\noindent%
+\begin{tikzpicture}
+  \matrix (pythonwrapper) [row sep=2.8mm,column sep=2.8mm] {
+    \node (python) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3cm] {XGBoost Python}; & \node [fill=bluenight!25, draw, rectangle with rounded corners, minimum width=3cm] (panda) {pandas/numpy};\\
+    \node (xgboost) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3cm] {XGBoost\phantom{y}}; & \\
+  };
+  \path let \p1=($(python.west)-(panda.east)$),
+            \n1 = {veclen(\p1)}
+            in node[fill=vertforet, text=white, rectangle with rounded corners, draw, above=of pythonwrapper.north, anchor=south, yshift=-1cm, minimum width=\n1] {\textbf{Utilisateurs Python}};
+  \matrix (rwrapper) [row sep=2.8mm,column sep=2.8mm, right=.5cm of pythonwrapper.east, anchor=west] {
+    \node (r) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3cm] {XGBoost R\phantom{y}}; & \node [fill=bluenight!25, draw, rectangle with rounded corners, minimum width=3cm] (dataframe) {dataframe\phantom{y}};\\
+    \node (xgboostdeux) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3cm] {XGBoost\phantom{y}}; & \\
+  };
+  \path let \p1=($(r.west)-(dataframe.east)$),
+            \n1 = {veclen(\p1)}
+            in node[fill=vertforet, text=white, rectangle with rounded corners, draw, above=of rwrapper.north, anchor=south, yshift=-1cm, minimum width=\n1] {\textbf{Utilisateurs R\phantom{y}}};
+\end{tikzpicture}

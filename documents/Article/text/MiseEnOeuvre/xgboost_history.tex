@@ -1,0 +1,64 @@
+\subsection{Grandes étapes de développement de XGBoost}
+Comme tout projet informatique, XGBoost a été codée de manière itérative afin de s'adapter aux besoins des utilisateurs. Nous allons donc voir ici quelles sont les grandes étapes de développement de cette méthode et quels sont les objectifs futurs\mysidenote{L'historique qui vous sera proposé ici est issue de données récoltées dans les \textit{Release Note} de la page Git Hub du projet~\cite{bib:xgboost-git}, mais aussi d'un retour sur expérience du fondateur de XGBoost sur sa page personnelle~\cite{bib:xgboost-author}.}.
+
+\subsubsection{Premières implémentations}
+L'origine de la méthode provient de recherches de T. \textsc{Chen} sur le boosting d'arbres. L'auteur n'ayant pas trouvé de soution lui convenant, il a décidé d'implémenter sa propre solution et d'en faire un package \og maison\fg. Afin d'optimiser les performances, ce premier code a été réalisé en C++ en utilisant la librairie OpenMP pour avoir une parallélisation automatique sur les CPU multi-threads~\cite{bib:boson}.
+
+Ce package a alors été utilisé sur le challenge Kagle \textit{Higgs Boson Challenge} et ses résultats ont été parmis les meilleurs et ont permis à d'autres concurrents d'améliorer leurs résultats.\mysidenote{En plus du développement accéléré de XGBoost suite à ce succès, son auteur a également publié un article de recherche précisant ses motivations, les modèles utilisés, et introduisant son code et ses algorithmes à la communauté~\cite{bib:boson}.}\mysidenote{Les excellents résultats de XGBoost sur cette compétition ont également eu pour conséquence que cette méthode soit vue comme une avancée majeure en termes d'outils utilisés dans la recherche physique. Ainsi, XGBoost s'est vue attribuée la \textit{High Energy Physics meets Machine Learning Award} pour cette contribution.}.
+
+Face à ce succès, un wrapper Python a alors été mis en place ainsi qu'une API pour l'utilisation. On retrouve alors la première version sur le répertoire Git, qui date de mars 2014. La première version du module Python est elle fournie dès mais 2014.
+
+Suite à cela, le code continue a être développé pour aboutir en septembre 2014 à un module R et un début de parallélisation pour le booster linéaire. De même, l'algorithme de calcul d'arbres est accéléré.
+
+On se retrouve donc à cette étape avec les éléments de la Figure~\ref{fig:dev_un}.
+
+\begin{figure}[h]
+	\begin{margincap}
+		\centering
+	  	\resizebox{.98\textwidth}{!}{%
+		\input{images/MiseEnOeuvre/dev_un}}
+		\caption{Première étape de développement de XGBoost (d'après~\cite{bib:xgboost-author})}
+		\label{fig:dev_un}
+	\end{margincap}
+\end{figure}
+
+Ainsi, fin 2014, XGBoost était accessible dans les deux principaux langages de Machine Learning, Python et R.
+
+\subsubsection{Mise en place de la version distribuée}
+Suite aux bons résultats dans de nouveaux challenges Kaggle et en pratique, la méthode continu à se développer. Ainsi, une release de mai 2015 permet d'instaurer les points suivants :\begin{itemize}
+	\itemperso{YARN}Une version distribuée qui fonctionne avec YARN et permet de traiter des volumes de données directement liés au Big Data.
+	\itemperso{HDFS}Enregistrement et chargement de données depuis HDFS.
+	\itemperso{Utilisation mémoire}Une première version expérimentale de la gestion de mémoire externe est mise en place.
+	\itemperso{Améliorations}De plus, des améliorations continues aux packages R et Python sont mises en place, notament sur la possibilité d'enregistrer et charger des modèles via ces langages. De plus, le wrapper pour SKLearn (plateforme Python) est terminé.
+\end{itemize}
+Ainsi, XGBoost s'est ouvert à l'univers du Big Data via YARN et HDFS, mais s'est aussi concentré sur la création d'une interface uniforme entre les principaux langages (Pyhton et R). Ceci a ensuite permis aux développeurs de se concentrer plus spécifiquement sur les performances. Dans ces principaux langages, les principaux éléments accesibles sont présentés de la Figure~\ref{fig:dev_deux}\mysidenoteoffset{-4cm}{Dans cette figure, apparaît le terme de \og\textit{gridsearch}\fg. Il s'agit en fait d'une méthode permettant de rechercher des paramètres optimaux pour les algorithmes (pour les paramètres de XGBoost, voir la Section~\ref{sec:params}). Ceci montre donc qu'en optimisant l'interface avec Scikit Learn et R, on augmente ainsi les capacité de XGBoost en l'interfaçant convenablement avec des technologies efficaces et déjà en place.}.
+
+\begin{figure}[h]
+	\begin{margincap}
+		\centering
+	  	\resizebox{.98\textwidth}{!}{%
+		\input{images/MiseEnOeuvre/dev_deux}}
+		\caption{Deuxième étape de développement de XGBoost, uniformisation des offres entre langages (d'après~\cite{bib:xgboost-author})}
+		\label{fig:dev_deux}
+	\end{margincap}
+\end{figure}
+
+\subsubsection{Refactoring, autres compatibilité et parallélisme}
+Après avoir réalisé les interfaces avec R et Python et mis un premier pied dans le monde du Big Data et du parallélisme, les développements se sont axés pour compléter l'offre logiciel et améliorer la qualité de l'existant. Ainsi, depuis mai 2015, seulement deux nouvelles versions majeures ont été distribuées, mais étendant le pannel de possibilités.
+
+\subParagraphe{Mise à jour de janvier 2016}
+Cette mise à jour a terminé les travaux sur les libraires R et Python en corrigeant les principaux bugs et en ajoutant plus de possibilités en paramétrage. En particulier pour Python, l'installation est simplifiée via un support pour \texttt{pip}. De même, des compatibilités avec les \textit{Data Frames} de Panda ont été ajoutées.
+
+Outre ces premiers usages, une API JAVA est également proposée et prête à l'emploi.
+
+Enfin, cette mise à jour marque un point important du point de vue de la maintenance future en ajoutant des sécurté supplémentaires et des solutions d'intégration continue pour rendre plus robuste les futures étapes.
+
+\subParagraphe{Mise à jour de juillet 2016}
+Cette dernière mise à jour majeure se caractérise par un refactoring important de la librairie. En particulier, le code C++ est entièrement remanié pour utiliser la version C++11, ceci implique en particulier des changements dans la gestion de l'aléatoire ou encore la gestion des pointeurs (et les questions de sécurité liées).
+
+Cette mise à jour contient ensuite un nombre important de changements ou d'amélioration pour divers langages :
+\begin{itemize}
+	\itemperso{R}Possibilité d'utilisation des capacités de gestion de mémoire externe, ceci reste cependant toujours bloqué sous Windows pour cause de problèmes techniques.
+	\itemperso{Multi-threading}Correctif pour rendre les librairies XGBoost et Rabit \textit{thread-safe}.
+	\itemperso{JAVA}Un package spécifique pour JAVA et Scala est fourni, nommé XGBoost4j. La version JAVA distribuée fonctionne également sur les frameworks JAVA Flink et Spark.
+\end{itemize}

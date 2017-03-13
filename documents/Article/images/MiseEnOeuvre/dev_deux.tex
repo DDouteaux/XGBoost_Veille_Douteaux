@@ -1,0 +1,17 @@
+\noindent%
+\begin{tikzpicture}
+  \matrix (pythonwrapper) [row sep=2.8mm,column sep=2.8mm] {
+    \node (python) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3.25cm, text width=3.25cm, align=center] {XGBoost Python}; & \node (xgboost) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3.25cm, text width=3.25cm, align=center] {XGBoost\phantom{y}};\\
+    \node [fill=bluenight!25, draw, rectangle with rounded corners, minimum height=1.5cm, minimum width=3.25cm, align=center, text width=3.25cm] (pgrid) {scikit-learn\\gridsearch}; & \node [fill=bluenight!25, draw, rectangle with rounded corners, align=center, minimum height=1.5cm, minimum width=3.25cm, text width=3.25cm] (papi) {API classification\\scikit-learn\phantom{g}};\\
+  };
+  \path let \p1=($(pgrid.west)-(papi.east)$),
+            \n1 = {veclen(\p1)}
+            in node[fill=vertforet, text=white, rectangle with rounded corners, draw, above=of pythonwrapper.north, anchor=south, yshift=-1cm, minimum width=\n1] {\textbf{Utilisateurs Python}};
+  \matrix (rwrapper) [row sep=2.8mm,column sep=2.8mm, right=.5cm of pythonwrapper.east, anchor=west] {
+    \node (r) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3.25cm, text width=3.25cm, align=center] {XGBoost R\phantom{y}}; & \node (xgboostdeux) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3.25cm, text width=3.25cm, align=center] {XGBoost\phantom{y}}; \\
+    \node [fill=bluenight!25, draw, rectangle with rounded corners, minimum height=1.5cm, minimum width=3.25cm, text width=3.25cm, align=center] (rgrid) {R caret\\gridsearch}; & \node [fill=bluenight!25, draw, rectangle with rounded corners, minimum height=1.5cm, minimum width=3.25cm, text width=3.25cm, align=center] (radaptator) {Adaptateur caret XGBoost};\\
+  };
+  \path let \p1=($(r.west)-(xgboostdeux.east)$),
+            \n1 = {veclen(\p1)}
+            in node[fill=vertforet, text=white, rectangle with rounded corners, draw, above=of rwrapper.north, anchor=south, yshift=-1cm, minimum width=\n1] {\textbf{Utilisateurs R\phantom{y}}};
+\end{tikzpicture}
