@@ -1,0 +1,23 @@
+\noindent%
+\begin{tikzpicture}
+  \matrix (platun) [row sep=2.8mm,column sep=2.8mm] {
+    & \node (xgboosta) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3cm, text width=3cm, align=center] {XGBoost}; \\
+    \node (svma) [fill=vertforet!25, draw, rectangle with rounded corners, minimum width=3cm, text width=3cm, align=center] {SVM A}; & \node (rabbita) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3cm, text width=3cm, align=center] {Abstraction Rabit};\\
+  };
+  \path let \p1=($(svma.west)-(rabbita.east)$),
+            \n1 = {veclen(\p1)}
+            in node[fill=vertforet, text=white, rectangle with rounded corners, draw, below=of platun.south, anchor=north, yshift=.9cm, minimum width=\n1] {\textbf{Plateforme A}};
+ 
+  \matrix (platdeux) [row sep=2.8mm,column sep=2.8mm, right=.5cm of platun.east, anchor=west] {
+    & \node (xgboostb) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3cm, text width=3cm, align=center] {XGBoost}; \\
+    \node (svmb) [fill=bluenight!25, draw, rectangle with rounded corners, minimum width=3cm, text width=3cm, align=center] {SVM B}; & \node (rabbitb) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3cm, text width=3cm, align=center] {Abstraction Rabit};\\
+  };
+  \path let \p1=($(svmb.west)-(rabbitb.east)$),
+            \n1 = {veclen(\p1)}
+            in node[fill=bluenight, text=white, rectangle with rounded corners, draw, below=of platdeux.south, anchor=north, yshift=.9cm, minimum width=\n1] {\textbf{Plateforme B}};
+
+  \matrix (plattrois) [row sep=2.8mm,column sep=2.8mm, right=.5cm of platdeux.south east, anchor=south west] {
+    \node (xgboostc) [fill=themeColor!25, draw, rectangle with rounded corners, minimum width=3cm, text width=3cm, align=center] {XGBoost};\\
+  };
+  \node (singlema) [fill=violet, text=white, draw, rectangle with rounded corners, minimum width=3cm, text width=3cm, align=center, below=of plattrois.south, anchor=north, yshift=.9cm] {\textbf{Machine isolée}};\\
+\end{tikzpicture}

@@ -1,0 +1,86 @@
+\subsection{Utilisation basique}
+Avant de regarder plus en détail des utilisations des fonctionnalités originales et avancées de XGBoost, nous fournirons ici quelques exemples d'utilisations de XGBoost avec les principaux langages sur lesquels il a été porté\mysidenote{Les différents exemples présentés proviennent directement de la documentation de XGBoost et présentent l'avantage de concerner le même jeu de données.}.
+
+\subsubsection{En Python}
+Tout le code nécessaire à l'utilisation de XGBoost est regroupé au sein du package développé mentionné dans l'historique de la Section~\ref{sec:historique}. 
+
+\begin{lstlisting}[language=Python]
+import xgboost as xgb
+
+# Lecture des données
+dtrain = xgb.DMatrix('demo/data/agaricus.txt.train')
+dtest = xgb.DMatrix('demo/data/agaricus.txt.test')
+
+# Paramètres spécifiés dans un dictionnaire
+param = {'max_depth':2, 'eta':1, 'silent':1, 'objective':'binary:logistic'}
+num_round = 2
+
+# Création du modèle
+bst = xgb.train(param, dtrain, num_round)
+
+# Application du modèle en prédiction
+preds = bst.predict(dtest)
+\end{lstlisting}
+
+\subsubsection{En R}
+Tout le code nécessaire pour l'utilisation de XGBoost est ici aussi contenu dans un package nommé \texttt{xgboost}.
+
+\begin{lstlisting}[language=R]
+# Lecture des données
+data(agaricus.train, package='xgboost')
+data(agaricus.test, package='xgboost')
+train <- agaricus.train
+test <- agaricus.test
+
+# Entrainement du modèle
+bst <- xgboost(data = train$data, label = train$label, max.depth = 2, eta = 1, nround = 2, nthread = 2, objective = "binary:logistic")
+
+# Application du modèle en prédiction
+pred <- predict(bst, test$data)
+\end{lstlisting}
+
+\subsubsection{En Julia}
+
+\begin{lstlisting}[language=julia]
+using XGBoost
+
+# Lecture des données
+train_X, train_Y = readlibsvm("demo/data/agaricus.txt.train", (6513, 126))
+test_X, test_Y = readlibsvm("demo/data/agaricus.txt.test", (1611, 126))
+
+# Entrainement du modèle
+num_round = 2
+bst = xgboost(train_X, num_round, label=train_Y, eta=1, max_depth=2)
+
+# Application du modèle en prédiction
+pred = predict(bst, test_X)
+\end{lstlisting}
+
+\subsubsection{En Scala}
+
+\begin{lstlisting}[language=Scala]
+import ml.dmlc.xgboost4j.scala.DMatrix
+import ml.dmlc.xgboost4j.scala.XGBoost
+
+object XGBoostScalaExample {
+  def main(args: Array[String]) {
+    // Lecture des données
+    val trainData =
+      new DMatrix("/path/to/agaricus.txt.train")
+    
+    // Paramètres spécifiés dans une liste
+    val paramMap = List(
+      "eta" -> 0.1,
+      "max_depth" -> 2,
+      "objective" -> "binary:logistic").toMap
+    val round = 2
+
+    // Entrainement du modèle
+    val model = XGBoost.train(trainData, paramMap, round)
+    
+    // Application du modèle en prédiction
+    val predTrain = model.predict(trainData)
+    model.saveModel("/local/path/to/model")
+  }
+}
+\end{lstlisting}

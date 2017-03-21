@@ -1,0 +1,126 @@
+\subsection{Les paramètres}
+L'implémentation de XGBoost laisse comme nous l'avons déjà laissé supposer propose un nombre important de paramètres laissés libres à l'utilisation. Ces paramètres peuvent être regroupés en trois familles que nous détaillerons tour à tour dans cette section.
+\subsubsection{Paramètres génériques}
+Ces paramètres permettent de définir les grandes lignes de l'algorithme, comme la version de boosting utilisée et des aspects plus \og administratifs\fg. Trois paramètres principaux sont proposés.
+
+\subParagraphe{\texttt{Booster}}Il définit le type de boosting à employer pour l'entraînement du modèle. Nous avons présenté en Section~\ref{sec:gradient-boosting} la version de boosting associé aux arbres.
+\subParagraphe{\texttt{Silent}}Ce mode permet de préciser si l'on demande lors de l'entraînement l'affichage d'informations dans la console (il s'agit en fait d'un mode \textit{verbose}).
+\subParagraphe{\texttt{Nthread}}Ce paramètre permet de limiter le nombre de threads que l'algorithme va utiliser. En effet, comme nous l'avons évoqué à la Section~\ref{} cette méthode est optimisée pour utiliser au mieux les capacités de calcul de la machine.
+
+\subParagraphe{Valeurs usuelles}Les valeurs communes et celles par défaut associées à ces paramètres sont listées à la Table~\ref{tab:params-generiques}.
+
+\begin{table}[h]
+  \begin{margincap}
+    \centering
+    \begin{tabular}[\margincapalign]{p{.2\textwidth}p{.4\textwidth}p{.3\textwidth}}
+	\toprule
+	\textbf{Paramètres}& \textbf{Valeurs} & \textbf{Par défaut} \\
+	\midrule
+	\texttt{booster}  & \texttt{gbtree} (arbres)\newline\texttt{gblinear} (linéaires) & \texttt{gbtree} \\
+	\texttt{silent}   & \texttt{1} (activé)\newline\texttt{0} (non activé)& \texttt{0}\\
+	\texttt{nthread}  & Valeur numérique & Rien, ie. le nombre maximum de threads disponibles. \\
+	\bottomrule
+    \end{tabular}
+	\sidecaption{Valeurs pour les paramètres génériques de XGBoost}
+	\label{tab:params-generiques}
+  \end{margincap}
+\end{table}
+D'autres paramètres existent pour rendre la liste exhaustive. Pour plus de détails sur ces paramètres restants XXX.
+
+\subsubsection{Paramètres de Boosting}
+Comme nous l'avons vu à la Table~\ref{tab:params-generiques}, il existe différents types de Boosting que peut utiliser XGBoost. Dans la continuité des points abordés, nous nous attarderons plus en détail sur le paramétrage du booster à base d'arbres\mysidenote{La liste de paramètres ici proposée n'est pas exhaustive, nous avons cependant retenu les plus importants et ceux les plus souvent mis en avant lors des exemples d'utilisation de XGBoost. Pour une liste plus complète de ces paramètres, vous pouvez vous référer à~\cite{bib:params}.}. Ce choix est également motivé dans la mesure où ce dernier est le plus utilisé. On retrouve ici la partie la plus importante des paramètres pour XGBoost, et en particulier ceux permettant de contrôler le sur-apprentissage par le modèle.
+
+\subParagraphe{\texttt{Eta}}Ce paramètre permet de contrôler le taux d'apprentissage (ie. un \og pas d'apprentissage\fg). Il permet en particulier d'augmenter la robustesse du modèle en diminuant les poids à chaque itérations.
+\subParagraphe{\texttt{Min\_child\_weight}}Il définit une somme minimale pour les scores des observations d'une feuille après apprentissagemysidenote{Attention, il ne s'agit pas de compter le nombre d'observations par feuilles, mais les poids de ces observations.}. Ce paramètre étant fortement lié aux questions de sur-apprentissage, il est conseille de l'entraîner en utiliser la cross-validation proposée avec XGBoost.
+\subParagraphe{\texttt{Max\_depth}}La profondeur maximale des arbres qui peuvent être appris. Comme pour \texttt{min\_child\_weight}, ce paramètre est lié au sur-apprentissage, il est donc conseiller de le choisir en utilisant la cross-validation.
+\subParagraphe{\texttt{Max\_leaf\_nodes}}Il s'agit d'une version \og duale\fg{} du paramètre \texttt{max\_depth}, qui au lieu de contrôler la profondeur de l'arbre va contrôler le nombre de feuille terminale autorisées\mysidenote{Les arbres créés sont binaires, la correspondance est donc parfaite. Ainsi, un arbre de profondeur $p$ produira au maximum $2^p$ feuilles.}. Si jamais ce paramètre est défini, l'algorithme ne prendra pas en compte de valeurs pour \textt{max\_depth}. La même remarque s'applique quant à la manière de fixer sa valeur.
+\subParagraphe{\texttt{Gamma}}L'intérêt est ici de fixer une valeur seuil pour autoriser la découpe d'un n\oe uds en deux sous-n\oe uds basé sur un critère de gain. Ce paramètre est le $\gamma$ observé dans la relation (\ref{eqn:gain}), et permet donc de définir le taux de laxisme pour la division des n\oe uds. De même, sa valeur dépendra fortement de la fonction de coût retenue, dans la mesure où le gain n'a pas d'unité absolue mais va dépendre de l'échelle imposée par la fonction de coût.
+
+On rappelle que ce paramètre entre aussi en jeu dans la formule calculant la complexité d'un nouveau modèle, et est le paramètre lié au nombre de feuille de l'arbre (voir la relation (\ref{eqn:complexity_expr})).
+\subParagraphe{\texttt{Lambda}}Il s'agit d'un terme de régularisation pour la norme imposée sur les c\oe fficients des feuilles dans le calcul de la complexité d'un arbre, comme observé avec la relation (\ref{eqn:complexity_expr}). Ce terme intervient aussi en régularisation dans le calcul du gain (\ref{eqn:gain}). Ce paramètre peut être utilisé en réduction du sur-apprentissage.
+\subParagraphe{\texttt{Alpha}}Ce terme n'avait pas été abordé dans la partie théorique. Ce paramètre est analogue à \texttt{lambda}, il est cependant lié à norme un des poids\mysidenote{Il s'agit alors d'écrira la complexité sous la forme \[\Omega(f_t)=\gamma T+\frac{1}{2}\lambda\sum_{j=1}^T\omega_j^2+\alpha\sum_{j=1}^T|\omega_j|\]Le fonctionnement est alors analogue à celui d'une régression Lasso, avec une solution analytique qui n'existe pas, mais des solutions numériques possibles qui vont en plus faire de la sélection dans les paramètres.}. Comme pour une méthode de Lasso traditionnelle, utiliser ce paramètre permet de réduire le temps de calcul et est particulièrement bien adapté au contexte de hautes dimensions.
+\subParagraphe{Subsample}Dans la mesure où l'algorithme va apprendre plusieurs modèles, l'idée est ici de sélectionner une partie (ou la totalité) de l'ensemble d'apprentissage et de renouveler ce pannel pour chaque modèle. On évite ainsi de trop coler à ces données.
+
+\subParagraphe{Valeurs usuelles}La Table~\ref{tab:params-boosting} propose alors les valeurs possibles pour ces différents paramètres ainsi que les valeurs par défaut. Un paramètre numérique avec une valeur de \texttt{0} indique que ce dernier n'est pas utilisé par défaut.
+\begin{table}[h]
+  \begin{margincap}
+    \centering
+    \begin{tabular}{p{.3\textwidth}p{.4\textwidth}c}
+	\toprule
+	\textbf{Paramètres} & \textbf{Valeurs} & \textbf{Par défaut} \\
+	\midrule
+	\texttt{eta} & Conseillée entre \texttt{0.01} et \texttt{0.2}. & \texttt{0.3} \\
+	\texttt{min\_child\_weight} & Valeur numérique & \texttt{1}\\
+	\texttt{max\_depth} & Conseillé entre \texttt{3} et \texttt{10} & \texttt{6} \\
+	\texttt{max\_leaf\_nodes} & Conseillé entre \texttt{8} et \texttt{1024} & \texttt{0} \\
+	\texttt{gamma} & Valeur numérique & \texttt{0} \\
+	\texttt{lambda} & Valeur numérique & \texttt{1} \\
+	\texttt{alpha} & Valeur numérique & \texttt{0} \\
+	\texttt{subsample} & Valeur <\texttt{1} & \texttt{1} \\
+	\bottomrule
+    \end{tabular}
+	\sidecaption{Valeurs pour les paramètres liés au boosting d'arbre}
+	\label{tab:params-boosting}
+  \end{margincap}
+\end{table}
+
+\subsubsection{Paramètres d'apprentissage}
+Pour terminer sur le détail des principaux paramètres de XGBoost, nous allons nous intéresser aux paramètres liés à l'apprentissage, c'est-à-dire pour la fonction objectif et les métriques utilisées. On retrouve trois grands axes.
+
+\subParagraphe{\texttt{Objective}}Il s'agit de définir quel est la fonction de coût (la fonction $\ell$ dans la relation (\ref{eqn:loss_n})) à minimiser. Les calculs que nous avions proposés en Section~\ref{sec:gradient-boosting} supposait de prendre l'erreur MSE. Les trois solutions les plus communes sont :
+\begin{itemize}
+\itemperso{\texttt{linear}}Utilisation d'une simple fonction associée à la  régression linéaire (RMSE).
+\itemperso{\texttt{logistic}}Pour des problèmes de classification binaire, il s'agit d'utiliser la fonction de régression logistique qui renvoie une probabilité d'appartenance à une classe.
+\itemperso{\texttt{softmax}}Pour des problèmes de classification multiclasse, elle renvoie elle la classe prédite (et non une probabilité d'appartenance).
+\itemperso{\texttt{softprob}}De même que pour \texttt{softmax} si ce n'est que l'on renvoie ici la probabilité.
+\end{itemize}
+\subParagraphe{\texttt{Eval\_metric}}Cette fonction peut être utilisée pour évaluer le modèle sur l'ensemble de test. À noter que si une fonction est précisée pour \texttt{objective} cette dernière sera nécessairement réutilisée. Des fonctions communes sont :
+\begin{itemize}
+\itemperso{\texttt{rmse}}Fonction d'erreur quadratique, utilisée couramment en régression.
+\itemperso{\texttt{mae}}Fonction d'erreur absolue.
+\itemperso{\texttt{logloss}}Utilisation de l'opposé de la log-vraissemblance.
+\itemperso{\texttt{merror}}Une mesure de taux d'erreur pour le cas multiclasse.
+\itemperso{\texttt{mlogloss}}Une utilisation de la log-vraissemblance pour le cas multiclasse.
+\itemperso{\texttt{auc}}L'air sous la courbe ROC.
+\end{itemize}
+\subParagraphe{\texttt{\texttt{Seed}}}Un paramètre classique pour pouvoir \og figer\fg{} l'aléatoire entre deux implémentations et utilisations de l'algorithme. Cela permet donc de fournir des modèles reproductibles si nécessaire.
+
+\subParagraphe{Valeurs usuelles}Pour conclure sur ce dernier ensemble de paramètre, nous précisons à la Table~\ref{tab:params-apprentissage} les valeurs usuelles et par défaut pour ces paramètres.
+\begin{table}[h]
+  \begin{margincap}
+    \centering
+    \begin{tabular}{p{.3\textwidth}p{.4\textwidth}c}
+	\toprule
+	\textbf{Paramètre} & \textbf{Valeurs} & \textbf{Par défaut} \\
+	\midrule
+	\texttt{objective} & \texttt{logistic} ; \texttt{softmax} ; \texttt{softprob} ; \texttt{linear} ; ...\newline Possibilité de fonction personnalisée& \texttt{linear} \\
+	\texttt{eval\_metric} & \texttt{rmse} ; \texttt{mae} ; \texttt{logloss} ; \texttt{error} ; \texttt{merror} ; \texttt{mlogloss} ; \texttt{auc} ; ... & Variable\mysidenote{Comme nous l'avons déjà vu, cette valeur sera imposée si une valeur a été fournie à l'attribut \texttt{objective}.} \\
+	\texttt{seed} & Valeur entière & \texttt{0} \\
+	\bottomrule
+    \end{tabular}
+	\sidecaption{Valeurs usuelles et par défaut des paramètres pour l'apprentissage}
+	\label{tab:params-apprentissage}
+  \end{margincap}
+\end{table}
+
+\subsubsection{Prévenir le sur-apprentissage}
+Comme nous l'avons mentionné, un certain nombre de paramètres sont à surveiller plus particulièrement. Nous regroupons ici les recommandations sur ces paramètres pour éviter les cas de sur-apprentissage.
+
+Avant tout, il est bon de rappeler que le principe d'utiliser la régularisation pour XGBoost est déjà en soi un moyen de limiter ce sur-apprentissage. Cependant, il est nécessaire de biens configurer les paramètres associés comme nous allons le détailler ici.
+
+\subParagraphe{Comment réduire le sur-apprentissage?}Dans le détail, l'algorithme XGBoost offre deux méthodes pour réduire le sur-apprentissage :
+\begin{itemize}
+\itemperso{Contrôle de la complexité}Cette dernière peut être contrôlée en contraignant les arbres qui seront générés. Les paramètres concernés sont ici \texttt{max\_depth}, \texttt{min\_child\_weight}, \texttt{max\_leaf\_node} et \texttt{gamma}.
+\itemperso{Ajout d'aléatoire}Afin de rendre le résultat moins sensible au bruit. Deux solutions sont préconisées par les développeurs de XGBoost :
+\begin{itemize}
+\subitemperso{}Utiliser les paramètres influant sur l'ensemble d'apprentissage (\texttt{subsample} et \texttt{colsample\_bytree}\mysidenote{Ce paramètre n'avait pas été présenté auparavant. Son intérêt est de sélectionner aléatoirement des ensembles de colonnes en construisant les arbres afin d'introduire de l'aléatoire dans l'utilisation de ces dernières et éviter que tous arbres ne se ressemblent (on est proche de l'idée des Random Forest).}).
+\subitemperso{}Réduire le pas d'apprentissage \texttt{eta} mais augmenter \texttt{num\_round}\mysidenote{Ce paramètre non présenté auparavant correspond au nombre d'étapes de Boosting a réaliser pour construire le modèle. L'idée est donc ici de l'augmenter pour contrebalancer la baise du pas d'apprentissage.} dans ce cas.
+\end{itemize}
+\end{itemize}
+Les différents paramètres et la manière de déterminer leurs valeurs sera précisé dans les paragraphes qui suivent.
+
+\subParagraphe{\texttt{min\_child\_weight}}En évitant d'apprendre des arbres avec des feuilles peu représentatives (ie. de poids faible), on se concentre sur l'apprentissage d'arbres plus représentatifs. Ainsi, des valeurs élevées permettent de prévenir l'apprentissage de relations trop spécifiques à l'ensemble utilisé pour les apprentissages.
+\subParagraphe{\texttt{max\_depth}}De même, utiliser des arbres trop développés va entraîner que ces dernier soient trop spécifiques aux données des ensembles d'apprentissages, il est donc nécessaire d'utiliser des valeurs plus faibles.
+\subParagraphe{\texttt{max\_leaf\_node}}Ce paramètre étant directement lié à \texttt{max\_depth}, la manière de l'appréhender est la même.
+\subParagraphe{\texttt{subsample}}Pour éviter d'être trop spécifique vis-à-vis des données d'apprentissage, prendre des fractions différentes entre chaque arbre permet de moyenner les biais. Ainsi, prendre une fraction \og faible\fg{} de ces données est une option intéressante, il faut cependant faire attention à ce que la valeur ne soit pas trop basse, le risque étant alors d'être en sous-apprentissage en ne considérant pas assez de données.
+\subParagraphe{\texttt{lambda}}Régulariser convenablement les scores des différentes feuilles peut permettre d'améliorer les problèmes de sur-apprentissage. Ainsi, bien que ce paramètre ne soit pas souvent utilisé, il est une option à considérer en cas de problème persistant.

@@ -1,4 +1,5 @@
 \subsection{Grandes étapes de développement de XGBoost}
+\label{sec:historique}
 Comme tout projet informatique, XGBoost a été codée de manière itérative afin de s'adapter aux besoins des utilisateurs. Nous allons donc voir ici quelles sont les grandes étapes de développement de cette méthode et quels sont les objectifs futurs\mysidenote{L'historique qui vous sera proposé ici est issue de données récoltées dans les \textit{Release Note} de la page Git Hub du projet~\cite{bib:xgboost-git}, mais aussi d'un retour sur expérience du fondateur de XGBoost sur sa page personnelle~\cite{bib:xgboost-author}.}.
 
 \subsubsection{Premières implémentations}
@@ -62,3 +63,45 @@ Cette mise à jour contient ensuite un nombre important de changements ou d'amé
 	\itemperso{Multi-threading}Correctif pour rendre les librairies XGBoost et Rabit \textit{thread-safe}.
 	\itemperso{JAVA}Un package spécifique pour JAVA et Scala est fourni, nommé XGBoost4j. La version JAVA distribuée fonctionne également sur les frameworks JAVA Flink et Spark.
 \end{itemize}
+
+Ces mises à jour montrent donc la réelle volonté actuelle pour XGBoost, qui est de pouvoir fonctionner sur diverses machines de manière distribuée, de manière transparente. Pour y arriver, un composant d'exécution pour faire le pont entre XGBoost et les différentes plateforme a été développé, du nom de Rabit. Son intérêt est illustré à la Figure~\ref{fig:dev_trois}.
+
+\begin{figure}[h]
+	\begin{margincap}
+		\centering
+	  	\resizebox{.98\textwidth}{!}{%
+		\input{images/MiseEnOeuvre/dev_trois}}
+		\caption{Extension de XGBoost vers un système distribué transparent par le développement de Rabit (d'après~\cite{bib:xgboost-author})}
+		\label{fig:dev_trois}
+	\end{margincap}
+\end{figure}
+
+\subsubsection{Intégration dans des plateformes de machine learning}
+En parallèle des développements \og officiels\fg{} de XGBoost, un certains nombre de plateformes de machine learning ont également annoncé intégrer XGBoost parmis les méthodes qu'elles proposaient à leurs utilisateurs. Ceci est le cas pour :
+\begin{itemize}
+	\itemperso{Data Science Studio}Il s'agit d'une plateforme de machine learning éditée par la société Dataiku. Cela permet ainsi à ses utilisateurs de pouvoir utiliser XGBoost sans avoir à rédiger (beaucoup) de code. Des exemples d'utilisation sont également fournis sur leur site~\cite{bib:xgboost-dataiku}. Cet ajout a été réalisé en août 2015.
+	\itemperso{H2O.ai}Le 28 janvier 2017, le CTO de la société H2O.ai annonce sur les réseaux sociaux que l'algorithme XGBoost sera utilisable dans leur plateforme lors de la prochaine release majeure~\cite{bib:xgboost-hdeuxo}.
+\end{itemize}
+Ces deux exemples tendent à montrer que la méthode requiert l'intérêt de la communauté, et ce très tôt (mi-2015), ce qui peut être un bon indicateur de pérénité.
+
+\subsubsection{Résumé}
+Pour résumé cet historique du développement et de l'expension de XGBoost, nous avons regroupé les principaux éléments sur la frise de la Figure~\ref{fig:frise}.
+
+\begin{figure}[h]
+	\begin{margincap}
+		\centering
+	  	\resizebox{.98\textwidth}{!}{%
+		\input{images/MiseEnOeuvre/dev_trois}}
+		\caption{Résumé des principales avancées de XGBoost depuis son apparition}
+		\label{fig:frise}
+	\end{margincap}
+\end{figure}
+
+En résumé de ces avancées, T.~\textsc{Chen} estime que le développement de XGBoost s'est fait sur le même modèle que celui d'Unix, à savoir être \og \textit{ouvert et s'intégrant bien aux autres systèmes par une interface commune}. Son idée est résumée de la manière suivante~\cite{bib:xgboost-author} :
+
+
+\vspace*{.2cm}
+\noindent\hspace*{\fill}\tikz{%
+  \node (def_larousse) [color=mygray, align=justify, text width=.8\textwidth] at (0,0) {\textit{XGBoost was designed to be closed package that takes input and produces models in the beginning. The XGBoost package today becomes fully designed to be embeded into any languages and existing platforms. It is like a Lego brick, that can be combined with other bricks to create things that is much more fun than one toy.}};%
+  \fill [\currentColor] ([xshift=-.15cm]def_larousse.north west) rectangle ([xshift=-.25cm]def_larousse.south west);%
+}\hspace*{\fill}\vspace*{.2cm}

@@ -1,0 +1,16 @@
+\subsection{Fonction de coût personnalisée}
+\begin{lstlisting}[language=R]
+loglossobj <- function(preds, dtrain) {
+  # dtrain is the internal format of the training data
+  # We extract the labels from the training data
+  labels <- getinfo(dtrain, "label")
+  # We compute the 1st and 2nd gradient, as grad and hess
+  preds <- 1/(1 + exp(-preds))
+  grad <- preds - labels
+  hess <- preds * (1 - preds)
+  # Return the result as a list
+  return(list(grad = grad, hess = hess))
+}
+
+model <- xgboost(data = train$data, label = train$label, nrounds = 2, objective = loglossobj, eval_metric = "error")
+\end{lstlisting}

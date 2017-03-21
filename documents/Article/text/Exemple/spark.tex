@@ -1,0 +1,26 @@
+\subsection{Utilisation avec Spark}
+\begin{lstlisting}[language=Scala]
+\begin{lstlisting}[language=Scala]
+val spark = SparkSession.builder().appName("SimpleXGBoost Application").config("spark.executor.memory", "2G").config("spark.executor.cores", "4").config("spark.default.parallelism", "4").master("local[*]").getOrCreate()
+
+// number of iterations
+val numRound = 10
+val numWorkers = 4
+// training parameters
+val paramMap = List(
+      "eta" -> 0.023f,
+      "max_depth" -> 10,
+      "min_child_weight" -> 3.0,
+      "subsample" -> 1.0,
+      "colsample_bytree" -> 0.82,
+      "colsample_bylevel" -> 0.9,
+      "base_score" -> 0.005,
+      "eval_metric" -> "auc",
+      "seed" -> 49,
+      "silent" -> 1,
+      "objective" -> "binary:logistic").toMap
+println("Starting Xgboost ")
+val xgBoostModelWithDF = XGBoost.trainWithDataFrame(trainingData, paramMap,round = numRound, nWorkers = numWorkers, useExternalMemory = true)
+
+val predictions = xgBoostModelWithDF.setExternalMemory(true).transform(testData).select("label", "probabilities")\end{lstlisting}
+\end{lstlisting}

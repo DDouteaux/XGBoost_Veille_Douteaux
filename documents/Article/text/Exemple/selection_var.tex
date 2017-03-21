@@ -1,0 +1,7 @@
+\subsection{Sélection de variables}
+\begin{lstlisting}[language=R]
+bst <- xgboost(data = train$data, label = train$label, max.depth = 2,
+           eta = 1, nthread = 2, nround = 2,objective = "binary:logistic")
+importance_matrix <- xgb.importance(agaricus.train$data@Dimnames[[2]], model = bst)
+xgb.plot.importance(importance_matrix)
+\end{lstlisting}

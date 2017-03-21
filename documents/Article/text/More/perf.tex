@@ -2,6 +2,9 @@
 \label{sec:perf}
 Outre son aspect algorithmique qui permet des paramétrages particuliers, XGBoost a également été conçue pour être une méthode d'apprentissage performante du point de vue de l'utilisation des ressources et de la parallélisation.
 \subsubsection{Optimisations réalisées}
+\subParagraphe{Parallélisation}Comme nous l'avons expliqué en Section~\ref{sec:gradient-boosting}, XGBoost va entraîner des arbres au fur et à mesure pour améliorer une métrique. Ainsi, il n'est pas possible de paralléliser l'entraînement des arbres, puisque l'arbre $n$ va dépendre des arbres entraînés précédemment (que ce soit sur l'échantillon ou le poids des données).
+
+Cependant, XGBoost se démarque en proposant à la place une solution pour paralléliser la création d'arbre en calculant des branches de manière indépendante.
 \subParagraphe{Mémoire}
 \subParagraphe{Utilisation du cache}
 \subParagraphe{Conception}

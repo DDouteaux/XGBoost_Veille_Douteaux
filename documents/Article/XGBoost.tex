@@ -115,7 +115,6 @@
 \input{text/XGBoost/generalites}
 
 \section{Le boosting}
-
 \input{text/Boosting/generalites}
 \input{text/Boosting/premierAlgo}
 \input{text/Boosting/lossComplexity}
@@ -128,24 +127,25 @@
 
 \section{Mise en \oe uvre}
 \input{text/MiseEnOeuvre/xgboost_history}
-\subsection{Les paramètres}
-\subsubsection{Paramètres génériques}
-\subsubsection{Paramètres de Boosting}
-\subsubsection{Paramètres d'apprentissage}
+\input{text/MiseEnOeuvre/parametres}
 
 \section{Applications}
 \subsection{Challenges Kaggle}
 \subsection{Exemple médical}
 \subsection{En entreprise}
 
+\section{Bonnes pratiques}
+
 \section{Exemples}
-\subsection{Avec Spark}
-\subsection{Fonction de perte personnalisée}
-\subsection{Sélection de variables}
-\subsection{Comparaison de méthodes}
+\input{text/Exemple/basics}
+\input{text/Exemple/spark}
+\input{text/Exemple/loss}
+\input{text/Exemple/selection_var}
+\input{text/Exemple/comparaison}
 
 \section{Une solution d'avenir?}
 
+\stepcounter{section}
 \addcontentsline{toc}{section}{Références}
 %\printbibliography
 \bibliographystyle{unsrt}
@@ -175,9 +175,3 @@
 \includeLOT{end}
 
 \end{document}
-
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: t
-%%% End:
