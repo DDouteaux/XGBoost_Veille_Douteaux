@@ -1,0 +1,39 @@
+\subsection{Challenges Kaggle}
+\subsubsection{Apparition de XGBoost}
+Comme cela a été expliqué, XGBoost est initiallement apparue lors d'un challenge Kaggle. Le challenge en question date de septembre 2014 et avait pour objectif d'explorer les apports possibles du Machine Learningpour la découverte de l'importance des expériences. En particulier, l'idée était la recherche possible de signal provenant de ces bosons à écarter d'un bruit important.
+
+Le code utilisé était encore une version simple, mais qui a fourni un résultat capable de se classer parmis les 10\% les meilleurs\mysidenote{On pourra retrouver le code utilisé sur le répertoire Git de XGBoost~\cite{bib:xgboost-higgs}.}.
+
+De plus, ces bons résultats ont conduits un nombre important de compétiteurs à tester cette solution qui a fini par être une des plus utilisées dans cette compétition.
+
+Une présentation proposée post-challenge précise qu'il était ainsi possible se classer vers le vingt-cinquième rang de la compétition en utilisant un simple modèle XGBoost~\cite{bib:higgs-presentation}.
+
+\subsubsection{Utilisations suivantes}
+Par la suite, XGBoost a acquis une notoriété grandissante parmis les challengers de Kaggle et est aujourd'hui très largement diffusé dans cette communauté. Il entre ainsi dans la plupart des solutions obtenant de bons classements au côté d'autres méthodes comme les Random Forest. Des exemples marquants ont été regroupés dans la Table~\ref{tab:xgboost-kaggle}.
+
+\begin{table}[h]
+  \begin{margincap}
+    \centering
+    \begin{tabular}{ccp{.4\textwidth}c}
+	\toprule
+	    \textbf{Classement} & \textbf{Année} & \textbf{Challenge} & \textbf{Concurrent} \\
+	\midrule
+	1\up{er} & 2016 & Knowledge Discovery and Data Mining Cup & V. \textsc{Sandulescu} \\
+	1\up{et} et 3\up{ème} & 2015 & CERN LHCb experiment Flavour of Physics competition & V. \textsc{Mironov} \\
+	1\up{er} & 2015 & Caterpillar Tube Pricing competition & M. \textsc{Filho} \\
+	2\up{ème} & & Airbus New User Bookings & N. \textsc{Kuroyanagi} \\
+	2\up{ème} & & Allstate Claims Severity & A. \textsc{Noskov} \\
+	    10\% & 2014 & Higgs Boson Competition & T. \textsc{Chen} \\
+	    \multicolumn{4}{c}{...} \\
+    \end{tabular}
+	  \caption{Quelques résultats utilisant XGBoost lors de challenges Kaggle}
+	  \label{tab:xgboost-kaggle}
+  \end{margincap}
+\end{table}
+L'influence de XGBoost dans le milieu des challenges Kaggle peut se résumer ainsi :
+
+\vspace*{.2cm}
+\noindent\hspace*{\fill}\tikz{%
+  \node (def_larousse) [color=mygray, align=justify, text width=.8\textwidth] at (0,0) {\textit{En 2015 sur Kaggle, 17 solutions gagnantes sur 29 utilisaient XGBoost.}};%
+  \fill [\currentColor] ([xshift=-.15cm]def_larousse.north west) rectangle ([xshift=-.25cm]def_larousse.south west);%
+}\hspace*{\fill}\vspace*{.2cm}
