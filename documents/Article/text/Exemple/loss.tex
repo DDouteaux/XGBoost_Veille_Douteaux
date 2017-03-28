@@ -1,16 +1,22 @@
 \subsection{Fonction de coût personnalisée}
+Nous avons à plusieurs reprise mentionné la possibilité d'utiliser les fonctions de pertes personnalisées avec XGBoost. Un exemple est fournit ci-dessous où l'on définit manuellement la fonction de log-vraissemblance pour la perte\mysidenote{La mesure de log-vraissemblance fait en réalité partie des options possibles par défaut dans XGBoost, elle est cependant présentée sous cette forme \og manuelle\fg{} ici à titre d'exemple. Pour mémoire, la manière de l'appeler serait de faire \texttt{objective = "binary:logistic".}}.
+
+Cet exemple est réalisé en R, mais le fonctionnement sera le même pour d'autres langages.
 \begin{lstlisting}[language=R]
 loglossobj <- function(preds, dtrain) {
-  # dtrain is the internal format of the training data
-  # We extract the labels from the training data
+  # On extrait les labels de l'ensemble d'apprentissage
   labels <- getinfo(dtrain, "label")
-  # We compute the 1st and 2nd gradient, as grad and hess
+  # Calcul du gradient et de la partie de la hessienne utiles 
+  # dans les relations de boosting.
   preds <- 1/(1 + exp(-preds))
   grad <- preds - labels
   hess <- preds * (1 - preds)
-  # Return the result as a list
+  # Renvoie des résultats sous forme de liste.
   return(list(grad = grad, hess = hess))
 }
 
+# Entrainement du modèle avec notre méthode
 model <- xgboost(data = train$data, label = train$label, nrounds = 2, objective = loglossobj, eval_metric = "error")
 \end{lstlisting}
+
+On remarque donc que la définition est des plus simples\mysidenote{Tant que l'on peut trouver des expressions algébriques...}, dans la mesure où les seuls éléments demandés sont de pouvoir exprimer le gradient et la hessienne de la fonction de perte.

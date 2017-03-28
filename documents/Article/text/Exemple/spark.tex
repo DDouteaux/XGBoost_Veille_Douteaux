@@ -1,12 +1,16 @@
 \subsection{Utilisation avec Spark}
+Dans un contexte de calcul distribué ou adapté au Big Data, nous avons vu que l'utilisation de Scala pouvait s'avérer intéressante. Il est cependant possible d'utiliser directement XGBoost via le langage Spark (et par là même l'intégrer dans un écosystème Hadoop).
+
+En utilisant Spark, on peut ainsi gérer une parallélisation de calcul plus importante, qu'elle soit au sein d'une machine ou entre plusieurs machines.
+
+Un exemple de code vous est fourni ci-dessous.
 \begin{lstlisting}[language=Scala]
-\begin{lstlisting}[language=Scala]
+// Initialisation du contexte Spark (paramètres de parallélisation).
 val spark = SparkSession.builder().appName("SimpleXGBoost Application").config("spark.executor.memory", "2G").config("spark.executor.cores", "4").config("spark.default.parallelism", "4").master("local[*]").getOrCreate()
 
-// number of iterations
-val numRound = 10
-val numWorkers = 4
-// training parameters
+// Paramètres pour XGBoost
+val numRound = 10	// Nombre d'itérations
+val numWorkers = 4	// Nombre de processus parallèles
 val paramMap = List(
       "eta" -> 0.023f,
       "max_depth" -> 10,
@@ -19,8 +23,17 @@ val paramMap = List(
       "seed" -> 49,
       "silent" -> 1,
       "objective" -> "binary:logistic").toMap
+
+// Entrainement du modèle
 println("Starting Xgboost ")
 val xgBoostModelWithDF = XGBoost.trainWithDataFrame(trainingData, paramMap,round = numRound, nWorkers = numWorkers, useExternalMemory = true)
 
-val predictions = xgBoostModelWithDF.setExternalMemory(true).transform(testData).select("label", "probabilities")\end{lstlisting}
+// Application du modèle en prédiction
+val predictions = xgBoostModelWithDF.setExternalMemory(true).transform(testData).select("label", "probabilities")
 \end{lstlisting}
+Ce code est parlant à plusieurs titres :\begin{itemize}
+	\itemperso{Paramètres}On retrouve dans cette application les principaux paramètres de XGBoost détaillés à la Section~\ref{sec:params}.
+	\itemperso{Parallélisation}On peut remarquer la syntaxe pour utiliser la parallélisation tant avec XGBoost qu'avec Spark. En particulier, le nombre de \textit{workers} pour XGBoost est identique au nombre d'unités de calcul parallèles spécifiées pour Spark.
+	\itemperso{Syntaxe}On remarque encore une fois une fort rapprochement syntaxique par rapport aux autres langages courants comme Python, R ou bien Julia.
+\end{itemize}
+Si ce code peut sembler anodin, son \og existence\fg{} montre l'impact de XGBoost et la volonté de pouvoir inclure cette méthode dans les frameworks de Big Data, signe de l'intérêt de cette méthode.

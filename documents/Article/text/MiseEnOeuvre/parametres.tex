@@ -28,6 +28,7 @@ Ces paramètres permettent de définir les grandes lignes de l'algorithme, comme
 D'autres paramètres existent pour rendre la liste exhaustive. Pour plus de détails sur ces paramètres restants XXX.
 
 \subsubsection{Paramètres de Boosting}
+\label{sec:params-boosting}
 Comme nous l'avons vu à la Table~\ref{tab:params-generiques}, il existe différents types de Boosting que peut utiliser XGBoost. Dans la continuité des points abordés, nous nous attarderons plus en détail sur le paramétrage du booster à base d'arbres\mysidenote{La liste de paramètres ici proposée n'est pas exhaustive, nous avons cependant retenu les plus importants et ceux les plus souvent mis en avant lors des exemples d'utilisation de XGBoost. Pour une liste plus complète de ces paramètres, vous pouvez vous référer à~\cite{bib:params}.}. Ce choix est également motivé dans la mesure où ce dernier est le plus utilisé. On retrouve ici la partie la plus importante des paramètres pour XGBoost, et en particulier ceux permettant de contrôler le sur-apprentissage par le modèle.
 
 \subParagraphe{\texttt{Eta}}Ce paramètre permet de contrôler le taux d'apprentissage (ie. un \og pas d'apprentissage\fg). Il permet en particulier d'augmenter la robustesse du modèle en diminuant les poids à chaque itérations.

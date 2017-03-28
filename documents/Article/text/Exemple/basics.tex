@@ -2,7 +2,7 @@
 Avant de regarder plus en détail des utilisations des fonctionnalités originales et avancées de XGBoost, nous fournirons ici quelques exemples d'utilisations de XGBoost avec les principaux langages sur lesquels il a été porté\mysidenote{Les différents exemples présentés proviennent directement de la documentation de XGBoost et présentent l'avantage de concerner le même jeu de données.}.
 
 \subsubsection{En Python}
-Tout le code nécessaire à l'utilisation de XGBoost est regroupé au sein du package développé mentionné dans l'historique de la Section~\ref{sec:historique}. 
+Tout le code nécessaire à l'utilisation de XGBoost est regroupé au sein du package développé mentionné dans l'historique de la Section~\ref{sec:historique}\mysidenote{Pour l'installation des packages sur les différentes plateforme, vous pouvez vous référer à \cite{bib:xgboost-install}.}.
 
 \begin{lstlisting}[language=Python]
 import xgboost as xgb
@@ -23,7 +23,7 @@ preds = bst.predict(dtest)
 \end{lstlisting}
 
 \subsubsection{En R}
-Tout le code nécessaire pour l'utilisation de XGBoost est ici aussi contenu dans un package nommé \texttt{xgboost}.
+Tout le code nécessaire pour l'utilisation de XGBoost est ici aussi contenu dans un package nommé \texttt{xgboost}\mysidenote{Pour l'installation du package sous R, vous pouvez vous référer à \cite{bib:xgboost-install}, il est à noter que cette installation est automatique en utilisant le package disponible sur le CRAN.}.
 
 \begin{lstlisting}[language=R]
 # Lecture des données
@@ -40,7 +40,9 @@ pred <- predict(bst, test$data)
 \end{lstlisting}
 
 \subsubsection{En Julia}
+Julia est un langage plus récent, mais pouvant être utilisé à même titre que le Python, notamment dans des contextes de calculs numériques, de statistiques ou même de programmation générale et de serveurs webs\mysidenote{Julia est aussi censé être plus rapide que Python d'un point de vue exécution, d'où son intérêt aujourd'hui.}. 
 
+À ce titre, XGBoost a rapidement été porté pour ce langage, on remarquera dans le code ci-dessous la proximité avec les syntaxes de R et Python pour l'utilisation de XGBoost.
 \begin{lstlisting}[language=julia]
 using XGBoost
 
@@ -57,7 +59,9 @@ pred = predict(bst, test_X)
 \end{lstlisting}
 
 \subsubsection{En Scala}
+Pour terminer sur les exemples d'utilisation basique de XGBoost, nous fournissons un exemple dans un langage un peu plus exotique qu'est Scala. L'intérêt est ici de voir que XGBoost a également été porté sur des langages à mi-chemin entre l'objet et le fonctionnel.
 
+On remarquera également que le portage de XGBoost sur JAVA s'est principalement fait par Scala\mysidenote{On remarquera en particulier qu'il existe tout un pan de la communauté Spark, qui semble passer directement par Scala pour utiliser XGBoost (et considérer l'interfaçage avec JAVA comme secondaire), comme en témoigne \cite{bib:scala-spark} ou encore \cite{bib:xgboost-flink}.}. La syntaxe devient cependant plus lourde qu'elle ne peut l'être en R ou Python, comme en témoigne le code suivant.
 \begin{lstlisting}[language=Scala]
 import ml.dmlc.xgboost4j.scala.DMatrix
 import ml.dmlc.xgboost4j.scala.XGBoost
@@ -84,3 +88,12 @@ object XGBoostScalaExample {
   }
 }
 \end{lstlisting}
+
+\subsubsection{Résumé sur les utilisations basiques}
+En définitive, nous pouvons remarquer ici que quel que soit le langage, l'utilisation de XGBoost reste assez transparente, et axée en quatre grandes parties :\begin{itemize}
+	\itemperso{Chargement des données}Plus particulièrement, on remarque que les données sont chargées et enregistrées au format \og\texttt{DMatrix}\fg, qui correspond à un format spécialement développé pour XGBoost et ses optimisations de performances. Cette couche est parfois cachée (Python, R) et parfois visible (Scala).
+	\itemperso{Spécification des paramètres}Nous passons sous silence ici la manière de chercher ces valeurs (voir la Section~\ref{sec:bonnes-pratiques} pour des directions à suivre), mais quoiqu'il en soit, ces dernières sont toujours fournies à l'algorithme sous forme de structures de données telles des \texttt{map}, des \texttt{hash} ou des dictionnaires.
+	\itemperso{Entraînement du modèle}Quel que soit le langage, il suffit d'appeler une méthode XGBoost dont les paramètres reprennent ceux déterminées précédemment, et à laquelle on fournit également l'ensemble d'apprentissage et le nombre d'itérations.
+	\itemperso{Prédiction avec le modèle}Pour cela, on utilise les méthodes de prédictions natives des langages (\texttt{predict},...).
+\end{itemize}
+Ainsi, le fonctionnement reste fortement transparent et transposable entre les langages, dans les limites syntaxiques de ces derniers.

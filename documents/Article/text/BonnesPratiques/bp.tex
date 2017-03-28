@@ -1,0 +1,25 @@
+\label{sec:bonnes-pratiques}
+En regardant les principaux tutoriels dédiés à l'utilisation de XGBoost, ainsi que les recommandations des auteurs de la méthode, il est possible d'en dégager un ensemble de bonnes pratiques. Nous allons présenter ces dernières dans cette partie.
+
+Ces bonnes pratiques seront à avoir en tête lors de toute utilisation de XGBoost.
+
+\subParagraphe{Fixer un niveau d'apprentissage élevé}
+Pour mémoire, ce niveau d'apprentissage correspond au paramètre \texttt{eta}. Il est recommandé initialement de le fixer vers 0,1. Ce dernier sera ensuite affiné pour des valeurs entre 0,05 et 0,3 en fonction des données et des problèmes concernés.
+
+L'idée est ici de prendre un niveau élevé (mais pas trop non plus!) afin que les apprentissages soient rapides et permettent de trouver les autres paramètres optimaux sans passer un temps (trop) considérable dans les phases d'apprentissage. Ainsi, une fois les autres paramètres correctement fixés, on pourra réduire le taux d'apprentissage pour affiner une dernière fois le modèle. On optimise ainsi le temps de configuration du modèle mais aussi ses performances.
+\subParagraphe{Trouver le nombre optimal d'arbres}
+Le nombre d'arbres est un des paramètres qui va le plus influer sur le temps d'apprentissage pour XGBoost, en effet, leur apprentissage est une tâche coûteuse et qui peut devenir inutile passé un certain stade (on observera des plateaux sur les performances au bout d'un certain moment).
+
+À ce compte, il est conseillé d'utiliser les options de validation croisée automatiquement incluses dans XGBoost\mysidenote{Pour rappel, cette option va permettre de réaliser une validation croisée à chaque étape de boosting.}. Utiliser cette méthode va alors permettre de retourner le nombre optimal d'arbres \textit{in fine}.
+
+\subParagraphe{Gérer les paramètres des arbres}Ces paramètres\mysidenote{Pour mémoire, il s'agit de \texttt{max\_depth}, \texttt{gamma}, \texttt{subsample}, \texttt{min\_child\_weight},...Pour revoir la signification de ces paramètres, voir la Section~\ref{sec:params-boosting}.} sont ceux qui auront le plus d'impact sur le modèle de sortie, comme pour le taux d'apprentissage, on partira de valeur élevée que l'on réduira au cours des itérations.
+
+Il est aussi possible d'utiliser des solutions de \textit{grid search}\mysidenote{Par exemple en utilisant \texttt{GridSearchCV} en Python.} afin de trouver ces valeurs. Le temps de calcul peut alors courament avoisinner les 15 à 30 minutes (ou plus), ces opérations étant coûteuses.
+\subParagraphe{Gérer les paramètres de régularisation}
+Ces paramètres\mysidenote{Pour mémoire, il s'agit de \texttt{lambda} ou \texttt{alpha}, pour revoir leur signification, voir la Section~\ref{sec:params-boosting}.} vont permettre de simplifier le modèle tout en améliorant ses performances. On peut encore une fois utiliser des solutions de \textit{grid search} pour réaliser ce paramétrage.
+\subParagraphe{Réduire le niveau d'apprentissage}Une fois les choix optimums réalisés pour les paramètres de régularisation ou d'arbres, on peut finir par affiner le taux d'apprentissage, comme nous l'avions expliqué initialement, afin d'optimiser une dernière fois notre apprentissage.
+\subParagraphe{Utiliser l'AUC pour estimer les modèles}
+Cette dernière recommandation ne vient pas réellement d'un paramètre, mais est un conseil générique, qui est de prendre l'aire sous la courbe ROC comme mesure par défaut pour les modèles, dans la mesure où cette dernière est souvent plus parlante que ne peut l'être la précision, le rappel,...
+
+Ainsi, il est recommandé de l'utiliser, sauf en cas de besoins spécifiques\mysidenote{En particulier, nous avons vu comme XGBoost pouvait utiliser des fonctions de pertes personnalisées pour des cas plus exotiques à la Section~\ref{sec:perso-loss}.}.
+\subParagraphe{Remarques générales}Enfin, un point comparable dans toutes les solutions proposées est que la recherche des paramètres optimaux va augmenter les performances, mais ne se suffit pas à elle-même. Ainsi, il est recommandé de l'utiliser en même temps que des solutions d'extraction de descripteurs pertinents, que l'utilisation de méthode dites \textit{Ensemble}\mysidenote{L'idée est ici d'avoir plusieurs modèles experts qui vont décider par vote majoritaire ou par moyenne.} ou encore de \textit{Stacking}\mysidenote{Il s'agit également d'une méthode permettant d'utiliser conjointement des modèles, un tutoriel basé uniquement sur ce point est disponible à~\cite{bib:stacking-kaggle}. De même, A. \textsc{Noskov}, classé seconde au \og\textit{Allstate Claims Severity Competition} (février 2017) a proposé une description de son modèle utilisant du stacking~\cite{bib:stacking-noskov}.}.
