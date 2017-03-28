@@ -1,3 +1,12 @@
 \subsection{Valeurs manquantes}
+Les valeurs manquantes sont un problème courant en analyse de données. La plupart des algorithmes proposent aujourd'hui deux solutions, soit l'utilisateur pré-traite ses données avant de les utiliser et retire ou modifie au besoin les données manquantes, soit il \og laisse faire\fg{} l'algorithme, au risque que la solution ne lui convienne pas.
 
+XGBoost se démarque ici en proposant un traitement non binaire (ie. on n'assigne pas par défaut \texttt{null} ou \texttt{0},...) pour traiter les données manquantes. À la place, l'algorithme propose d'assigner une direction aux valeurs manquantes plutôt qu'une valeur numérique particulière.
+
+Ceci signifie que lorsqu'une découpe est réalisée selon une variable proposant des valeurs manquantes, l'algorithme va classer les données manquantes \og à gauche ou à droite\fg{} dans les fils du n\oe uds. A posteriori de ce classement, XGBoost va regarder quel classement fournirait le meilleur gain et re-répartir ces instances de manière à maximiser ce dernier\mysidenote{Pour les personnes intéressées, l'algorithme explicite est précisé dans l'article de T. \textsc{Chen} (Algorithme 3) \cite{bib:xgboost-article}}.
+
+Ce comportement est activé par défaut pour XGBoost, et a pour intérêt que l'algorithme va apprendre une direction optimale au lieu de simplement considérer toutes les valeurs inconnues comme identiques ou alors les rejeter.
 \subsection{Cross-validation native}
+Pour simplifier l'utilisation de XGBoost, et uniformiser l'utilisation de cette dernière avec XGBoost, les auteurs des packages ont inclus une fonction de cross-validation directement dans XGBoost.
+
+Cette dernière permet alors de reprendre tous les paramètres disponibles par XGBoost en apprentissage pour la cross-validation et d'avoir ainsi un fonctionnement continu. On retrouve en particulier la possibilité d'utiliser une fonction de perte personnalisée\mysidenote{Plus de détails sur les paramètres de XGBoost seront proposés en Section~\ref{sec:params}, on peut également trouver un descriptif de tous les paramètres en cross-validation à \cite{bib:cv-params}.}.
