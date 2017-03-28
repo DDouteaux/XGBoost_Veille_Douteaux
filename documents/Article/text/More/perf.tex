@@ -1,14 +1,23 @@
 \subsection{Performances}
 \label{sec:perf}
+\subsubsection{Principales améliorations}
 Outre son aspect algorithmique qui permet des paramétrages particuliers, XGBoost a également été conçue pour être une méthode d'apprentissage performante du point de vue de l'utilisation des ressources et de la parallélisation.
-\subsubsection{Optimisations réalisées}
+
 \subParagraphe{Parallélisation}Comme nous l'avons expliqué en Section~\ref{sec:gradient-boosting}, XGBoost va entraîner des arbres au fur et à mesure pour améliorer une métrique. Ainsi, il n'est pas possible de paralléliser l'entraînement des arbres, puisque l'arbre $n$ va dépendre des arbres entraînés précédemment (que ce soit sur l'échantillon ou le poids des données).
 
-Cependant, XGBoost se démarque en proposant à la place une solution pour paralléliser la création d'arbre en calculant des branches de manière indépendante.
-\subParagraphe{Mémoire}
-\subParagraphe{Utilisation du cache}
-\subParagraphe{Conception}
-\subParagraphe{Externalisation des données}
+Cependant, XGBoost se démarque en proposant à la place une solution pour paralléliser la création d'arbre en calculant des branches de manière indépendante\mysidenote{Plus de détails sur les algorithmes qu'il est possible d'utiliser à cette fin peuvent être trouvés au lien suivant \cite{bib:parallel}.}.
+
+À noter que cette parallélisation peut être réalisée par une utilisation multi-threads d'une machine ou bien par la répartition du calcul dans des clusters.
+\subParagraphe{Utilisation mémoire}Pour le cas de données trop importantes\mysidenote{Et si l'on ne dispose pas d'autres machines pour paralléliser les calculs et donc l'utilisation de la mémoire.}, XGBoost peut en le couplant à un stockage de données SSD réaliser une version dégradée de son algorithme qui va consister en des apprentissages partiels du modèles sur des bouts de données. Il est toujours possible d'utiliser l'algorithme en multi-threads pour chaque bout de données.
+
+L'idée est ainsi de conserver les données sur le disque et de ne les monter que partiellement tour à tour en mémoire, on utiliser ainsi une mémoire dite \og externe\fg, pour faire tourner l'algorithme\mysidenote{Dans un article présentant les améliorations sur les plans théoriques et des performances de XGBoost \cite{bib:xgboost-article}, les auteurs de la méthode précisent que pour arriver à ce résultat, une structure de données \og en blocs\fg{} est utilisée}. On remarquera aussi que cette stratégie permet d'optimiser les accès au cache de mémoire.
+
+\subParagraphe{Rapidité}Les différents éléments précédents (et en particulier la parallélisation), permettent à XGBoost d'être un algorithme rapide. Ceci est également accentué par le fait qu'une grande partie des modules sont écrits en C++, et que l'interfaçage avec les autres langages se fait principalement par des modules créés par dessus ces briques élémentaires. Ceci peut être observé sur le répertoire Github de XGBoost, où les volumes relatifs des langages sont les suivants :
+\begin{center}
+	C++ (41,9\%)\hspace{1cm}Scala (16,3\%)\hspace{1cm}R (14,4\%)\hspace{1cm}Python (11,5\%)\hspace{1cm}JAVA (7,4\%)\hspace{1cm}Cuda (4,9\%)\hspace{1cm}Autres (3,6\%)
+\end{center}
+On remarque donc que quasiment 50\% de l'\textit{ensemble} du code est directement écrit en C++, qui reste parmis les langages utilisés le moins gourmands en ressources et le plus rapide si bien utilisé.
+
 \subsubsection{Benchmarking des solutions}
 Plusieurs études ont été menée pour comparer les performances de XGBoost vis-à-vis d'autres solutions.
 \subParagraphe{Benchmarking par Tong~\textsc{He}}Le créateur de XGBoost a réalisé un comparatif de temps d'exécution entre son algorithme et d'autres algorithme courants sur le challenge Kaggle du boson de Higgs~\cite{bib:boson}. Les résultats de ce benchmarking sont repris à la Figure~\ref{fig:perfun}.
@@ -27,5 +36,21 @@ Sur la Figure~\ref{fig:perfun}, les courbes \textit{Python-sklearn} et \textit{R
 \itemperso{Influence du nombre de c\oe ur}Plus le nombre de c\oe urs pour paralléliser XGBoost est important, plus ce dernier est rapide, même si on observe un tassement passé quatre c\oe urs\mysidenote{Ceci est logique, car comme nous l'avons vu, il n'est pas possible de paralléliser tout le processus d'apprentissage, mais seulement une partie de ce dernier. Ainsi, il restera une partie que l'on ne peut réduire, d'où ce constat.}.
 \end{itemize}
 
-\subsubsection{Benchmarking par rapport à des implémentations de Random Forest}
-Un autre Benchmarking a également visé à comparer les performances de XGBoost 
+\subsubsection{Benchmarking sur des implémentations de Random Forest}
+Un autre Benchmarking a également visé à comparer les performances de XGBoost avec celles de différentes implémentations de Random Forest. Les résultats sont regroupés à la Figure~\ref{fig:perfdeux}.
+
+\begin{figure}[h]
+	\begin{margincap}
+		\centering
+		\includegraphics[width=\textwidth]{images/More/perf_deux}
+		\caption{Comparaison des temps d'apprentissage et des résultats entre XGBoost et différentes implémentations de Random Forest}
+		\label{fig:perfdeux}
+	\end{margincap}
+\end{figure}
+
+On retrouve également sur ces figures des conclusions similaires à celles du premier benchmarking, à savoir :
+\begin{itemize}
+	\itemperso{Temps d'exécution}Sur tous les cas testés (sauf un cas limite où les temps sont tous faibles), XGBoost était déjà (2015) l'implémentation la plus rapide lors de cette étude.
+	\itemperso{AUC}L'étude s'intéressait également aux performances via une mesure d'AUC. Cette dernière donne ici XGBoost au coude à coude avec l'implémentation de Random Forest de H2Oai, cette dernière étant même un peu meilleure sur des taux d'apprentissage plus élevés.
+\end{itemize}
+Quoiqu'il en soit, XGBoost apparaît dans ces différentes situtations comme un solution performante tant sur le point de vue des performances que sur celui des temps d'exécution.
