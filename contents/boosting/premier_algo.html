@@ -65,18 +65,18 @@ Pour commencer, nous allons présenter l'idée originale de l'algorithme de Boos
 <br/><br/>
 Pour nos exemples, nous allons considérer la situation de la Figure 1. Le problème a traiter ici est un problème de classification supervisé, c'est-à-dire que l'on désire entraîner un classifieur pour pouvoir séparer les carrés des cercles.
 
-<img src="../../assets/images/boosting/algo_11.png">
+<img src="../../assets/images/boosting/algo_11.PNG">
 <div class="img-label"><div class="fig-name">Fig. 1</div>Deux ensembles à séparer par le modèle que l'on entraîne (d'après [1])</div>
 
 Pour commencer, l'idée est d'entraîner un premier classifieur. Cependant, pour retirer une partie du biais des données, ce dernier ne sera entraînée que sur une partie des données (choisie arbitrairement). Nous retrouvons ainsi en Figure 2a l'ensemble d'apprentissage qui est en rouge, et en Figure 2b le classifieur appris sur ces données, notés h<div class="sub-text">1</div>.
 
 <div style="display:block">
 <div style="width:49%; display:inline-block;">
-	<img src="../../assets/images/boosting/algo_21.png">
+	<img src="../../assets/images/boosting/algo_21.PNG">
 	<div class="img-label"><div class="fig-name">Fig. 2a</div>Données d'apprentissage choisies aléatoirement</div>
 </div>
 <div style="width:49%; display:inline-block;">
-	<img src="../../assets/images/boosting/algo_22.png">
+	<img src="../../assets/images/boosting/algo_22.PNG">
 	<div class="img-label"><div class="fig-name">Fig. 2b</div>Classifieur h<div class="sub-text">1</div> obtenu sur l'ensemble ■ •</div>
 </div>
 <div class="img-label"><div class="fig-name">Fig. 2</div>Premier modèle appris sur les données (d'après [1])</div>
@@ -90,11 +90,11 @@ Dans notre cas, nous allons choisir un nouvel ensemble d'apprentissage qui regro
 
 <div style="display:block">
 <div style="width:49%; display:inline-block;">
-	<img src="../../assets/images/boosting/algo_31.png">
+	<img src="../../assets/images/boosting/algo_31.PNG">
 	<div class="img-label"><div class="fig-name">Fig. 3a</div>Données d'apprentissage pour le deuxième classifieur</div>
 </div>
 <div style="width:49%; display:inline-block;">
-	<img src="../../assets/images/boosting/algo_32.png">
+	<img src="../../assets/images/boosting/algo_32.PNG">
 	<div class="img-label"><div class="fig-name">Fig. 3b</div>Classifieur h<div class="sub-text">2</div> obtenu sur l'ensemble</div>
 </div>
 <div class="img-label"><div class="fig-name">Fig. 3</div>Deuxième modèle appris sur les données (d'après [1])</div>
@@ -108,11 +108,11 @@ Nous continuons alors sur le même principe, en entraînant un troisième classi
 
 <div style="display:block">
 <div style="width:49%; display:inline-block;">
-	<img src="../../assets/images/boosting/algo_41.png">
+	<img src="../../assets/images/boosting/algo_41.PNG">
 	<div class="img-label"><div class="fig-name">Fig. 4a</div>Données d'apprentissage pour le troisième classifieur</div>
 </div>
 <div style="width:49%; display:inline-block;">
-	<img src="../../assets/images/boosting/algo_42.png">
+	<img src="../../assets/images/boosting/algo_42.PNG">
 	<div class="img-label"><div class="fig-name">Fig. 4b</div>Classifieur h<div class="sub-text">3</div> obtenu sur l'ensemble</div>
 </div>
 <div class="img-label"><div class="fig-name">Fig. 4</div>Troisième modèle appris sur les données (d'après [1])</div>
@@ -120,7 +120,7 @@ Nous continuons alors sur le même principe, en entraînant un troisième classi
 
 À la fin de ce processus (qui aurait pu durer plus longtemps si nous l'avions désiré), nous obtenons trois classifieurs. Comme cela a été vu, ces derniers ont été créés de manière à ce qu'ils corrigent leurs erreurs entre eux, ce paramètre étant pris en compte par la construction des ensembles d'apprentissage. Ainsi, l'utilisation de tous ces classifieurs revient pour chaque point à réaliser une prédiction avec tous les classifieurs et d'attribuer la classe ayant le plus de vote. On moyenne ainsi les erreurs des classifieurs entre eux et on réduit ainsi le biais de la prédiction. Cette décision finale est illustrée à la Figure 5, où les erreurs sont précisées en rouge.
 
-<img src="../../assets/images/boosting/algo5.png">
+<img src="../../assets/images/boosting/algo5.PNG">
 <div class="img-label"><div class="fig-name">Fig. 5</div>Prévision finale conjointe des trois classifieurs entraînés par Boosting (d'après [1])</div>
 
 Cette première version de l'algorithme de Boosting a subit de nombreuses améliorations jusqu'à aujourd'hui, les plus notables étant :

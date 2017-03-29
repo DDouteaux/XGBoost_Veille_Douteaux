@@ -66,10 +66,10 @@
 Le dernier exemple d'application que nous proposerons ici est celui de la recherche d'importance des variables. En effet, certains algorithmes de Machine Learning (comme les Random Forest), peuvent permettre de comparer l'importance des variables entre elles.
 <br/><br/>
 Dans la mesure où XGBoost va à l'instar des Random Forest entraîner plusieurs arbres et faire des choix sur les variables les plus pertinentes pour créer de nouvelles branches, il est possible de mettre en place un calcul d'importance des variables via XGBoost. Ce calcul peut être réalisé en utilisant par exemple le code R suivant.
-<img src="../../assets/images/code/select.png">
+<img src="../../assets/images/code/select.PNG">
 Ce code permet alors d'obtenir les évaluations de la Figure 19.
 
-<img src="../../assets/images/code/importance.png">
+<img src="../../assets/images/code/importance.PNG">
 <div class="img-label"><div class="fig-name">Fig. 19</div>Exemple d'affichage de l'importance des variables via XGBoost</div>
 
 Dans ce cas particulier on remarque que la plupart de l'information est portée par le premier paramètre, les autres ne retenant qu'une part plus faible de cette dernière. En particulier, le dernier pourraît être supprimé de l'apprentissage, dans la mesure où il semble peu révélateur.

@@ -76,7 +76,7 @@ Suite à cela, le code continue a être développé pour aboutir en septembre 20
 <br/><br/>
 On se retrouve donc à cette étape avec les éléments de la Figure 14.
 
-<img src="../../assets/images/mise_en_oeuvre/histun.png">
+<img src="../../assets/images/mise_en_oeuvre/histun.PNG">
 <div class="img-label"><div class="fig-name">Fig. 14</div>Première étape de développement de XGBoost (d'après [10])</div>
 
 Ainsi, fin 2014, XGBoost était accessible dans les deux principaux langages de Machine Learning, Python et R.
@@ -92,7 +92,7 @@ Suite aux bons résultats dans de nouveaux challenges Kaggle et en pratique, la 
 
 Ainsi, XGBoost s'est ouvert à l'univers du Big Data via YARN et HDFS, mais s'est aussi concentré sur la création d'une interface uniforme entre les principaux langages (Pyhton et R). Ceci a ensuite permis aux développeurs de se concentrer plus spécifiquement sur les performances. Dans ces principaux langages, les principaux éléments accesibles sont présentés de la Figure 15. Dans cette figure, apparaît le terme de « <i>gridsearch</i> ». Il s'agit en fait d'une méthode permettant de rechercher des paramètres optimaux pour les algorithmes (pour les paramètres de XGBoost, voir <a class="ref" href="../params.html">cette page</a>). Ceci montre donc qu'en optimisant l'interface avec Scikit Learn et R, on augmente ainsi les capacité de XGBoost en l'interfaçant convenablement avec des technologies efficaces et déjà en place.
 
-<img src="../../assets/images/mise_en_oeuvre/histdeux.png">
+<img src="../../assets/images/mise_en_oeuvre/histdeux.PNG">
 <div class="img-label"><div class="fig-name">Fig. 15</div>Deuxième étape de développement de XGBoost, uniformisation des offres entre langages (d'après [10])</div>
 
 <div class="subtitle">Refactoring, autres compatibilité et parallélisme</div>
@@ -117,7 +117,7 @@ Cette mise à jour contient ensuite un nombre important de changements ou d'amé
 
 Ces mises à jour montrent donc la réelle volonté actuelle pour XGBoost, qui est de pouvoir fonctionner sur diverses machines de manière distribuée, de manière transparente. Pour y arriver, un composant d'exécution pour faire le pont entre XGBoost et les différentes plateforme a été développé, du nom de Rabit. Son intérêt est illustré à la Figure 16.
 
-<img src="../../assets/images/mise_en_oeuvre/histtrois.png">
+<img src="../../assets/images/mise_en_oeuvre/histtrois.PNG">
 <div class="img-label"><div class="fig-name">Fig. 16</div>Extension de XGBoost vers un système distribué transparent par le développement de Rabit (d'après [10])</div>
 
 <div class="subtitle">Intégration dans des plateformes de machine learning</div>

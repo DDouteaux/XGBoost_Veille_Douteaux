@@ -76,7 +76,7 @@ Cette relation fait apparaître deux termes en plus du modèle noté \(\Theta\) 
 
 Ce sont ces deux fonctions (et leur intérêt!) qui vons nous intéresser par la suite. Pour cela, nous allons considérer la situation cobaye de la Figure 6.
 
-<img src="../../assets/images/boosting/situation_loss.png">
+<img src="../../assets/images/boosting/situation_loss.PNG">
 <div class="img-label"><div class="fig-name">Fig. 6</div>Situation de test pour comprendre les notions de perte et complexité (d'après [2])</div>
 
 Sur la Figure 6, nous avons également représenté en gris pointillé un modèle qui représenterait un bon compromis.
@@ -85,7 +85,7 @@ Sur la Figure 6, nous avons également représenté en gris pointillé un modèl
 
 Cette fonction (notée \(\mathcal{L}\) dans la relation exprimant l'objectif)), représente la qualité prédictive du modèle sur l'ensemble d'apprentissage. Attention, il est important de voir qu'on s'intéresse ici à l'adéquation à l'ensemble d'apprentissage, mais pas sur l'ensemble de test (puisqu'on ne le connaît pas à priori). Les fonctions communément utilisées sont par exemple l'erreur MSE (liée à la norme \(\mathcal{L}_2\)) ou une expression de perte logistique.
 
-<img src="../../assets/images/boosting/loss.png">
+<img src="../../assets/images/boosting/loss.PNG">
 <div class="img-label"><div class="fig-name">Fig. 7</div>Une situation où la perte n'est pas optimisée (d'après [2])</div>
 
 La Figure 7 propose une situation où la perte induite pas le modèle est plus importante que ce qu'il est possible de dans le cas optimal. L'idée de cette fonction \(\mathcal{L}\) est donc de pouvoir détecter ces situations et d'estimer si un nouveau modèle améliore ou non cette situation.
@@ -96,7 +96,7 @@ Cette fonction (notée \(\Omega\) dans la relation définissant l'objectif), est
 
 Un exemple de fonction de complexité vous sera proposé dans l'exemple de <a class="ref" href="../code/loss_perso.html">cette page</a>.
 
-<img src="../../assets/images/boosting/complexity.png">
+<img src="../../assets/images/boosting/complexity.PNG">
 <div class="img-label"><div class="fig-name">Fig. 8</div>Une situation où la complexité n'est pas optimisée (d'après [2])</div>
 
 Le modèle qui était représenté en gris sur les 6 à 8 correspondait en fait à un bon compromis entre \(\mathcal{L}\) et \(\Omega\).

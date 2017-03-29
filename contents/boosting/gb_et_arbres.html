@@ -72,19 +72,19 @@ Les modèles qui seront pris en exemple sont des modèles à base d'arbre, car i
 <br/>
 Un modèle pouvant convenir et obtenu par exemple avec la méthode CART est représenté à la Figure 9.
 
-<img src="../../assets/images/boosting/arbre.png">
+<img src="../../assets/images/boosting/arbre.PNG">
 <div class="img-label"><div class="fig-name">Fig. 9</div>Arbre pouvant convenir pour expliquer la goût des jeux vidéos dans la famille (d'après [3])</div>
 
 Ce modèle nous apprend par exemple que des garçons de moins de 15 ans devraient avoir un fort attrait pour les jeux vidéos, ce qui n'est par exemple pas le cas des individus de plus de 15 ans. Pour réduire le taux d'erreur et obtenir de meilleurs résultats, on peut comme nous l'avons vu à <a class="ref" href="premier_algo.html">cette page</a> utiliser plusieurs de ces modèles simples et les combiner.
 <br/><br/>
 Par exemple, à la Figure 10, nous avons entraîné deux arbres, et les résultats en prédiction consistent à sommer les prédictions (scores) obtenus avec chaque arbre. Ceci permet d'obtenir des résultats plus sûrs et de combiner plus d'informations qu'un seul modèle ne le permettrait.
 
-<img src="../../assets/images/boosting/arbres.png">
+<img src="../../assets/images/boosting/arbres.PNG">
 <div class="img-label"><div class="fig-name">Fig. 10</div>Deux arbres utilisés conjointement pour obtenir le résultat (d'après [3])</div>
 
 Avec les deux arbres de la Figure 10, on peut alors calculer une nouvelle prédiction\mysidenote{La formule théorique donnant la prédiction \(\hat{y}_i\) est \(\displaystyle{\hat{y}_i=\sum_{k=1}^K f_k(x_i)}\), où on utilise \(K\) arbres notés chacun \(f_k\). L'individu pour lequel on cherche une prédiction est noté \(x_i\) :
 
-<img src="../../assets/images/boosting/note.png">
+<img src="../../assets/images/boosting/note.PNG">
 
 Pour construire tous les arbres nécessaires, on pourrait fonctionner comme dans <a class="ref" href="premier_algo.html">cette page</a>. Cependant, ceci permettrait de bien optimier la partie coût des erreurs (fonction \(\mathcal{L}\) de la fonction objectif), mais en aucun cas de limiter la complexité finale. Nous allons donc voir dans la suite un algorithme permettant de prendre en compte ses deux aspects simultanément.
 
@@ -153,7 +153,7 @@ Une première remarque est que le gain peut être négatif. Là où des méthode
 <br/><br/>
 Un exemple de découpage et une partie des calculs associés vous est présenté à la Figure 11.
 
-<img src="../../assets/images/boosting/prunning.png">
+<img src="../../assets/images/boosting/prunning.PNG">
 <div class="img-label"><div class="fig-name">Fig. 11</div>Comment déterminer le meilleur découpage à une étape donné (d'après [3])</div>
 
 En pratique, on ne teste même pas tous les découpages possibles. À la place, on procède comme à la 11, ie. on ordonne les instances par valeur attendue (le \(y_i\) théorique). On regarde alors juste les découpages obtenus en coupant entre les éléments de la gauche vers la droite. On regarde ainsi uniquement \(n_l\) découpages possibles, où \(n_l\) est le nombre d'éléments de la feuille, ce qui est bien mieux que de regarder tous les découpages possibles, c'est-à-dire \(\displaystyle{\approx\sum_{i=1}^{\left\lfloor\frac{n_l}{2}\right\rfloor}\binom{i}{n_l}}\) solutions.
