@@ -93,3 +93,15 @@ var swap = function(json){
 Array.prototype.insert = function (index, item) {
   this.splice(index, 0, item);
 };
+
+
+var loaded_section = $('a[href$="' + document.URL.substr(document.URL.lastIndexOf('/') + 1) + '"]');
+if(loaded_section.parent()[0] != $('#sidebar')[0]){
+	$('.sidebar-with-children[data-section-name="' + loaded_section.parent().parent().data('section') + '"]').click();
+	loaded_section.parent().addClass('selected');
+} else {
+	loaded_section.addClass('selected');
+}
+
+console.log($('a[href$="' + document.URL.substr(document.URL.lastIndexOf('/') + 1) + '"]').parent().parent().data('section'));
+console.log($('a[href$="' + document.URL.substr(document.URL.lastIndexOf('/') + 1) + '"]'));

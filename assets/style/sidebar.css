@@ -21,10 +21,6 @@
 	text-align: center;
 }
 
-.sidebar-link:hover{
-	color: rgb(13,186,27);
-}
-
 .sidebar-link{
 	color: white;
 }
@@ -47,6 +43,10 @@
 
 .sidebar-link.sidebar-part{
 	display: block;
+}
+
+.sidebar-link:hover{
+	color: #FFA500;
 }
 
 .sidebar-subpart{
