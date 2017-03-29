@@ -21,11 +21,21 @@
 	text-align: center;
 }
 
+.sidebar-link:hover{
+	color: rgb(13,186,27);
+}
+
+.sidebar-link{
+	color: white;
+}
+
+.sidebar-link.sidebar-part,
 .sidebar-part,
 .sidebar-subpart{
 	cursor: pointer;
 }
 
+.sidebar-link.sidebar-part,
 .sidebar-part{
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -33,6 +43,10 @@
 	color: white;
 	font-size: 18px;
 	font-weight: bold;
+}
+
+.sidebar-link.sidebar-part{
+	display: block;
 }
 
 .sidebar-subpart{

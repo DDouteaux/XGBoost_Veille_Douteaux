@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<script src="../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Bonnes pratiques</div>
+		<div id="main_subheader">Comment tirer le meilleur de XGBoost?</div>
+		<div id="main_content">
+En regardant les principaux tutoriels dédiés à l'utilisation de XGBoost, ainsi que les recommandations des auteurs de la méthode, il est possible d'en dégager un ensemble de bonnes pratiques. Nous allons présenter ces dernières dans cette partie.
+<br/><br/>
+Ces bonnes pratiques seront à avoir en tête lors de toute utilisation de XGBoost.
+
+<div class="subtitle">Fixer un niveau d'apprentissage élevé</div>
+Pour mémoire, ce niveau d'apprentissage correspond au paramètre <tt>eta</tt>. Il est recommandé initialement de le fixer vers 0,1. Ce dernier sera ensuite affiné pour des valeurs entre 0,05 et 0,3 en fonction des données et des problèmes concernés.
+<br/><br/>
+L'idée est ici de prendre un niveau élevé (mais pas trop non plus!) afin que les apprentissages soient rapides et permettent de trouver les autres paramètres optimaux sans passer un temps (trop) considérable dans les phases d'apprentissage. Ainsi, une fois les autres paramètres correctement fixés, on pourra réduire le taux d'apprentissage pour affiner une dernière fois le modèle. On optimise ainsi le temps de configuration du modèle mais aussi ses performances.
+
+<div class="subtitle">Trouver le nombre optimal d'arbres</div>
+Le nombre d'arbres est un des paramètres qui va le plus influer sur le temps d'apprentissage pour XGBoost, en effet, leur apprentissage est une tâche coûteuse et qui peut devenir inutile passé un certain stade (on observera des plateaux sur les performances au bout d'un certain moment).
+<br/><br/>
+À ce compte, il est conseillé d'utiliser les options de validation croisée automatiquement incluses dans XGBoost. Pour rappel, cette option va permettre de réaliser une validation croisée à chaque étape de boosting. Utiliser cette méthode va alors permettre de retourner le nombre optimal d'arbres <i>in fine</i>.
+
+<div class="subtitle">Gérer les paramètres des arbre</div>
+Ces paramètres (pour mémoire, il s'agit de <tt>max_depth</tt>, <tt>gamma</tt>, <tt>subsample</tt>, <tt>min_child_weight</tt>,...leur signification est détaillée à <a class="ref" href="mise_en_oeuvre/params.html">cette page</a>) sont ceux qui auront le plus d'impact sur le modèle de sortie, comme pour le taux d'apprentissage, on partira de valeur élevée que l'on réduira au cours des itérations.
+<br/><br/>
+Il est aussi possible d'utiliser des solutions de <i>grid search</i> (par exemple <tt>GridSearchCV</tt> en Python) afin de trouver ces valeurs. Le temps de calcul peut alors courament avoisinner les 15 à 30 minutes (ou plus), ces opérations étant coûteuses.
+
+<div class="subtitle">Gérer les paramètres de régularisation</div>
+Ces paramètres (pour mémoire, il s'agit de <tt>lambda</tt> ou <tt>alpha</tt>, leur signification est détaillée à <a class="ref" href="mise_en_oeuvre/params.html">cette page</a>) vont permettre de simplifier le modèle tout en améliorant ses performances. On peut encore une fois utiliser des solutions de <i>grid search</i> pour réaliser ce paramétrage.
+
+<div class="subtitle">Réduire le niveau d'apprentissage</div>
+Une fois les choix optimums réalisés pour les paramètres de régularisation ou d'arbres, on peut finir par affiner le taux d'apprentissage, comme nous l'avions expliqué initialement, afin d'optimiser une dernière fois notre apprentissage.
+
+<div class="subtitle">Utiliser l'AUC pour estimer les modèles</div>
+Cette dernière recommandation ne vient pas réellement d'un paramètre, mais est un conseil générique, qui est de prendre l'aire sous la courbe ROC comme mesure par défaut pour les modèles, dans la mesure où cette dernière est souvent plus parlante que ne peut l'être la précision, le rappel,...
+<br/><br/>
+Ainsi, il est recommandé de l'utiliser, sauf en cas de besoins spécifiques. En particulier, nous avons vu comme XGBoost pouvait utiliser des fonctions de pertes personnalisées pour des cas plus exotiques à <a class="ref" href="code/loss_perso.html">cette page</a>.
+
+<div class="subtitle">Remarques générales</div>
+Enfin, un point comparable dans toutes les solutions proposées est que la recherche des paramètres optimaux va augmenter les performances, mais ne se suffit pas à elle-même. Ainsi, il est recommandé de l'utiliser en même temps que des solutions d'extraction de descripteurs pertinents, que l'utilisation de méthode dites <i>Ensemble</i> (l'idée est ici d'avoir plusieurs modèles experts qui vont décider par vote majoritaire ou par moyenne) ou encore de <i>Stacking</i>.
+<br/><br/>
+Ce <i>Stacking</i> correspond à une méthode permettant d'utiliser conjointement des modèles, un tutoriel basé uniquement sur ce point est disponible à [18]. De même, A. Noskov, classé seconde au <i>Allstate Claims Severity Competition</i> (février 2017) a proposé une description de son modèle utilisant du stacking [19].
+		</div>
+	</div>
+	</body>
+</html>
+
+<script src="../sidebar.js"></script>
+<script src="../assets/js/create_elements.js"></script>

@@ -1,0 +1,142 @@
+<html>
+	<head>
+		<script src="../../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Mise en œuvre</div>
+		<div id="main_subheader">Historique de développement</div>
+		<div id="main_content">
+Comme tout projet informatique, XGBoost a été codée de manière itérative afin de s'adapter aux besoins des utilisateurs. Nous allons donc voir ici quelles sont les grandes étapes de développement de cette méthode et quels sont les objectifs futurs. L'historique qui vous sera proposé ici est issue de données récoltées dans les <i>Release Notes</i> de la page Git Hub du projet [9], mais aussi d'un retour sur expérience du fondateur de XGBoost sur sa page personnelle [10].
+
+<div class="subtitle">Premières implémentations</div>
+L'origine de la méthode provient de recherches de T. Chen sur le boosting d'arbres. L'auteur n'ayant pas trouvé de soution lui convenant, il a décidé d'implémenter sa propre solution et d'en faire un package « maison ». Afin d'optimiser les performances, ce premier code a été réalisé en C++ en utilisant la librairie OpenMP pour avoir une parallélisation automatique sur les CPU multi-threads [5].
+<br/><br/>
+Ce package a alors été utilisé sur le challenge Kagle <i>Higgs Boson Challenge</i> et ses résultats ont été parmis les meilleurs et ont permis à d'autres concurrents d'améliorer leurs résultats. En plus du développement accéléré de XGBoost suite à ce succès, son auteur a également publié un article de recherche précisant ses motivations, les modèles utilisés, et introduisant son code et ses algorithmes à la communauté [5]. De plus, les excellents résultats de XGBoost sur cette compétition ont également eu pour conséquence que cette méthode soit vue comme une avancée majeure en termes d'outils utilisés dans la recherche physique. Ainsi, XGBoost s'est vue attribuée la <i>High Energy Physics meets Machine Learning Award} pour cette contribution.</i>
+<br/><br/>
+Face à ce succès, un wrapper Python a alors été mis en place ainsi qu'une API pour l'utilisation. On retrouve alors la première version sur le répertoire Git, qui date de mars 2014. La première version du module Python est elle fournie dès mais 2014.
+<br/><br/>
+Suite à cela, le code continue a être développé pour aboutir en septembre 2014 à un module R et un début de parallélisation pour le booster linéaire. De même, l'algorithme de calcul d'arbres est accéléré.
+<br/><br/>
+On se retrouve donc à cette étape avec les éléments de la Figure 14.
+
+<img src="../../assets/images/mise_en_oeuvre/histun.png">
+<div class="img-label"><div class="fig-name">Fig. 14</div>Première étape de développement de XGBoost (d'après [10])</div>
+
+Ainsi, fin 2014, XGBoost était accessible dans les deux principaux langages de Machine Learning, Python et R.
+
+<div class="subtitle">Mise en place de la version distribuée</div>
+Suite aux bons résultats dans de nouveaux challenges Kaggle et en pratique, la méthode continu à se développer. Ainsi, une release de mai 2015 permet d'instaurer les points suivants :
+<ul>
+	<li><div class="li-label">YARN</div>Une version distribuée qui fonctionne avec YARN et permet de traiter des volumes de données directement liés au Big Data.</li>
+	<li><div class="li-label">HDFS</div>Enregistrement et chargement de données depuis HDFS.</li>
+	<li><div class="li-label">Utilisation mémoire</div>Une première version expérimentale de la gestion de mémoire externe est mise en place.</li>
+	<li><div class="li-label">Améliorations</div>De plus, des améliorations continues aux packages R et Python sont mises en place, notament sur la possibilité d'enregistrer et charger des modèles via ces langages. De plus, le wrapper pour SKLearn (plateforme Python) est terminé.</li>
+</ul>
+
+Ainsi, XGBoost s'est ouvert à l'univers du Big Data via YARN et HDFS, mais s'est aussi concentré sur la création d'une interface uniforme entre les principaux langages (Pyhton et R). Ceci a ensuite permis aux développeurs de se concentrer plus spécifiquement sur les performances. Dans ces principaux langages, les principaux éléments accesibles sont présentés de la Figure 15. Dans cette figure, apparaît le terme de « <i>gridsearch</i> ». Il s'agit en fait d'une méthode permettant de rechercher des paramètres optimaux pour les algorithmes (pour les paramètres de XGBoost, voir <a class="ref" href="../params.html">cette page</a>). Ceci montre donc qu'en optimisant l'interface avec Scikit Learn et R, on augmente ainsi les capacité de XGBoost en l'interfaçant convenablement avec des technologies efficaces et déjà en place.
+
+<img src="../../assets/images/mise_en_oeuvre/histdeux.png">
+<div class="img-label"><div class="fig-name">Fig. 15</div>Deuxième étape de développement de XGBoost, uniformisation des offres entre langages (d'après [10])</div>
+
+<div class="subtitle">Refactoring, autres compatibilité et parallélisme</div>
+Après avoir réalisé les interfaces avec R et Python et mis un premier pied dans le monde du Big Data et du parallélisme, les développements se sont axés pour compléter l'offre logiciel et améliorer la qualité de l'existant. Ainsi, depuis mai 2015, seulement deux nouvelles versions majeures ont été distribuées, mais étendant le pannel de possibilités.
+
+<div class="subparagraphe">Mise à jour de janvier 2016</div>
+Cette mise à jour a terminé les travaux sur les libraires R et Python en corrigeant les principaux bugs et en ajoutant plus de possibilités en paramétrage. En particulier pour Python, l'installation est simplifiée via un support pour <tt>pip</tt>. De même, des compatibilités avec les </i>Data Frames</i> de Panda ont été ajoutées.
+<br/><br/>
+Outre ces premiers usages, une API JAVA est également proposée et prête à l'emploi.
+<br/><br/>
+Enfin, cette mise à jour marque un point important du point de vue de la maintenance future en ajoutant des sécurté supplémentaires et des solutions d'intégration continue pour rendre plus robuste les futures étapes.
+
+<div class="subparagraphe">Mise à jour de juillet 2016</div>
+Cette dernière mise à jour majeure se caractérise par un refactoring important de la librairie. En particulier, le code C++ est entièrement remanié pour utiliser la version C++11, ceci implique en particulier des changements dans la gestion de l'aléatoire ou encore la gestion des pointeurs (et les questions de sécurité liées).
+<br/><br/>
+Cette mise à jour contient ensuite un nombre important de changements ou d'amélioration pour divers langages :
+<ul>
+	<li><div class="li-label">R</div>Possibilité d'utilisation des capacités de gestion de mémoire externe, ceci reste cependant toujours bloqué sous Windows pour cause de problèmes techniques.</li>
+	<li><div class="li-label">Multi-threading</div>Correctif pour rendre les librairies XGBoost et Rabit <i>thread-safe</i>.</li>
+	<li><div class="li-label">JAVA</div>Un package spécifique pour JAVA et Scala est fourni, nommé XGBoost4j. La version JAVA distribuée fonctionne également sur les frameworks JAVA Flink et Spark.</li>
+</ul>
+
+Ces mises à jour montrent donc la réelle volonté actuelle pour XGBoost, qui est de pouvoir fonctionner sur diverses machines de manière distribuée, de manière transparente. Pour y arriver, un composant d'exécution pour faire le pont entre XGBoost et les différentes plateforme a été développé, du nom de Rabit. Son intérêt est illustré à la Figure 16.
+
+<img src="../../assets/images/mise_en_oeuvre/histtrois.png">
+<div class="img-label"><div class="fig-name">Fig. 16</div>Extension de XGBoost vers un système distribué transparent par le développement de Rabit (d'après [10])</div>
+
+<div class="subtitle">Intégration dans des plateformes de machine learning</div>
+En parallèle des développements « officiels » de XGBoost, un certains nombre de plateformes de machine learning ont également annoncé intégrer XGBoost parmis les méthodes qu'elles proposaient à leurs utilisateurs. Ceci est le cas pour :
+<ul>
+	<li><div class="li-label">Data Science Studio</div>Il s'agit d'une plateforme de machine learning éditée par la société Dataiku. Cela permet ainsi à ses utilisateurs de pouvoir utiliser XGBoost sans avoir à rédiger (beaucoup) de code. Des exemples d'utilisation sont également fournis sur leur site [11]. Cet ajout a été réalisé en août 2015.</li>
+	<li><div class="li-label">H2O.ai</div>Le 28 janvier 2017, le CTO de la société H2O.ai annonce sur les réseaux sociaux que l'algorithme XGBoost sera utilisable dans leur plateforme lors de la prochaine release majeure [12].</li>
+</ul>
+
+Ces deux exemples tendent à montrer que la méthode requiert l'intérêt de la communauté, et ce très tôt (mi-2015), ce qui peut être un bon indicateur de pérénité.
+
+<div class="subtitle">Résumé</div>
+En résumé de ces avancées, T. Chen estime que le développement de XGBoost s'est fait sur le même modèle que celui d'Unix, à savoir être <i>« ouvert et s'intégrant bien aux autres systèmes par une interface commune »</i>. Son idée est résumée de la manière suivante [10] :
+
+<div class="quote">XGBoost was designed to be closed package that takes input and produces models in the beginning. The XGBoost package today becomes fully designed to be embeded into any languages and existing platforms. It is like a Lego brick, that can be combined with other bricks to create things that is much more fun than one toy.</div>
+		</div>
+	</div>
+	</body>
+</html>
+
+<script src="../../sidebar.js"></script>
+<script src="../../assets/js/create_elements.js"></script>

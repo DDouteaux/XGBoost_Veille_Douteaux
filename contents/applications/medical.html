@@ -1,0 +1,94 @@
+<html>
+	<head>
+		<script src="../../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Exemples d'applications</div>
+		<div id="main_subheader">Usages médicaux</div>
+		<div id="main_content">
+Lors de la partie consacrée aux entreprises, nous avons vu à la Table 6 que certaines entreprises situées dans l'assurance s'intéressaient à XGBoost. Ceci nous a conduit à nous intéresser à l'utilisation qui peut être faite de XGBoost en médecine.
+<br/><br/>
+Si encore une fois aucun exemple professionnel n'est ressorti, nous avons pu mettre en avant deux travaux de personnes indépendantes pour réaliser de l'analyse de données médicales avec XGBoost.
+
+<div class="subtitle">Amélioration du taux de non-présentation des patients</div>
+Ce cas d'application est issu d'un travail personnel qui fut présenté devant des gérants d'agences de santé, et n'a donc pas été réalisé qu'à des fins « d'études ». 
+<br/><br/>
+L'idée est ici de détecter des patients qui auraient dû se rendre dans des centres de santé mais ne l'ont pas fait et n'ont ainsi pas été diagnostiqués avant que des symptômes graves ne se déclenchent. 
+<br/><br/>
+Dans l'article détaillé [16], l'auteur décrit l'intégralité de son processus de traitement de données. Nous retiendrons pour notre part ici que le modèle utilisé est un simple modèle XGBoost, pour lequel une phase de préparation des données et de recherche des paramètres optimaux a été menée, notament en suivant les bonnes pratiques présentées à <a class="ref" href="../bonnes_pratiques.html">cette page</a>.
+<br/><br/>
+Le modèle obtenu fourni ici des taux de vrais positifs et vrais négatifs compris entre 90 et 92%, ce qui est considéré comme bon dans le domaine par l'auteur de l'étude. De plus, ce modèle a permis à son auteur de dresser une carte des quartiers à risque concernant ces non-présentations, que nous fournissons en Figure 18.
+
+<img src="../../assets/images/applications/flue.png">
+<div class="img-label"><div class="fig-name">Fig. 18</div>Carte de risque pour que les patients ne se présente pas au centre de soin établie à partir d'un modèle XGBoost.</div>
+
+<div class="subtitle">Prévision de foyer de grippe</div>
+Ce cas d'application (bien que beaucoup relayé sur Twitter) provient d'un membre de Github réalisant des essais de différentes méthodes de Machine Learning avec R. Dans le cadre de cet essai, l'idée était devoir s'il était possible de créer un modèle pour prévoir les morts dûs à la grippe H7N9 en Chine en 2013.
+<br/><br/>
+Après avoir fait des essais avec la plupart des méthodes classiques (Random Forest, Elastic Net et KNN entre autres), l'auteur s'est intéressée aux apports possibles de XGBoost à cette étude.
+<br/><br/>
+La conclusion est ici que XGBoot a permis d'obtenir des résultats avec moins d'imprécisions que l'ensemble des autres méthodes, et ce en utilisant les pratiques proposée à <a class="ref" href="../bonnes_pratiques.html">cette page</a>. Le code fournit est assez complet, mais le conclusions peu détaillées, en particulier les notations utilisées pour la représentation des résultats. Le lecteur intéressé pourra cependant se rendre à la page en question [17] pour de plus amples détails.
+		</div>
+	</div>
+	</body>
+</html>
+
+<script src="../../sidebar.js"></script>
+<script src="../../assets/js/create_elements.js"></script>

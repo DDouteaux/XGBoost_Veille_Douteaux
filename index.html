@@ -1,34 +1,8 @@
 <!DOCTYPE html>
 
-<!--
-	Plan du site :
-		- Accueil
-		- XGBoost au sein des méthodes d'apprentissage
-			* Généralités (apprentissage supervisé ou non,...)
-			* Historique
-			* Méthodes parents
-		- Spécificités techniques de XGBoost
-			* Principe de l'algo
-			* Aspects mathématiques
-		- Implémentations de la méthode
-			* R
-			* Python
-			* C++
-			* Autres
-		- Configurer un appel à XGBoost
-			* R
-			* Python
-			* Bonnes pratiques
-		- Exemples d'applications
-			* Kaggle
-			* Données médicales
-			* Autres
-		- Références
-		- Crédits
--->
-
 <html>
 	<head>
+		<script src="assets/js/jquery.min.js"></script>
 		<meta charset="utf8"/>
 		<title>XGBoost</title>
 		<link rel="stylesheet" type="text/css" href="assets/style/layout.css">
@@ -38,423 +12,99 @@
 		<link rel="stylesheet" type="text/css" href="assets/style/references.css">
 		<link rel="stylesheet" type="text/css" href="assets/style/collapsable_box.css">
 		<link rel="stylesheet" type="text/css" href="assets/style/font-awesome.min.css">
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="languages/fr.js"></script>
-		<script src="languages/en.js"></script>
 	</head>
+	
 	<body>
 		<div id="sidebar">
 			<hr>
 				<div class="sidebar-main-title">XGBoost</div>
 			<hr>
-			<div class="sidebar-part" data-load="accueil"><div class="text-content"></div></div>
-			<div class="sidebar-part sidebar-with-children" data-load="learning_methods" data-section-name="learning_methods"><div class="text-content"></div></div>
-			<div class="sidebar-subpart-container" data-section="learning_methods">
-				<div class="sidebar-subpart" data-load="lm_generality"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="lm_xgboost"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="lm_historic"><div class="text-content"></div></div>
+			<a class="sidebar-link sidebar-part" href="index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
 			</div>
-			<div class="sidebar-part sidebar-with-children" data-load="technical_specificity" data-section-name="technical_specificity"><div class="text-content"></div></div>
-			<div class="sidebar-subpart-container" data-section="technical_specificity">
-				<div class="sidebar-subpart" data-load="ts_algo_principle"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="ts_maths"><div class="text-content"></div></div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/more/cross_validation.html">Cross-validation native</a></div>
 			</div>
-			<div class="sidebar-part sidebar-with-children" data-load="implementations" data-section-name="implementations"><div class="text-content"></div></div>
-			<div class="sidebar-subpart-container" data-section="implementations">
-				<div class="sidebar-subpart" data-load="impl_r"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="impl_python"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="impl_cpp"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="impl_other"><div class="text-content"></div></div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/mise_en_oeuvre/params.html">Paramètres</a></div>
 			</div>
-			<div class="sidebar-part sidebar-with-children" data-load="configure" data-section-name="configure"><div class="text-content"></div></div>
-			<div class="sidebar-subpart-container" data-section="configure">
-				<div class="sidebar-subpart" data-load="conf_r"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="conf_python"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="conf_best_practice"><div class="text-content"></div></div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/applications/medical.html">Usages médicaux</a></div>
 			</div>
-			<div class="sidebar-part sidebar-with-children" data-load="uses" data-section-name="uses"><div class="text-content"></div></div>
-			<div class="sidebar-subpart-container" data-section="uses">
-				<div class="sidebar-subpart" data-load="uses_kaggle"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="uses_medical"><div class="text-content"></div></div>
-				<div class="sidebar-subpart" data-load="uses_other_uses"><div class="text-content"></div></div>
-			</div>
-			<div class="sidebar-part" data-load="ressources"><div class="text-content"></div></div>
-			<div class="sidebar-part" data-load="credits"><div class="text-content"></div></div>
-			<div id="languages">
-			<div class="language-choice language-current" data-language="fr">fr</div>
-			<div class="language-choice" data-language="en">en</div>
-			</div>
+			<a class="sidebar-link sidebar-part" href="contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="contents/references.html">Références</a>
 		</div>
 		<div id="inner_content">
-			<div id="main_header"></div>
-			<div id="main_subheader"></div>
-			<div id="main_content">
-			</div>
+		<div id="main_header">XGBoost</div>
+		<div id="main_subheader">La méthode en deux mots</div>
+		<div id="main_content">
+<div class="subtitle">Bienvenue!</div>
+<div class="subparagraph">Où suis-je?</div>
+Ce site contient l'ensemble des données récoltées lors du travail de veille technologique pour le MOS 4.4 <i>Nouvelles technologies de l'information et de la communication</i>. Il vous permettra ainsi de vous familiariser avec XGBoost, une méthode de Machine Learning, dont les fondamentaux vous sont présentés ci-dessous.
+<div class="subparagraph">Autres contenus</div>
+Outre ce site, vous pourrez trouver les informations suivantes aux liens indiqués :
+<ul>
+	<li><div class="li-label">Article</div>Le contenu de ce site a également été proposé sous la forme d'un article que vous pourrez télécharger à <a class="ref" href="https://github.com/DDouteaux/XGBoost_Veille_Douteaux/blob/master/documents/Article/XGBoost.pdf">ce lien</a>. Ce dernier propose une mise en forme différente de ce contenu, avec la possibilité de l'imprimer avec des zones réservées à vos commentaires.</li>
+	<li><div class="li-label">Support</div>Cette veille a fait l'objet d'une restitution orale dont vous pourrez retrouver les supports à <a class="ref" href="https://github.com/DDouteaux/XGBoost_Veille_Douteaux/blob/master/documents/Présentation/presentation_XGBoost.pdf">ce lien</a>.</li>
+	<li><div class="li-label">Ressources</div>Une liste de diverses ressources utiles est disponible sur ce site à <a class="ref" href="references.html">ce lien</a>.</li>
+	<li><div class="li-label">Flux Twitter</div>Pour retrouver les différents Tweets liés à cette veille, suivez <a class="ref" href="https://twitter.com/DDouteaux">ce lien</a>.</li>
+	<li><div class="li-label">Codes et autres</div>Enfin, l'intégralité des codes du site, des illustrations, des documents,...est disponible à <a class="ref" href="https://github.com/DDouteaux/XGBoost_Veille_Douteaux/">ce lien</a>.</li>
+</ul>
+En cas de question, n'hésitez pas à me contacter via mon adresse mail :
+<center>
+damien.douteaux@ecl13.ec-lyon.fr
+</center>
+
+
+<div class="subtitle">XGBoost en quelques mots</div>
+	L'objectif de de ce site est de présenter XGBoost. Mais qu'est-ce que XGBoost? Il s'agit d'une méthode de machine learning apparue il y a trois ans et dérivant des méthodes dites de boosting. Cette méthode est présentée par ses créateurs comme étant :
+	<ul>
+		<li><div class="li-label">Flexible</div>Prise en compte de plusieurs thématiques de machine learning.</li>
+		<li><div class="li-label">Portable</div>Utilisable sous toutes les plateformes (Windows, Linux, MAC)</li>
+
+		<li><div class="li-label">Multi-langages</div>L'algorithme a été porté en Python, JAVA (Spark), C++,...</li>
+		<li><div class="li-label">Distribuée</div>Depuis deux ans, l'algorithme est utilisable avec Hadoop et Spark.</li>
+		<li><div class="li-label">Perfomante</div>Cet algorithme est donné pour être plus rapide que les algorithmes de sa famille et fournir de même meilleurs résultats.</li>
+	</ul>
+	
+Mais avant toute chose, que veut exactement dire l'acronyme « XGBoost »?
+<center>E<div class="blue-letter">X</div>treme <div class="blue-letter">G</div>radiant <div class="blue-letter">Boost</div>ing</center>
+Ainsi, la méthode XGBoost s'organise autours de trois points essentiels :
+<ul>
+	<li><div class="li-label">Boosting</div>Il s'agit d'une famille d'algorithme utilisés initiallement en apprentissage supervisé. Le principe du boosting est détaillé à <a class="ref" href="boosting/premier_algo.html">cette page</a>.</li>
+	<li><div class="li-label">Gradient Boosting</div>Il s'agit d'une version du boosting dans laquelle l'objectif sera d'optimiser une fonctione faisant apparaître des gradients. Les détails de cette idée seront détaillées à <a class="ref" href="boosting/gb_et_arbres.html">cette page</a>.</li>
+	<li><div class="li-label">« Extreme »</div>Ce qualificatif signifie que la recherche de performances est poussée au maximum pour cette méthode, comme nous l'étudierons à <a class="ref" href="more/perf.html">cette page</a>.</li>
+</ul>
+Ainsi, nous allons dans un premier temps présenter les grandes lignes théoriques derrière cet algorithme avant de partir dans l'étude des implémentations et des applications de XGBoost.
+
+Nous nous intéresserons également aux aspects plus techniques de XGBoost, en regardant en détails les principaux paramètres de cette méthode d'apprentissage.
+
+Il sera également intéressant de regarder quels sont les usages réels de cette méthode, afin de nous forger un avis sur sa pérennité.
 		</div>
 	</body>
 </html>
 
-<script type="text/javascript">
-
-/*
- *
- * Gestion de la navigation
- * 
- */
-
-// Variables globales
-var _current_section = 'accueil';
-var _current_subsection = '';
-
-// Labels globaux à réutiliser sur toute l'application
-var _recycle_part_name = '';
-
-// Variables globales pour connaître le langage courrant.
-var _language = 'fr';
-var _language_array = fr_strings
-
-// Méthode pour afficher le texte de la barre de navigation.
-var set_sidebar_text = function(){
-	var sidebar_parts = $('.sidebar-part, .sidebar-subpart');
-	sidebar_parts.filter('[data-load="accueil"]').find('.text-content').text(_language_array.sections.accueil);
-	sidebar_parts.filter('[data-load="learning_methods"]').find('.text-content').text(_language_array.sections.learning_methods);
-	sidebar_parts.filter('[data-load="technical_specificity"]').find('.text-content').text(_language_array.sections.technical_specificity);
-	sidebar_parts.filter('[data-load="implementations"]').find('.text-content').text(_language_array.sections.implementations);
-	sidebar_parts.filter('[data-load="configure"]').find('.text-content').text(_language_array.sections.configure);
-	sidebar_parts.filter('[data-load="uses"]').find('.text-content').text(_language_array.sections.uses);
-	sidebar_parts.filter('[data-load="ressources"]').find('.text-content').text(_language_array.sections.ressources);
-	sidebar_parts.filter('[data-load="credits"]').find('.text-content').text(_language_array.sections.credits);
-	sidebar_parts.filter('[data-load="lm_generality"]').find('.text-content').text(_language_array.sections.lm_generality);
-	sidebar_parts.filter('[data-load="lm_historic"]').find('.text-content').text(_language_array.sections.lm_historic);
-	sidebar_parts.filter('[data-load="lm_xgboost"]').find('.text-content').text(_language_array.sections.lm_xgboost);
-	sidebar_parts.filter('[data-load="lm_parent_methods"]').find('.text-content').text(_language_array.sections.lm_parent_methods);
-	sidebar_parts.filter('[data-load="ts_algo_principle"]').find('.text-content').text(_language_array.sections.ts_algo_principle);
-	sidebar_parts.filter('[data-load="ts_maths"]').find('.text-content').text(_language_array.sections.ts_maths);
-	sidebar_parts.filter('[data-load="impl_r"]').find('.text-content').text(_language_array.sections.impl_r);
-	sidebar_parts.filter('[data-load="impl_python"]').find('.text-content').text(_language_array.sections.impl_python);
-	sidebar_parts.filter('[data-load="impl_cpp"]').find('.text-content').text(_language_array.sections.impl_cpp);
-	sidebar_parts.filter('[data-load="impl_other"]').find('.text-content').text(_language_array.sections.impl_other);
-	sidebar_parts.filter('[data-load="conf_r"]').find('.text-content').text(_language_array.sections.conf_r);
-	sidebar_parts.filter('[data-load="conf_python"]').find('.text-content').text(_language_array.sections.conf_python);
-	sidebar_parts.filter('[data-load="conf_best_practice"]').find('.text-content').text(_language_array.sections.conf_best_practice);
-	sidebar_parts.filter('[data-load="uses_kaggle"]').find('.text-content').text(_language_array.sections.uses_kaggle);
-	sidebar_parts.filter('[data-load="uses_medical"]').find('.text-content').text(_language_array.sections.uses_medical);
-	sidebar_parts.filter('[data-load="uses_other_uses"]').find('.text-content').text(_language_array.sections.uses_other_uses);
-	sidebar_parts.filter('.sidebar-with-children').find('.text-content').append('<i class="icon fa fa-chevron-down"></i>')
-}
-
-/*var click_on_recycle_methods = function(){
-	var recycle_method_div = $('[data-load="recycle_methods"]');
-	if(recycle_method_div.find('.icon')[0].className == 'icon fa fa-chevron-down'){
-		recycle_method_div.click();
-	}
-}
-*/
-// Fonction pour savoir quelle méthode de mise à jour du visuel 
-// exécuter, les méthodes appelées proviennent de scripts externes
-//
-// Params :
-// 		- val : la clé de la section pour laquelle on veut réaliser
-//					la mise à jour du contenu
-// Par défaut on charge l'accueil.
-var execute_setter_method = function (val, reinit=false){
-	_current_section = val;
-	_current_subsection = '';
-	switch(val){
-		case 'accueil':
-			set_accueil();
-			break;
-		case 'learning_methods':
-		case 'technical_specificity':
-		case 'implementations':
-		case 'configure':
-		case 'uses':
-			break;
-		case 'ressources':
-			set_ressources();
-			break;
-		case 'credits':
-			set_credits();
-			break;
-		case 'lm_generality':
-			_current_section = 'learning_methods';
-			_current_subsection = val;
-			set_lm_generality();
-			break;
-		case 'lm_xgboost':
-			_current_section = 'learning_methods';
-			_current_subsection = val;
-			set_lm_xgboost();
-			break;
-		case 'lm_historic':
-			_current_section = 'learning_methods';
-			_current_subsection = val;
-			set_lm_historic();
-			break;
-		case 'ts_algo_principle':
-			_current_section = 'technical_specificity';
-			_current_subsection = val;
-			set_ts_algo_principle();
-			break;
-		case 'ts_maths':
-			_current_section = 'technical_specificity';
-			_current_subsection = val;
-			set_ts_maths();
-			break;
-		case 'impl_r': 
-			_current_section = 'implementations';
-			_current_subsection = val;
-			set_impl_r();
-			break;
-		case 'impl_python': 
-			_current_section = 'implementations';
-			_current_subsection = val;
-			set_impl_python();
-			break;
-		case 'impl_cpp': 
-			_current_section = 'implementations';
-			_current_subsection = val;
-			set_impl_cpp();
-			break;
-		case 'impl_other': 
-			_current_section = 'implementations';
-			_current_subsection = val;
-			set_impl_other();
-			break;
-		case 'conf_r':
-			_current_section = 'configure';
-			_current_subsection = val;
-			set_conf_r();
-			break;
-		case 'conf_python':
-			_current_section = 'configure';
-			_current_subsection = val;
-			set_conf_python();
-			break;
-		case 'conf_best_practice':
-			_current_section = 'configure';
-			_current_subsection = val;
-			set_conf_best_practice();
-			break;
-		case 'uses_kaggle':
-			_current_section = 'uses';
-			_current_subsection = val;
-			set_uses_kaggle();
-			break;		
-		case 'uses_medical':
-			_current_section = 'uses';
-			_current_subsection = val;
-			set_uses_medical();
-			break;
-		case 'uses_other_uses':
-			_current_section = 'uses';
-			_current_subsection = val;
-			set_uses_other_uses();
-			break;
-		case 'ressources':
-			set_ressources();
-			break;
-		case 'credits':
-			set_credits();
-			break;
-		default:
-			console.log('[WARNING] Un cas qui ne devait pas se produire est arrivé dans execute_setter_method -- index.html');
-			console.log('          Valeur problématique : ' + val);
-			_current_section = 'accueil';
-			set_accueil();
-			break;
-	}
-}
-
-var load_section = function(key, header, subheader, content){
-	init_common_divs(header, subheader, content);
-	select_section(key)
-}
-
-/*
- *
- *  Méthodes pour créer autmatiquement des éléments avec des styles donnés
- *
- */
-
-// Génération d'un sous titre (bleu gras avec petit soulignement)
-var create_subtitle = function(content){
-	return '<div class="subtitle">' + content + '</div>';
-}
-
-var create_collapsable_box = function(title, content){
-	return '<div class="collapsable_container"><div class="collapse_title">' + title + '<i class="icon fa fa-chevron-up collapse_arrow"></i></div><div class="collapse_content">' + content + '</div></div>';
-}
-
-var init_collapsable_box = function(){
-	$('.collapse_title').on('click', function(e){
-		$(e.target.parentNode).find('.collapse_content').toggle();
-		var arrow = $(e.target).find('.collapse_arrow')[0];
-		if(arrow.className.search('down') != -1){
-			arrow.setAttribute('class', arrow.className.replace('down', 'up'));
-		} else {
-			arrow.setAttribute('class', arrow.className.replace('up', 'down'));
-		}
-	});
-	$('.collapse_title').click();
-}
-
-var create_list_item = function(class_name, content, onclick_method){
-	return '<div class="' + class_name + '" ' + (typeof onclick_method == 'undefined' ? '' : 'onclick="' + onclick_method + '"') + '><i class="icon fa fa-beer"></i>' + content + '</div>';
-}
-
-/*
- *
- *  Gestion des langues
- *
- */
-
-// Attention, language_array est défini un peu plus haut, car nécessaire pour afficher les labels de navigation.
-
-// Fonction pour la gestion des langues
-$('.language-choice').on('click', function(){
-	$.each($('.language-current'), function(){
-		this.className = 'language-choice';
-	});
-	this.className = 'language-choice language-current';
-	switch(this.getAttribute('data-language')){
-		case 'fr':
-			_language_array = fr_strings;
-			break;
-		case 'en':
-			_language_array = en_strings;
-			break;
-	}
-	set_sidebar_text();
-	switch(_current_section){
-		case 'main_quest':
-			if(questions.current_question == 'end'){
-				//console.log('[INFO] Rechargement de la page de réponse');
-				set_result_page();
-			} else if(questions.current_question != 'init') {
-				//console.log('[INFO] Rechargement d\'une page de question.');
-				questions.load_question(questions.current_question);
-			} else {
-				execute_setter_method(_current_section);
-			}
-			break;
-		case 'recycle_methods':
-			generate_methods_index();
-		default:
-			execute_setter_method(_current_section);
-			break;
-	}
-});
-
-// Méthode pour le nettoyage des divs communes à toutes les sections.
-// Après le nettoyage, on met à jour avec les nouvelles valeurs.
-//
-// Params :
-//  	- header : le titre principale de la page
-//  	- subheader : le titre secondaire de la page
-//  	- content : le contenu de la page
-var init_common_divs = function(header, subheader, content){
-	$('#main_header').empty();
-	$('#main_subheader').empty();
-	$('#main_content').empty();
-	$('#main_header').append(header);
-	$('#main_subheader').append(subheader);
-	$('#main_content').append(content);
-}
-
-// Sélection de la section dans le panneau latéral, ie. on enlève la surbrillance sur toute section 
-// précédemment sélectionnée, et on sélectionne la section mentionnée.
-//
-// Params :
-//		- key : la clé de la section a sélectionner
-var select_section = function(key){
-	$('.sidebar-part, .sidebar-subpart').removeClass('selected')
-	$('.sidebar-part, .sidebar-subpart').filter('[data-load="' + key + '"]').addClass('selected')
-}
-
-/*
- *
- * Méthodes et objets utilisés pour la gestion de la barre de
- * navigation de l'application.
- *
- */
-
-// Gestion des zones de la barre de navigation qui contiennent des
-// sous-parties. Pour cette gestion, au clic on récupère la var
-// section_name qui est enregistrée dans le HTML pour dérouler la
-// sous-section correspondante.
-// L'intérêt de fonctionner par ce système de clé-valeur, est que 
-// la div contenant les sous-sections n'est pas comprise dans la
-// div du titre principal, et ainsi on éviter de ferme l'onglet au
-// clic sur une sous-section. 
-$('.sidebar-with-children').on('click', function(e){
-	var section_name = this.getAttribute('data-section-name');
-	var associated_sections = $('.sidebar-subpart-container[data-section="' + section_name + '"]');
-	if(associated_sections.css('display') == 'none' || associated_sections.css('display') == ''){
-		$(this).find('.icon')[0].className = 'icon fa fa-chevron-up';
-		associated_sections.css('display', 'block');
-	} else {
-		$(this).find('.icon')[0].className = 'icon fa fa-chevron-down';
-		associated_sections.css('display', 'none');
-	}
-});
-
-// Gestion des clics sur un élément quelconque de la sidebar pour
-// connecter ce clic à la fonction de mise à jour du contenu adéquate.
-$('.sidebar-part, .sidebar-subpart').on('click', function(){
-	execute_setter_method(this.getAttribute('data-load'));
-});
-
-/*
- *
- * Méthodes utilitaires
- *
- */
-
- // Méthode pour échanger les clés et les valeurs d'un objet JSON.
- //
- // Params: 
- //		- json : le JSON sur lequel exécuter l'opération.
-var swap = function(json){
-  var ret = {};
-  for(var key in json){
-    ret[json[key]] = key;
-  }
-  return ret;
-}
-
-Array.prototype.insert = function (index, item) {
-  this.splice(index, 0, item);
-};
-
-/*
- *
- * Après avoir initialisé toute l'application, on charge l'accueil.
- *
- */
-set_sidebar_text();
-</script>
-
-<script src="contents/accueil.js"></script>
-<script src="contents/credits.js"></script>
-<script src="contents/ressources.js"></script>
-<script src="contents/learning_methods.js"></script>
-<script src="contents/learning_methods/lm_historic.js"></script>
-<script src="contents/learning_methods/lm_xgboost.js"></script>
-<script src="contents/learning_methods/lm_generality.js"></script>
-<script src="contents/technical_specificity.js"></script>
-<script src="contents/technical_specificity/ts_algo_principle.js"></script>
-<script src="contents/technical_specificity/ts_maths.js"></script>
-<script src="contents/implementations.js"></script>
-<script src="contents/implementations/impl_r.js"></script>
-<script src="contents/implementations/impl_python.js"></script>
-<script src="contents/implementations/impl_cpp.js"></script>
-<script src="contents/implementations/impl_other.js"></script>
-<script src="contents/configure.js"></script>
-<script src="contents/configure/conf_r.js"></script>
-<script src="contents/configure/conf_python.js"></script>
-<script src="contents/configure/conf_best_practice.js"></script>
-<script src="contents/uses.js"></script>
-<script src="contents/uses/uses_kaggle.js"></script>
-<script src="contents/uses/uses_medical.js"></script>
-<script src="contents/uses/uses_other_uses.js"></script>
+<script src="assets/js/create_elements.js"></script>

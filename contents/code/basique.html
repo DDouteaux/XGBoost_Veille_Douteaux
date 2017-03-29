@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<script src="../../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+ 	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Exemples de codes</div>
+		<div id="main_subheader">Utilisation basique</div>
+		<div id="main_content">
+Avant de regarder plus en détail des utilisations des fonctionnalités originales et avancées de XGBoost, nous fournirons ici quelques exemples d'utilisations de XGBoost avec les principaux langages sur lesquels il a été porté. Les différents exemples présentés proviennent directement de la documentation de XGBoost et présentent l'avantage de concerner le même jeu de données.
+
+<div class="subtitle">En Python</div>
+Tout le code nécessaire à l'utilisation de XGBoost est regroupé au sein du package développé mentionné dans l'historique (voir <a class="ref" href="../mise_en_oeuvre/historique.html">cette page</a>). Pour l'installation des packages sur les différentes plateforme, vous pouvez vous référer à [20].
+
+<img src="../../assets/images/code/python.png">
+
+<div class="subtitle">En R</div>
+Tout le code nécessaire pour l'utilisation de XGBoost est ici aussi contenu dans un package nommé <tt>xgboost</tt>. Pour l'installation du package sous R, vous pouvez vous référer à [20], il est à noter que cette installation est automatique en utilisant le package disponible sur le CRAN.
+
+<img src="../../assets/images/code/r.png">
+
+<div class="subtitle">En Julia</div>
+Julia est un langage plus récent, mais pouvant être utilisé à même titre que le Python, notamment dans des contextes de calculs numériques, de statistiques ou même de programmation générale et de serveurs webs (Julia est aussi censé être plus rapide que Python d'un point de vue exécution, d'où son intérêt aujourd'hui).
+<br/><br/>
+À ce titre, XGBoost a rapidement été porté pour ce langage, on remarquera dans le code ci-dessous la proximité avec les syntaxes de R et Python pour l'utilisation de XGBoost.
+
+<img src="../../assets/images/code/julia.png">
+
+<div class="subtitle">En Scala</div>
+Pour terminer sur les exemples d'utilisation basique de XGBoost, nous fournissons un exemple dans un langage un peu plus exotique qu'est Scala. L'intérêt est ici de voir que XGBoost a également été porté sur des langages à mi-chemin entre l'objet et le fonctionnel.
+<br/><br/>
+On remarquera également que le portage de XGBoost sur JAVA s'est principalement fait par Scala. On remarquera en particulier qu'il existe tout un pan de la communauté Spark, qui semble passer directement par Scala pour utiliser XGBoost (et considérer l'interfaçage avec JAVA comme secondaire), comme en témoigne [21] ou encore [22]. La syntaxe devient cependant plus lourde qu'elle ne peut l'être en R ou Python, comme en témoigne le code suivant.
+
+<img src="../../assets/images/code/scala.png">
+
+<div class="subtitle">Résumé sur les utilisations basiques</div>
+En définitive, nous pouvons remarquer ici que quel que soit le langage, l'utilisation de XGBoost reste assez transparente, et axée en quatre grandes parties :
+<ul>
+	<li><div class="li-label">Chargement des données</div>Plus particulièrement, on remarque que les données sont chargées et enregistrées au format « <tt>DMatrix</tt> », qui correspond à un format spécialement développé pour XGBoost et ses optimisations de performances. Cette couche est parfois cachée (Python, R) et parfois visible (Scala).</li>
+	<li><div class="li-label">Spécification des paramètres</div>Nous passons sous silence ici la manière de chercher ces valeurs (voir <a class="ref" href="../bonnes_pratiques.html">cette page</a> pour des directions à suivre), mais quoiqu'il en soit, ces dernières sont toujours fournies à l'algorithme sous forme de structures de données telles des <tt>map</tt>, des <tt>hash</tt> ou des dictionnaires.</li>
+	<li><div class="li-label">Entraînement du modèle</div>Quel que soit le langage, il suffit d'appeler une méthode XGBoost dont les paramètres reprennent ceux déterminées précédemment, et à laquelle on fournit également l'ensemble d'apprentissage et le nombre d'itérations.</li>
+	<li><div class="li-label">Prédiction avec le modèle</div>Pour cela, on utilise les méthodes de prédictions natives des langages (<tt>predict</tt>,...).</li>
+</ul>
+Ainsi, le fonctionnement reste fortement transparent et transposable entre les langages, dans les limites syntaxiques de ces derniers.
+		</div>
+	</div>
+	</body>
+</html>
+
+<script src="../../sidebar.js"></script>
+<script src="../../assets/js/create_elements.js"></script>
+<script type="text/javascript">
+     SyntaxHighlighter.all()
+</script>

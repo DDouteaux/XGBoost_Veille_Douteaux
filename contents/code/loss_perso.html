@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<script src="../../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Exemples de codes</div>
+		<div id="main_subheader">Fonction de perte personnalisée</div>
+		<div id="main_content">
+Nous avons à plusieurs reprise mentionné la possibilité d'utiliser les fonctions de pertes personnalisées avec XGBoost. Un exemple est fournit ci-dessous où l'on définit manuellement la fonction de log-vraissemblance pour la perte. La mesure de log-vraissemblance fait en réalité partie des options possibles par défaut dans XGBoost, elle est cependant présentée sous cette forme « manuelle » ici à titre d'exemple. Pour mémoire, la manière de l'appeler serait de faire <tt>objective = "binary:logistic"</tt>.
+<br/><br/>
+Cet exemple est réalisé en R, mais le fonctionnement sera le même pour d'autres langages.
+<img src="../../assets/images/code/loss.png">
+
+On remarque donc que la définition est des plus simples (tant que l'on peut trouver des expressions algébriques...), dans la mesure où les seuls éléments demandés sont de pouvoir exprimer le gradient et la hessienne de la fonction de perte.
+		</div>
+	</div>
+	</body>
+</html>
+
+<script src="../../sidebar.js"></script>
+<script src="../../assets/js/create_elements.js"></script>

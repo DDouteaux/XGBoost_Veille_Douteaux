@@ -1,0 +1,114 @@
+<html>
+	<head>
+		<script src="../../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Exemples d'applications</div>
+		<div id="main_subheader">Challenges Kaggle</div>
+		<div id="main_content">
+Comme cela a été expliqué, XGBoost est initiallement apparue lors d'un challenge Kaggle. Le challenge en question date de septembre 2014 et avait pour objectif d'explorer les apports possibles du Machine Learningpour la découverte de l'importance des expériences. En particulier, l'idée était la recherche possible de signal provenant de ces bosons à écarter d'un bruit important.
+</br/><br/>
+Le code utilisé était encore une version simple, mais qui a fourni un résultat capable de se classer parmis les 10\% les meilleurs (on pourra retrouver le code utilisé sur le répertoire Git de XGBoost [14]).
+</br/><br/>
+De plus, ces bons résultats ont conduits un nombre important de compétiteurs à tester cette solution qui a fini par être une des plus utilisées dans cette compétition.
+</br/><br/>
+Une présentation proposée post-challenge précise qu'il était ainsi possible se classer vers le vingt-cinquième rang de la compétition en utilisant un simple modèle XGBoost [15].
+
+<div class="subtitle">Utilisations suivantes</div>
+Par la suite, XGBoost a acquis une notoriété grandissante parmis les challengers de Kaggle et est aujourd'hui très largement diffusé dans cette communauté. Il entre ainsi dans la plupart des solutions obtenant de bons classements au côté d'autres méthodes comme les Random Forest. Des exemples marquants ont été regroupés dans la Table 4.
+
+<table>
+	<tr>
+	    <th> \textbf{Classement} </th> <th> \textbf{Année} </th> <th> \textbf{Challenge} </th> <th> \textbf{Concurrent} </th>
+	</tr>
+	<tr>
+		<td> 2\up{nd} </td> <td> 2017 </td> <td> Allstate Claims Severity Competition </td> <td> A. \textsc{Noskov} </td> 
+	</tr> 
+	<tr> 
+		<td> 1\up{er} </td> <td> 2016 </td> <td> Knowledge Discovery and Data Mining Cup </td> <td> V. \textsc{Sandulescu} </td> 
+	</tr> 
+	<tr>
+		<td> 1\up{et} et 3\up{ème} </td> <td> 2015 </td> <td> CERN LHCb experiment Flavour of Physics competition </td> <td> V. \textsc{Mironov} </td> 
+	</tr>
+ 	<tr>
+		<td> 1\up{er} </td> <td> 2015 </td> <td> Caterpillar Tube Pricing competition </td> <td> M. \textsc{Filho} </td> 
+	</tr> 
+	<tr>
+		<td> 2\up{ème} </td> <td> </td> <td> Airbus New User Bookings </td> <td> N. \textsc{Kuroyanagi} </td> 
+	</tr> 
+	<tr>
+		<td> 2\up{ème} </td> <td> </td> <td> Allstate Claims Severity </td> <td> A. \textsc{Noskov} </td> 
+	</tr> 
+	<tr>
+	    <td> 10\% </td> <td> 2014 </td> <td> Higgs Boson Competition </td> <td> T. \textsc{Chen} </td>
+	</tr>
+</table>
+<div class="img-label"><div class="fig-name">Tab. 4</div>Quelques résultats utilisant XGBoost lors de challenges Kaggle</div>
+
+L'influence de XGBoost dans le milieu des challenges Kaggle peut se résumer ainsi :
+
+<div class="quote">Sur les challenges Kaggle de 2015, 17 solutions gagnantes sur 29 utilisaient XGBoost.</div>
+				</div>
+	</div>
+	</body>
+</html>
+
+<script src="../../sidebar.js"></script>
+<script src="../../assets/js/create_elements.js"></script>

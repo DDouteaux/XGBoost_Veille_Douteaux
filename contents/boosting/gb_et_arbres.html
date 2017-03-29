@@ -1,0 +1,167 @@
+<html>
+	<head>
+		<script src="../../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Boosting</div>
+		<div id="main_subheader">Gradient Boosting et arbres</div>
+		<div id="main_content">
+Désormais que nous venons de voire l'importance de la perte et de la complexité engendrées par les modèles, nous allons voir comment les utiliser dans le cas du gradient boosting appliqué aux arbres.
+
+<div class="subtitle">Modèles à base d'arbres</div>
+Pour cette partie, nous considérerons un exemple proposé par les concepteurs de XGBoost et repris dans la documentation [2] et [3]. On considère donc la situation où on essaie de créer un modèle pour savoir si les membres d'une famille apprécient les jeux vidéos.
+<br/><br/>
+Les modèles qui seront pris en exemple sont des modèles à base d'arbre, car ils seront plus simple à visualiser et expliquer.
+<br/>
+Un modèle pouvant convenir et obtenu par exemple avec la méthode CART est représenté à la Figure 9.
+
+<img src="../../assets/images/boosting/arbre.png">
+<div class="img-label"><div class="fig-name">Fig. 9</div>Arbre pouvant convenir pour expliquer la goût des jeux vidéos dans la famille (d'après [3])</div>
+
+Ce modèle nous apprend par exemple que des garçons de moins de 15 ans devraient avoir un fort attrait pour les jeux vidéos, ce qui n'est par exemple pas le cas des individus de plus de 15 ans. Pour réduire le taux d'erreur et obtenir de meilleurs résultats, on peut comme nous l'avons vu à <a class="ref" href="premier_algo.html">cette page</a> utiliser plusieurs de ces modèles simples et les combiner.
+<br/><br/>
+Par exemple, à la Figure 10, nous avons entraîné deux arbres, et les résultats en prédiction consistent à sommer les prédictions (scores) obtenus avec chaque arbre. Ceci permet d'obtenir des résultats plus sûrs et de combiner plus d'informations qu'un seul modèle ne le permettrait.
+
+<img src="../../assets/images/boosting/arbres.png">
+<div class="img-label"><div class="fig-name">Fig. 10</div>Deux arbres utilisés conjointement pour obtenir le résultat (d'après [3])</div>
+
+Avec les deux arbres de la Figure 10, on peut alors calculer une nouvelle prédiction\mysidenote{La formule théorique donnant la prédiction \(\hat{y}_i\) est \(\displaystyle{\hat{y}_i=\sum_{k=1}^K f_k(x_i)}\), où on utilise \(K\) arbres notés chacun \(f_k\). L'individu pour lequel on cherche une prédiction est noté \(x_i\) :
+
+<img src="../../assets/images/boosting/note.png">
+
+Pour construire tous les arbres nécessaires, on pourrait fonctionner comme dans <a class="ref" href="premier_algo.html">cette page</a>. Cependant, ceci permettrait de bien optimier la partie coût des erreurs (fonction \(\mathcal{L}\) de la fonction objectif), mais en aucun cas de limiter la complexité finale. Nous allons donc voir dans la suite un algorithme permettant de prendre en compte ses deux aspects simultanément.
+
+<div class="subtitle">Ajouter des arbres en optimisant le coût</div>
+L'objectif est de construire \(K\) arbres. Pour cela, la méthode retenue est dite additive, dans la mesure où nous allons ajouter un arbre par itération de l'algorithme. L'objectif est alors d'optimiser l'arbre ajouté à chaque étape. Quand on passe de l'étape \(t-1\) (ie. avec \(t-1\) arbres) à l'étape \(t\), l'objectif devient :
+
+<center>
+\(\displaystyle{objectif^{(t)}=\sum_{i=1}^n\ell\left(y_i, \hat{y}_i^{(t-1)}+f_t(x_i)\right)+\Omega(f_t)+constante}\)
+</center>
+
+La fonction \(\ell\) représente la perte entre la théorie (\(y_i\)) et la prédiction à l'étape \(t\) qui est obtenue en ajoutant la prédiction de l'arbre \(f_t\). Une solution courrante est de prendre l'erreur MSE pour \(\ell\).
+<br/><br/>
+Dans le cas de l'erreur MSE, la relation donnant la fonction de perte peut s'écrire « simplement », ce qui n'est pas toujours le cas. Ainsi, l'usage veut que l'on utiliser un développement de Taylor pour remanier la relation donnant la fonction de perte, on obtient alors la relation suivante :
+
+\begin{equation}
+objectif^{(t)}=\sum_{i=1}^n\left[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)\right]+\Omega(f_t)
+\end{equation}
+
+Dans cette relation, la fonction \(g_i\) représente la dérivée première de \(\ell\) et \(h_i\) sa dérivée seconde selon \(\hat{y}_i^{(t-1)}\).
+<br/><br/>
+Quelle est la particularité de cette expression finale? Il s'agit de sa seule dépendance en les dérivée de la fonction de perte, il est donc simple d'utiliser des fonctions de perte particulières sans devoir changer tout le code. Ces dérivées sont donc tout simplement des paramètres du modèle final. Un exemple d'utilisation de ces fonctions de coûts personnalisées sera proposé à <a class="ref" href="../code/loss_perso.html">cette page</a>.
+
+<div class="subtitle">Optimiser la complexité</div>
+
+Dans la relation de l'objectif final, nous avons déjà traité la question de la fonction de coût, reste à traiter le cas de la complexité du modèle (aussi appelée régularisation). Si l'on note \(\omega_j\) le score prévu par la feuille \(j\) de l'arbre, une expression de la complexité \(\Omega\) courrament utilisée est alors :
+
+\begin{equation}
+\Omega(f_t)=\gamma T+\frac{1}{2}\lambda\sum_{j=1}^T\omega_j^2\hspace{1cm}\text{\(T\) est le nombre de feuilles de \(f_t\)}
+\end{equation}
+
+Dans quelle mesure cette expression est-elle légitime? En partie car elle reflète un contrôle sur des termes importants (voir plus bas), mais aussi par ses performances jugées (très) bonnes en pratique. Bien entendu, d'autres expressions seraient possibles!
+<br/>
+On remarque que cette expression de la complexité a la particularité de proposer deux nouveaux paramètres :
+<ul>
+	<li><div class="li-label">\(\gamma\)</div>Ce paramètre permet de porter plus ou moins l'accent sur le nombre de feuilles de l'arbre.</li>
+	<li><div class="li-label">\(\lambda\)</div>Ce paramètre permet de porter plus ou moins l'accent sur les poids des feuilles, pour éviter qu'ils prennent des valeurs irréalistes.</li>
+</ul>
+
+<div class="subtitle">Choix de l'arbre</div>
+Nous savons désormais quelle fonction optimiser. Reste à savoir comment filtrer les arbres en fonction de cette formule.
+
+<div class="subparagraph">Solution naïve</div>
+La solution naïve consisterait à envisager <i>toutes</i> les structures d'arbres possibles. Une fois cette énumération réalisée, on calculer la fonction objectif pour chacune de ces structures et on trouve ensuite celle fournissant la meilleure valeur pour l'objectif. Il resterait alors à optimiser les poids des feuilles pour cette structure. Des formules adaptées à ce cas existent et sont détaillées dans [3].
+
+<div class="subparagraph">Construction au coup par coup</div>
+Cependant, on se rend compte qu'en pratique cette solution est coûteuse en temps de calcul et n'est donc pas réaliste. La démarche proposée à la place est alors de construire les arbres au coût par coût.
+<br/><br/>
+L'idée est alors de commencer à la racine. À partir de cette dernière, on énumère tous les découpages possibles, et on garde celui de meilleur gain. On fait ensuite de même pour le fils gauche et le fils droit et ainsi de suite. Ce algorithme nécessite donc de calculer un gain pour les découpages proposés. Dans le nouvel arbre, chaque individu va être associé (comme auparavant) à un \(g_i\) et un \(h_i\). Le gain s'écrit alors :
+
+\begin{equation}
+Gain=\frac{1}{2}\left[\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{\left(G_L+G_R\right)^2}{H_L+H_R+\lambda}\right]-\gamma
+\end{equation}
+
+Ici, les termes indexés par \(L\) représentent des sommes sur les \(g_i\) ou les \(h_i\) pour la feuille de gauche. Ceux indexés par \(R\) représentent des sommes pour la feuille de droite. Les cœ fficients \(\lambda\) et \(\gamma\) correspondent aux termes de régularisation abordés précédemment.
+
+<br/><br/>
+Alors, les termes de l'expression de ce gain sont dans l'ordre :
+<ul>
+	<li>Le score de la nouvelle feuille gauche.</li>
+	<li>Le score de la nouvelle feuille droite.</li>
+	<li>Le score de la feuille initiale (celle que l'on découpe).</li>
+	<li>Un terme de régularisation sur le nombre de feuilles, voir l'expression de la complexité.</li>
+</ul>
+
+Une première remarque est que le gain peut être négatif. Là où des méthodes d'élagage arrêteraient l'algorithme, l'idée pour XGBoost est de continuer autant que possible (jusqu'à épuisement des instances ou que l'on ait atteint une profondeur/nombre de feuilles demandés). Procéder ainsi, peut par exemple permettre de retrouver des découpage très intéressants que nous aurions éventuellement pu oublier si on coupait au premier gain négatif.
+<br/><br/>
+Un exemple de découpage et une partie des calculs associés vous est présenté à la Figure 11.
+
+<img src="../../assets/images/boosting/prunning.png">
+<div class="img-label"><div class="fig-name">Fig. 11</div>Comment déterminer le meilleur découpage à une étape donné (d'après [3])</div>
+
+En pratique, on ne teste même pas tous les découpages possibles. À la place, on procède comme à la 11, ie. on ordonne les instances par valeur attendue (le \(y_i\) théorique). On regarde alors juste les découpages obtenus en coupant entre les éléments de la gauche vers la droite. On regarde ainsi uniquement \(n_l\) découpages possibles, où \(n_l\) est le nombre d'éléments de la feuille, ce qui est bien mieux que de regarder tous les découpages possibles, c'est-à-dire \(\displaystyle{\approx\sum_{i=1}^{\left\lfloor\frac{n_l}{2}\right\rfloor}\binom{i}{n_l}}\) solutions.
+<br/><br/>
+En résumé, l'algorithme revient à construire les \(n\) arbres un à un. Ces derniers sont alors construits au coup par coup en calculant les gains des différents découpages possibles. Les arbres sont ensuite élagués après avoir été totalement construits. On optimise ainsi à chaque étape de l'algorithme une fonction de objectif influant sur la qualité du modèle (fonction de coût/perte) aussi bien que sur sa complexité.
+		</div>
+	</body>
+</html>
+
+<script src="../../sidebar.js"></script>
+<script src="../../assets/js/create_elements.js"></script>

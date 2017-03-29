@@ -1,0 +1,136 @@
+<html>
+	<head>
+		<script src="../../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/font-awesome.min.css">
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Boosting</div>
+		<div id="main_subheader">Un premier algorithme</div>
+		<div id="main_content">
+Pour commencer, nous allons présenter l'idée originale de l'algorithme de Boosting présenté par R. Schapire en 1989. Comme nous l'avons précisé, l'idée est de construire de « mauvais » classifieurs au fur et à mesure qui combiné fourniront un excellent classifieur.
+
+<br/><br/>
+Pour nos exemples, nous allons considérer la situation de la Figure 1. Le problème a traiter ici est un problème de classification supervisé, c'est-à-dire que l'on désire entraîner un classifieur pour pouvoir séparer les carrés des cercles.
+
+<img src="../../assets/images/boosting/algo_11.png">
+<div class="img-label"><div class="fig-name">Fig. 1</div>Deux ensembles à séparer par le modèle que l'on entraîne (d'après [1])</div>
+
+Pour commencer, l'idée est d'entraîner un premier classifieur. Cependant, pour retirer une partie du biais des données, ce dernier ne sera entraînée que sur une partie des données (choisie arbitrairement). Nous retrouvons ainsi en Figure 2a l'ensemble d'apprentissage qui est en rouge, et en Figure 2b le classifieur appris sur ces données, notés h<div class="sub-text">1</div>.
+
+<div style="display:block">
+<div style="width:49%; display:inline-block;">
+	<img src="../../assets/images/boosting/algo_21.png">
+	<div class="img-label"><div class="fig-name">Fig. 2a</div>Données d'apprentissage choisies aléatoirement</div>
+</div>
+<div style="width:49%; display:inline-block;">
+	<img src="../../assets/images/boosting/algo_22.png">
+	<div class="img-label"><div class="fig-name">Fig. 2b</div>Classifieur h<div class="sub-text">1</div> obtenu sur l'ensemble ■ •</div>
+</div>
+<div class="img-label"><div class="fig-name">Fig. 2</div>Premier modèle appris sur les données (d'après [1])</div>
+</div>
+
+Sans surprise, ce classifieur n'est pas parfait et réalise un certain nombre d'erreurs (indiquées en rouge sur la Figure 2b). Toute l'idée du Boosting est alors de créer de nouveaux modèles en changeant l'ensemble d'apprentissage de manière « intelligente ». 
+
+<br/><br/>
+
+Dans notre cas, nous allons choisir un nouvel ensemble d'apprentissage qui regroupe des éléments n'étant pas dans l'ensemble initial et pour lesquels les prévisions de h<div class="sub-text">1</div> sont équiprobablement correctes et incorrectes. Cet ensemble est représenté sur la Figure 3a. On apprend alors à partir de cet ensemble un nouveau classifieur h<div class="sub-text">2</div> présenté à la Figure 3b.
+
+<div style="display:block">
+<div style="width:49%; display:inline-block;">
+	<img src="../../assets/images/boosting/algo_31.png">
+	<div class="img-label"><div class="fig-name">Fig. 3a</div>Données d'apprentissage pour le deuxième classifieur</div>
+</div>
+<div style="width:49%; display:inline-block;">
+	<img src="../../assets/images/boosting/algo_32.png">
+	<div class="img-label"><div class="fig-name">Fig. 3b</div>Classifieur h<div class="sub-text">2</div> obtenu sur l'ensemble</div>
+</div>
+<div class="img-label"><div class="fig-name">Fig. 3</div>Deuxième modèle appris sur les données (d'après [1])</div>
+</div>
+
+On remarque qu'ici le modèle h<div class="sub-text">2</div> ne fait pas d'erreurs sur son ensemble d'apprentissage (qui est cependant peu fourni), ceci est un cas particulier et n'est pas automatique. À cette étape, nous disposons donc de deux modèles, le second permettant de « rattraper » des erreurs du premier.
+
+<br/><br/>
+
+Nous continuons alors sur le même principe, en entraînant un troisième classifieur. Son ensemble d'apprentissage sera choisit dans les points n'ayant pas encore servis à l'apprentissage, et pour lesquels les deux autres classifieurs sont en désaccord, voir la Figure 4a. Le troisième classifieur, noté h<div class="sub-text">3</div> est représenté à la Figure 4b.
+
+<div style="display:block">
+<div style="width:49%; display:inline-block;">
+	<img src="../../assets/images/boosting/algo_41.png">
+	<div class="img-label"><div class="fig-name">Fig. 4a</div>Données d'apprentissage pour le troisième classifieur</div>
+</div>
+<div style="width:49%; display:inline-block;">
+	<img src="../../assets/images/boosting/algo_42.png">
+	<div class="img-label"><div class="fig-name">Fig. 4b</div>Classifieur h<div class="sub-text">3</div> obtenu sur l'ensemble</div>
+</div>
+<div class="img-label"><div class="fig-name">Fig. 4</div>Troisième modèle appris sur les données (d'après [1])</div>
+</div>
+
+À la fin de ce processus (qui aurait pu durer plus longtemps si nous l'avions désiré), nous obtenons trois classifieurs. Comme cela a été vu, ces derniers ont été créés de manière à ce qu'ils corrigent leurs erreurs entre eux, ce paramètre étant pris en compte par la construction des ensembles d'apprentissage. Ainsi, l'utilisation de tous ces classifieurs revient pour chaque point à réaliser une prédiction avec tous les classifieurs et d'attribuer la classe ayant le plus de vote. On moyenne ainsi les erreurs des classifieurs entre eux et on réduit ainsi le biais de la prédiction. Cette décision finale est illustrée à la Figure 5, où les erreurs sont précisées en rouge.
+
+<img src="../../assets/images/boosting/algo5.png">
+<div class="img-label"><div class="fig-name">Fig. 5</div>Prévision finale conjointe des trois classifieurs entraînés par Boosting (d'après [1])</div>
+
+Cette première version de l'algorithme de Boosting a subit de nombreuses améliorations jusqu'à aujourd'hui, les plus notables étant :
+<ul>
+	<li><div class="li-label">Adaboost</div>Cette version de l'algorithme change la manière de construire l'ensemble d'apprentissage. Au lieu de prendre des sous-ensembles d'apprentissage, cette méthode propose de pondérer très fortement les éléments mal classés, et dans le même temps de pondérer faiblement les éléments bien classés. L'idée est alors qu'à chaque étape on va principalement apprendre sur les données en erreurs, et contrebalancer les votes précédents. Cette méthode va donc se focaliser sur les cas « difficiles » de l'ensemble d'apprentissage. Si cette solution permet de converger très rapidement et avec grande précision, on voit également qu'elle va s'efforcer au maximum de bien classer tous les éléments, y compris ceux étant abhérents. Ainsi, cette méthode va augmenter l'improtance des exemples mal-classés, isolés (outliers) ou encore mal-enregistrés.</li>
+	<li><div class="li-label">Gradient Boosting Machine (GBM)</div>Une version un peu remaniée de ces derniers sera abordée à <a class="ref" href="gb_et_arbres.html">cette page</a>.</li>
+</ul>
+		</div>
+	</body>
+</html>
+
+<script src="../../sidebar.js"></script>
+<script src="../../assets/js/create_elements.js"></script>

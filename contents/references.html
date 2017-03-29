@@ -1,0 +1,99 @@
+<html>
+	<head>
+		<script src="../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Principales références</div>
+		<div id="main_subheader"></div>
+		<div id="main_content">
+		La liste suivante n'est pas exhaustive, mais constitue les principales sources qui ont été utilisées pour établir ce site et l'article qui y est associé.
+<ul>
+	<li><div class="li-label">[1]</div>Haytham Elghazel. <i>Méthodes ensemblistes pour l’apprentissage supervisé.</i> Support de cours à l'UCBL, 2016.</li>
+	<li><div class="li-label">[2]</div>T. Chen et al. <a class="ref" href="https://xgboost.readthedocs.io/en/latest/"><i>Scalable and flexible gradient boosting</i></a>. Accès le 25/03/2017.</li>
+	<li><div class="li-label">[3]</div>T. Chen et C. Guestrin. <i>Xgboost : A scalable tree boosting system</i>. ArXiV, 2016.</li>
+	<li><div class="li-label">[4]</div>Z. Fang. <a class="ref" href="http://zhanpengfang.github.io/418home.html"><i>Parallel gradient boosting decision trees</i></a>. Accès le 25/03/2017.</li>
+	<li><div class="li-label">[5]</div>T. Chen et T. He. <i>Higgs boson discovery with boosted trees</i>. JMLR : Workshop and Conference Proceedings, 2014.</li>
+	<li><div class="li-label">[6]</div>T. He. <a class="ref" href="http://www.parallelr.com/parallel-computation-with-r-and-xgboost/"><i>Parallel computation with R and xgboost</i></a>. 24 janvier 2017.</li>
+	<li><div class="li-label">[7]</div>Szilard Pafka. <a class="ref" href="http://datascience.la/benchmarking-random-forest-implementations/"><i>Benchmarking random forest implementations</i></a>. 19 mai 2015.</li>
+	<li><div class="li-label">[8]</div>CRAN. <a class="ref" href="https://rdrr.io/cran/xgboost/man/xgb.cv.html"><i>xgb.cv : Cross validation</i></a>. Accès le 25/03/2017.</li>
+	<li><div class="li-label">[9]</div>T. Chen et Moutai. <a class="ref" href="https://github.com/dmlc/xgboost/blob/master/NEWS.md"><i>Xgboost change log</i></a>. Accès le 12/03/2017.</li>
+	<li><div class="li-label">[10]</div>T. Chen. <a class="ref" href="http://homes.cs.washington.edu/~tqchen/2016/03/10/story-and-lessons-behind-the-evolution-of-xgboost.html"><i>Story and lessons behind the evolution of xgboost</i></a>. Accès le 12/03/2017.</li>
+	<li><div class="li-label">[11]</div>M. Scordia pour Dataiku. <a class="ref" href="https://blog.dataiku.com/2015/08/24/xgboost_and_dss"><i>Xgboost in data science studio</i></a>. Accès le 13/03/2017.</li>
+	<li><div class="li-label">[12]</div>A. Candel via Twitter. <a class="ref" href="https://twitter.com/ArnoCandel/status/825198541958045696/photo/1"><i>Xgboost will soon be part of h2o.ai</i></a>. Accès le 13/03/2017.</li>
+	<li><div class="li-label">[13]</div>J. Aarshay. <a class="ref" href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/"><i>Complete guide to parameter tuning in xgboost (with codes in python)</i></a>. 1er mars 2016.</li>
+	<li><div class="li-label">[14]</div>Tong He. <a class="ref" href="https://github.com/dmlc/xgboost/blob/master/demo/kaggle-higgs/higgs-train.R"><i>Xgboost, higgs trains for R</i></a>. Accès le 25/03/2017.</li>
+	<li><div class="li-label">[15]</div>T. Chen et T He. <i>Xgboost, extreme gradient boosting</i>. Slideshare, 2015.</li>
+	<li><div class="li-label">[16]</div>James Marquez. <a class="ref" href="http://jamesmarquezportfolio.com"><i>Walk-throught of patient no-show supervised machine learning classification with xgboost in R</i></a>. Accès le 25/03/2017.</li>
+	<li><div class="li-label">[17]</div>ShirinG (Github). <a class="ref" href="https://shiring.github.io/machine_learning/2016/12/02/flu_outcome_ML_2_post"><i>Extreme gradient boosting and preprocessing in machine learning - addendum to predicting flu outcome with R</i></a>. Accès le 25/03/2017.</li>
+	<li><div class="li-label">[18]</div>B. Gorman. <a class="ref" href="http://blog.kaggle.com/2016/12/27/a-kagglers-guide-to-model-stacking-in-practice/"><i>A kaggler’s guide to model stacking in pratice</i></a>. 27 décembre 2016.</li>
+	<li><div class="li-label">[19]</div>A. Noskov. <a class="ref" href="http://blog.kaggle.com/2017/02/27/allstate-claims-severity-competition-2nd-place-winners-interview-alexey-noskov/"><i>Allstate claims severity competition, 2 nd place winners’s interview</i></a>. 27 février 2017.</li>
+	<li><div class="li-label">[20]</div>T. Chen et al. <a class="ref" href="http://xgboost.readthedocs.io/en/latest/build.html"><i>Installation guide</i></a>. Accès le 25/03/2017.</li>
+	<li><div class="li-label">[21]</div>E. Cuoco. <a class="ref" href="https://www.elenacuoco.com/2016/10/10/scala-spark-xgboost-classification/"><i>Spark and xgboost using scala</i></a>. 10 octobre 2016.</li>
+	<li><div class="li-label">[22]</div>T. Chen N. Zhu. <a class="ref" href="http://www.kdnuggets.com/2016/03/xgboost-implementing-winningest-kaggle-algorithm-spark-flink.html"><i>Xgboost : Implementing the winningest kaggle algorithm in spark and flink</i></a>. Accès le 25/03/2017.</li>
+	<li><div class="li-label">[23]</div>T.He. <a class="ref" href="http://dmlc.ml/rstats/2016/03/10/xgboost.html"><i>An introduction to xgboost R package</i></a>. 10 mars 2016.</li>
+	<li><div class="li-label">[24]</div>Tong He. <a class="ref" href="http://www.saedsayad.com/docs/xgboost.pdf"><i>Xgboost, extreme gradient boosting</i></a>. Accès le 25/03/2017.</li>
+</ul>
+		</div>
+	</div>
+	</body>
+</html>
+
+<script src="../sidebar.js"></script>
+<script src="../assets/js/create_elements.js"></script>

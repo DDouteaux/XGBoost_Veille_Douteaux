@@ -1,0 +1,243 @@
+<html>
+	<head>
+		<script src="../../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Mise en œuvre</div>
+		<div id="main_subheader">Les paramètres de XGBoost</div>
+		<div id="main_content">
+L'implémentation de XGBoost laisse comme nous l'avons déjà laissé supposer propose un nombre important de paramètres laissés libres à l'utilisation. Ces paramètres peuvent être regroupés en trois familles que nous détaillerons tour à tour dans cette section.
+<div class="subtitle">Paramètres génériques</div>
+Ces paramètres permettent de définir les grandes lignes de l'algorithme, comme la version de boosting utilisée et des aspects plus « administratifs ». Trois paramètres principaux sont proposés.
+
+<div class="subparagraph"><tt>Booster</tt></div>
+Il définit le type de boosting à employer pour l'entraînement du modèle. Nous avons présenté à <a class="ref" href="../boosting/gb_et_arbres.html">cette page</a> la version de boosting associé aux arbres.
+
+<div class="subparagraph"><tt>Silent</tt></div>
+Ce mode permet de préciser si l'on demande lors de l'entraînement l'affichage d'informations dans la console (il s'agit en fait d'un mode <i>verbose</i>).
+
+<div class="subparagraph"><tt>Nthread</tt></div>
+Ce paramètre permet de limiter le nombre de threads que l'algorithme va utiliser. En effet, comme nous l'avons évoqué à <a class="ref" href="../more/perf.html">cette page</a>, cette méthode est optimisée pour utiliser au mieux les capacités de calcul de la machine.
+
+<div class="subparagraph">Valeurs usuelles</div>
+Les valeurs communes et celles par défaut associées à ces paramètres sont listées à la Table 1.
+
+<table>
+	<tr>
+		<th>Paramètres</th> <th>Valeurs</th> <th>Par défaut</th>
+	</tr>
+	<tr>
+		<td><tt>booster</tt>  </td> <td> <tt>gbtree</tt> (arbres)<br/><tt>gblinear</tt> (linéaires) </td> <td> <tt>gbtree</tt> </td>
+	</tr>
+	<tr>
+		<td><tt>silent</tt>   </td> <td> <tt>1</tt> (activé)<br/><tt>0</tt> (non activé)</td> <td> <tt>0</tt> </td>
+	</tr>
+	<tr>
+		<td><tt>nthread</tt></tt> </td> <td> Valeur numérique </td> <td> Rien, ie. le nombre maximum de threads disponibles. </td>
+	</tr>
+</table>
+<div class="img-label"><div class="fig-name">Tab. 1</div>Valeurs pour les paramètres génériques de XGBoost</div>
+
+D'autres paramètres existent pour rendre la liste exhaustive. Pour plus de détails sur ces paramètres restants on peut se reporter à la documentation [2].
+
+<div class="subtitle">Paramètres de Boosting</div>
+Comme nous l'avons vu à la Table 1, il existe différents types de Boosting que peut utiliser XGBoost. Dans la continuité des points abordés, nous nous attarderons plus en détail sur le paramétrage du booster à base d'arbres.
+<br/>
+La liste de paramètres ici proposée n'est pas exhaustive, nous avons cependant retenu les plus importants et ceux les plus souvent mis en avant lors des exemples d'utilisation de XGBoost. Pour une liste plus complète de ces paramètres, vous pouvez vous référer à [13]. Ce choix est également motivé dans la mesure où ce dernier est le plus utilisé. On retrouve ici la partie la plus importante des paramètres pour XGBoost, et en particulier ceux permettant de contrôler le sur-apprentissage par le modèle.
+
+<div class="subparagraph"><tt>Eta</tt></div>Ce paramètre permet de contrôler le taux d'apprentissage (ie. un « pas d'apprentissage »). Il permet en particulier d'augmenter la robustesse du modèle en diminuant les poids à chaque itérations.
+
+<div class="subparagraph"><tt>Min_child_weight</tt></div>Il définit une somme minimale pour les scores des observations d'une feuille après apprentissage (attention, il ne s'agit pas de compter le nombre d'observations par feuilles, mais les poids de ces observations). Ce paramètre étant fortement lié aux questions de sur-apprentissage, il est conseille de l'entraîner en utiliser la cross-validation proposée avec XGBoost.
+
+<div class="subparagraph"><tt>Max_depth</tt></div>La profondeur maximale des arbres qui peuvent être appris. Comme pour <tt>min_child_weight</tt>, ce paramètre est lié au sur-apprentissage, il est donc conseiller de le choisir en utilisant la cross-validation.
+
+<div class="subparagraph"><tt>Max_leaf_nodes</tt></div>Il s'agit d'une version « duale » du paramètre <tt>max_depth</tt>, qui au lieu de contrôler la profondeur de l'arbre va contrôler le nombre de feuille terminale autorisées. Les arbres créés sont binaires, la correspondance est donc parfaite. Ainsi, un arbre de profondeur $p$ produira au maximum $2^p$ feuilles. 
+<br/><br/>
+Si jamais ce paramètre est défini, l'algorithme ne prendra pas en compte de valeurs pour \textt{max_depth</tt>. La même remarque s'applique quant à la manière de fixer sa valeur.
+
+<div class="subparagraph"><tt>Gamma</tt></div>L'intérêt est ici de fixer une valeur seuil pour autoriser la découpe d'un nœuds en deux sous-nœuds basé sur un critère de gain. Ce paramètre est le \(\gamma\) observé dans la relation exprimant le gain, et permet donc de définir le taux de laxisme pour la division des nœuds. De même, sa valeur dépendra fortement de la fonction de coût retenue, dans la mesure où le gain n'a pas d'unité absolue mais va dépendre de l'échelle imposée par la fonction de coût.
+
+On rappelle que ce paramètre entre aussi en jeu dans la formule calculant la complexité d'un nouveau modèle, et est le paramètre lié au nombre de feuille de l'arbre (voir la relation d'expression de la complexité).
+
+<div class="subparagraph"><tt>Lambda</tt></div>Il s'agit d'un terme de régularisation pour la norme imposée sur les cœfficients des feuilles dans le calcul de la complexité d'un arbre, comme observé avec la relation donnant l'expression de la complexité. Ce terme intervient aussi en régularisation dans le calcul du gain. Ce paramètre peut être utilisé en réduction du sur-apprentissage.
+
+<div class="subparagraph"><tt>Alpha</tt></div>Ce terme n'avait pas été abordé dans la partie théorique. Ce paramètre est analogue à <tt>lambda</tt>, il est cependant lié à norme un des poids. Il s'agit alors d'écrira la complexité sous la forme 
+<center>
+\(\displaystyle{\Omega(f_t)=\gamma T+\frac{1}{2}\lambda\sum_{j=1}^T\omega_j^2+\alpha\sum_{j=1}^T|\omega_j|}\)
+</center>
+Le fonctionnement est alors analogue à celui d'une régression Lasso, avec une solution analytique qui n'existe pas, mais des solutions numériques possibles qui vont en plus faire de la sélection dans les paramètres.
+<br/><br/>
+Comme pour une méthode de Lasso traditionnelle, utiliser ce paramètre permet de réduire le temps de calcul et est particulièrement bien adapté au contexte de hautes dimensions.
+
+<div class="subparagraph">Subsample</div>Dans la mesure où l'algorithme va apprendre plusieurs modèles, l'idée est ici de sélectionner une partie (ou la totalité) de l'ensemble d'apprentissage et de renouveler ce pannel pour chaque modèle. On évite ainsi de trop coler à ces données.
+
+<div class="subparagraph">Valeurs usuelles</div>La Table 2 propose alors les valeurs possibles pour ces différents paramètres ainsi que les valeurs par défaut. Un paramètre numérique avec une valeur de <tt>0</tt> indique que ce dernier n'est pas utilisé par défaut.
+
+<table>
+	<tr>
+		<th>Paramètres </th><th> Valeurs </th><th> Par défaut </th>
+	</tr>
+	<tr>
+		<td> <tt>eta</tt> </td> <td> Conseillée entre <tt>0.01</tt> et <tt>0.2</tt>. </td> <td> <tt>0.3</tt> </td>
+	</tr>
+	<tr>
+		<td> <tt>min_child_weight</tt> </td> <td> Valeur numérique </td> <td> <tt>1</tt></td>
+	</tr>
+	<tr>
+		<td> <tt>max_depth</tt> </td> <td> Conseillé entre <tt>3</tt> et <tt>10</tt> </td> <td> <tt>6</tt> </td>
+	</tr>
+	<tr>
+		<td> <tt>max_leaf_nodes</tt> </td> <td> Conseillé entre <tt>8</tt> et <tt>1024</tt> </td> <td> <tt>0</tt> </td>
+	</tr>
+	<tr>
+		<td> <tt>gamma</tt> </td> <td> Valeur numérique </td> <td> <tt>0</tt> </td>
+	</tr>
+	<tr>
+		<td> <tt>lambda</tt> </td> <td> Valeur numérique </td> <td> <tt>1</tt> </td>
+	</tr>
+	<tr>
+		<td> <tt>alpha</tt> </td> <td> Valeur numérique </td> <td> <tt>0</tt> </td>
+	</tr>
+	<tr>
+		<td> <tt>subsample</tt> </td> <td> Valeur <<tt>1</tt> </td> <td> <tt>1</tt> </td>
+	</tr>
+</table>
+<div class="img-label"><div class="fig-name">Tab. 2</div>Valeurs pour les paramètres liés au boosting d'arbre</tt></div>
+
+<div class="subtitle">Paramètres d'apprentissage</div>
+Pour terminer sur le détail des principaux paramètres de XGBoost, nous allons nous intéresser aux paramètres liés à l'apprentissage, c'est-à-dire pour la fonction objectif et les métriques utilisées. On retrouve trois grands axes.
+
+<div class="subparagraph"><tt>Objective</tt></div>
+Il s'agit de définir quel est la fonction de coût (la fonction \(\ell\) dans la relation exprimant le fonction de perte) à minimiser. Les calculs que nous avions proposés à <a class="ref" href="../boosting/gb_et_arbres.html">cette page</a> supposait de prendre l'erreur MSE. Les trois solutions les plus communes sont :
+<ul>
+	<li><div class="li-label"><tt>linear</tt></div>Utilisation d'une simple fonction associée à la  régression linéaire (RMSE).</li>
+	<li><div class="li-label"><tt>logistic</tt></div>Pour des problèmes de classification binaire, il s'agit d'utiliser la fonction de régression logistique qui renvoie une probabilité d'appartenance à une classe.</li>
+	<li><div class="li-label"><tt>softmax</tt></div>Pour des problèmes de classification multiclasse, elle renvoie elle la classe prédite (et non une probabilité d'appartenance).</li>
+	<li><div class="li-label"><tt>softprob</tt></div>De même que pour <tt>softmax</tt> si ce n'est que l'on renvoie ici la probabilité.</li>
+</ul>
+
+<div class="subparagraph"><tt>Eval_metric</tt></tt></div>Cette fonction peut être utilisée pour évaluer le modèle sur l'ensemble de test. À noter que si une fonction est précisée pour <tt>objective</tt> cette dernière sera nécessairement réutilisée. Des fonctions communes sont :
+<ul>
+	<li><div class="li-label"><tt>rmse</tt></div>Fonction d'erreur quadratique, utilisée couramment en régression.</li>
+	<li><div class="li-label"><tt>mae</tt></div>Fonction d'erreur absolue.</li>
+	<li><div class="li-label"><tt>logloss</tt></div>Utilisation de l'opposé de la log-vraissemblance.</li>
+	<li><div class="li-label"><tt>merror</tt></div>Une mesure de taux d'erreur pour le cas multiclasse.</li>
+	<li><div class="li-label"><tt>mlogloss</tt></div>Une utilisation de la log-vraissemblance pour le cas multiclasse.</li>
+	<li><div class="li-label"><tt>auc</tt></div>L'air sous la courbe ROC.</li>
+</ul>
+
+<div class="subparagraph"><tt>Seed</tt></div>Un paramètre classique pour pouvoir « figer » l'aléatoire entre deux implémentations et utilisations de l'algorithme. Cela permet donc de fournir des modèles reproductibles si nécessaire.
+
+<div class="subparagraph">Valeurs usuelles</div>Pour conclure sur ce dernier ensemble de paramètre, nous précisons à la Table 3 les valeurs usuelles et par défaut pour ces paramètres.
+
+<table>
+	<tr>
+		<th> Paramètre </th> <th> Valeurs </th> <th> Par défaut </th>
+	</tr>
+	<tr>
+		<td> <tt>objective</tt> </td> <td>  <tt>logistic</tt> ; <tt>softmax</tt> ; <tt>softprob</tt> ; <tt>linear</tt> ; ...<br/> Possibilité de fonction personnalisée</td> <td>  <tt>linear</tt> </td>
+	</tr>
+	<tr>
+		<td> <tt>eval_metric</tt> </td> <td>  <tt>rmse</tt> ; <tt>mae</tt> ; <tt>logloss</tt> ; <tt>error</tt> ; <tt>merror</tt> ; <tt>mlogloss</tt> ; <tt>auc</tt> ; ... </td> <td>  Variable (comme nous l'avons déjà vu, cette valeur sera imposée si une valeur a été fournie à l'attribut <tt>objective</tt>.) </td>
+	</tr>
+	<tr>
+		<td> <tt>seed</tt> </td> <td>  Valeur entière </td> <td>  <tt>0</tt> </td>
+	</tr>
+</table>
+<div class="img-label"><div class="fig-name">Tab. 3</div>Valeurs usuelles et par défaut des paramètres pour l'apprentissage</div>
+
+<div class="subtitle">Prévenir le sur-apprentissage</div>
+Comme nous l'avons mentionné, un certain nombre de paramètres sont à surveiller plus particulièrement. Nous regroupons ici les recommandations sur ces paramètres pour éviter les cas de sur-apprentissage.
+
+Avant tout, il est bon de rappeler que le principe d'utiliser la régularisation pour XGBoost est déjà en soi un moyen de limiter ce sur-apprentissage. Cependant, il est nécessaire de biens configurer les paramètres associés comme nous allons le détailler ici.
+
+<div class="subparagraph">Comment réduire le sur-apprentissage?</div>Dans le détail, l'algorithme XGBoost offre deux méthodes pour réduire le sur-apprentissage :
+<ul>
+	<li><div class="li-label">Contrôle de la complexité</div>Cette dernière peut être contrôlée en contraignant les arbres qui seront générés. Les paramètres concernés sont ici <tt>max_depth</tt>, <tt>min_child_weight</tt>, <tt>max_leaf_node</tt> et <tt>gamma</tt>.</li>
+	<li><div class="li-label">Ajout d'aléatoire</div>Afin de rendre le résultat moins sensible au bruit. Deux solutions sont préconisées par les développeurs de XGBoost :
+	<ul>
+		<li>Utiliser les paramètres influant sur l'ensemble d'apprentissage (<tt>subsample</tt> et <tt>colsample_bytree</tt> (ce paramètre n'avait pas été présenté auparavant. Son intérêt est de sélectionner aléatoirement des ensembles de colonnes en construisant les arbres afin d'introduire de l'aléatoire dans l'utilisation de ces dernières et éviter que tous arbres ne se ressemblent (on est proche de l'idée des Random Forest)).</li>
+		<li>Réduire le pas d'apprentissage <tt>eta</tt> mais augmenter <tt>num_round</tt> (ce paramètre non présenté auparavant correspond au nombre d'étapes de Boosting a réaliser pour construire le modèle. L'idée est donc ici de l'augmenter pour contrebalancer la baise du pas d'apprentissage) dans ce cas.</li>
+	</ul>
+	</li>
+</ul>
+Les différents paramètres et la manière de déterminer leurs valeurs sera précisé dans les paragraphes qui suivent.
+
+<div class="subparagraph"><tt>min_child_weight</tt></div>
+En évitant d'apprendre des arbres avec des feuilles peu représentatives (ie. de poids faible), on se concentre sur l'apprentissage d'arbres plus représentatifs. Ainsi, des valeurs élevées permettent de prévenir l'apprentissage de relations trop spécifiques à l'ensemble utilisé pour les apprentissages.
+
+<div class="subparagraph"><tt>max_depth</tt></div>
+De même, utiliser des arbres trop développés va entraîner que ces dernier soient trop spécifiques aux données des ensembles d'apprentissages, il est donc nécessaire d'utiliser des valeurs plus faibles.
+
+<div class="subparagraph"><tt>max_leaf_node</tt></div>
+Ce paramètre étant directement lié à <tt>max_depth</tt>, la manière de l'appréhender est la même.
+
+<div class="subparagraph"><tt>subsample</tt></div>
+Pour éviter d'être trop spécifique vis-à-vis des données d'apprentissage, prendre des fractions différentes entre chaque arbre permet de moyenner les biais. Ainsi, prendre une fraction « faible » de ces données est une option intéressante, il faut cependant faire attention à ce que la valeur ne soit pas trop basse, le risque étant alors d'être en sous-apprentissage en ne considérant pas assez de données.
+
+<div class="subparagraph"><tt>lambda</tt></div>
+Régulariser convenablement les scores des différentes feuilles peut permettre d'améliorer les problèmes de sur-apprentissage. Ainsi, bien que ce paramètre ne soit pas souvent utilisé, il est une option à considérer en cas de problème persistant.
+		</div>
+	</div>
+	</body>
+</html>
+
+<script src="../../sidebar.js"></script>
+<script src="../../assets/js/create_elements.js"></script>

@@ -1,0 +1,121 @@
+<html>
+	<head>
+		<script src="../../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Plus que du boosting</div>
+		<div id="main_subheader">Performances</div>
+		<div id="main_content">
+<div class="subtitle">Principales améliorations</div>
+Outre son aspect algorithmique qui permet des paramétrages particuliers, XGBoost a également été conçue pour être une méthode d'apprentissage performante du point de vue de l'utilisation des ressources et de la parallélisation.
+
+<div class="subparagraph">Parallélisation</div>
+Comme nous l'avons expliqué à <a class="ref" href="../boosting/gb_et_arbres.html">cette page</a>, XGBoost va entraîner des arbres au fur et à mesure pour améliorer une métrique. Ainsi, il n'est pas possible de paralléliser l'entraînement des arbres, puisque l'arbre \(n\) va dépendre des arbres entraînés précédemment (que ce soit sur l'échantillon ou le poids des données).
+<br/><br/>
+Cependant, XGBoost se démarque en proposant à la place une solution pour paralléliser la création d'arbre en calculant des branches de manière indépendante (plus de détails sur les algorithmes qu'il est possible d'utiliser à cette fin peuvent être trouvés au lien suivant [4]).
+<br/><br/>
+À noter que cette parallélisation peut être réalisée par une utilisation multi-threads d'une machine ou bien par la répartition du calcul dans des clusters.
+
+<div class="subparagraph">Utilisation mémoire</div>
+Pour le cas de données trop importantes (et si l'on ne dispose pas d'autres machines pour paralléliser les calculs et donc l'utilisation de la mémoire), XGBoost peut en le couplant à un stockage de données SSD réaliser une version dégradée de son algorithme qui va consister en des apprentissages partiels du modèles sur des bouts de données. Il est toujours possible d'utiliser l'algorithme en multi-threads pour chaque bout de données.
+<br/><br/>
+L'idée est ainsi de conserver les données sur le disque et de ne les monter que partiellement tour à tour en mémoire, on utiliser ainsi une mémoire dite « externe », pour faire tourner l'algorithme. Dans un article présentant les améliorations sur les plans théoriques et des performances de XGBoost [3], les auteurs de la méthode précisent que pour arriver à ce résultat, une structure de données « en blocs » est utilisée. On remarquera aussi que cette stratégie permet d'optimiser les accès au cache de mémoire.
+
+<div class="subparagraph">Rapidité</div>
+Les différents éléments précédents (et en particulier la parallélisation), permettent à XGBoost d'être un algorithme rapide. Ceci est également accentué par le fait qu'une grande partie des modules sont écrits en C++, et que l'interfaçage avec les autres langages se fait principalement par des modules créés par dessus ces briques élémentaires. Ceci peut être observé sur le répertoire Github de XGBoost, où les volumes relatifs des langages sont les suivants :
+<center>
+	C++ (41,9\%)&emsp;&emsp;Scala (16,3\%)&emsp;&emsp;R (14,4\%)&emsp;&emsp;Python (11,5\%)&emsp;&emsp;JAVA (7,4\%)&emsp;&emsp;Cuda (4,9\%)&emsp;&emsp;Autres (3,6\%)
+</center>
+On remarque donc que quasiment 50\% de l'<i>ensemble</i> du code est directement écrit en C++, qui reste parmis les langages utilisés le moins gourmands en ressources et le plus rapide si bien utilisé.
+
+<div class="subtitle">Benchmarking des solutions</div>
+Plusieurs études ont été menée pour comparer les performances de XGBoost vis-à-vis d'autres solutions.
+<br/><br/>
+Le créateur de XGBoost a réalisé un comparatif de temps d'exécution entre son algorithme et d'autres algorithme courants sur le challenge Kaggle du boson de Higgs [5]. Les résultats de ce benchmarking sont repris à la Figure 12.
+
+<img src="../../assets/images/more/perfun.png">
+<div class="img-label"><div class="fig-name">Fig. 12</div>Comparaison des temps d'apprentissage entre XGBoost et d'autres algorithmes importants de Machine Learning sur le challenge Kaggle du boson de Higgs [6]</div>
+
+Sur la Figure 12, les courbes <i>Python-sklearn</i> et <i>R-gbm</i> correspondent à des algorithmes GBM déjà existants sur ces plateformes, alors que XGBoost correspond à des essais avec l'algorithme nouvellement développé. L'influence du nombre de cœurs utilisés est également testé ici (tous les apprentissages se font à même paramétrage). On tire de ce graphe les conclusions suivantes :
+<ul>
+	<li><div class="li-label">XGBoost et autres GBM</div>Mis à part pour un faible nombre d'arbres appris, XGBoost obtient des performances de bien meilleures (deux fois plus rapide) que les autres solutions de GBM.</li>
+	<li><div class="li-label">Influence du nombre de cœur</div>Plus le nombre de cœurs pour paralléliser XGBoost est important, plus ce dernier est rapide, même si on observe un tassement passé quatre cœurs. Ceci est logique, car comme nous l'avons vu, il n'est pas possible de paralléliser tout le processus d'apprentissage, mais seulement une partie de ce dernier. Ainsi, il restera une partie que l'on ne peut réduire, d'où ce constat.</li>
+</ul>
+
+<div class="subtitle">Benchmarking sur des implémentations de Random Forest</div>
+Un autre Benchmarking a également visé à comparer les performances de XGBoost avec celles de différentes implémentations de Random Forest. Les résultats sont regroupés à la Figure 13.
+
+<img src="../../assets/images/more/perfdeux.png">
+<div class="img-label"><div class="fig-name">Fig. 13</div>Comparaison des temps d'apprentissage et des résultats entre XGBoost et différentes implémentations de Random Forest [7]</div>
+
+On retrouve également sur ces figures des conclusionssions similaires à celles du premier benchmarking, à savoir :
+<ul>
+	<li><div class="li-label">Temps d'exécution</div>Sur tous les cas testés (sauf un cas limite où les temps sont tous faibles), XGBoost était déjà (2015) l'implémentation la plus rapide lors de cette étude.</li>
+	<li><div class="li-label">AUC</div>L'étude s'intéressait également aux performances via une mesure d'AUC. Ici, XGBoost au coude à coude avec l'implémentation de Random Forest de H2Oai, cette dernière étant même un peu meilleure sur des taux d'apprentissage plus élevés.</li>
+</ul>
+
+Quoiqu'il en soit, XGBoost apparaît dans ces différentes situtations comme un solution performante tant sur le point de vue des performances que sur celui des temps d'exécution.		
+		</div>
+	</div>
+	</body>
+</html>
+
+<script src="../../sidebar.js"></script>
+<script src="../../assets/js/create_elements.js"></script>

@@ -1,0 +1,125 @@
+<html>
+	<head>
+		<script src="../../assets/js/jquery.min.js"></script>
+		<meta charset="utf8"/>
+		<title>XGBoost</title>
+		<link rel="stylesheet" type="text/css" href="../../assets/style/layout.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/sidebar.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/pages.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/buttons.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/references.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/collapsable_box.css">
+		<link rel="stylesheet" type="text/css" href="../../assets/style/font-awesome.min.css">
+		<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	</head>
+
+	<body>
+
+		<div id="sidebar">
+			<hr>
+				<div class="sidebar-main-title">XGBoost</div>
+			<hr>
+			<a class="sidebar-link sidebar-part" href="../../index.html">En deux mots</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="boosting"><div class="text-content">Le boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="boosting">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/generalite.html">Généralités</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/premier_algo.html">Premier algorithme</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/perte_complexite.html">Perte et complexité</a></div>
+				<div class=	"sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/fonction_perte.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/boosting/gb_et_arbres.html">Boosting et arbre</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="more"><div class="text-content">Ajouts au boosting<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="more">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/perf.html">Performances</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/importance_var.html">Importance des variables</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/valeurs_manquantes.html">Valeurs manquantes</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/more/cross_validation.html">Cross-validation native</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="mise_en_oeuvre"><div class="text-content">Mise en œuvre<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="mise_en_oeuvre">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/historique.html">Historique</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/mise_en_oeuvre/params.html">Paramètres</a></div>
+			</div>
+			<div class="sidebar-part sidebar-with-children" data-section-name="application"><div class="text-content">Applications<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="application">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/kaggle.html">Challenges Kaggle</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/entreprises.html">En entreprises</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/applications/medical.html">Usages médicaux</a></div>
+			</div>
+			<a class="sidebar-link sidebar-part" href="../../contents/bonnes_pratiques.html">Bonnes pratiques</a>
+			<div class="sidebar-part sidebar-with-children" data-section-name="code"><div class="text-content">Exemples de code<div class="icon"></div></div></div>
+			<div class="sidebar-subpart-container" data-section="code">
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/basique.html">Utilisation standard</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/spark.html">Spark</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/loss_perso.html">Fonction de perte</a></div>
+				<div class="sidebar-subpart"><a class="sidebar-link" href="../../contents/code/selection_var.html">Sélection de variable</a></div>
+			</div>			
+			<a class="sidebar-link sidebar-part" href="../../contents/solution_avenir.html">Une solution d'avenir?</a>
+			<a class="sidebar-link sidebar-part" href="../../contents/references.html">Références</a>
+		</div>
+	<div id="inner_content">
+		<div id="main_header">Exemples d'applications</div>
+		<div id="main_subheader">En entreprises</div>
+		<div id="main_content">
+De manière générale, les entreprises ne vont préciser en détail quels sont les modèles qu'elles utilisent pour obtenir leurs performances. Il est ainsi assez difficile de savoir qui utilise XGBoost à partir de simples témoignages. Cependant, deux sources nous ont permis d'avoir quelques informations sur la diffusion de cette méthode au sein de ces structures :
+<ul>
+	<li><div class="li-label">La page officielle de XGBoost</div>Sur cette dernière, les auteurs ont recensés quelques cas d'application de XGBoost en entreprise, selon des échos ou des discussions avec des responsables.</li>
+	<li><div class="li-label">Les sites d'annonces d'emplois</div>Si la plupart des entreprise ne donnent pas leurs modèles, elles vont cependant demander aux candidats de maîtriser certaines techniques, et on peut ainsi avoir une idée des secteurs utilisant cet ensemble de méthodes.</li>
+</ul>
+
+<div class="subtitle">Cas d'utilisation mis en avant par XGBoost</div>
+Les quelques cas de la Table 5 sont mis en avant sur la page Github de XGBoost.
+
+<table>
+	<tr>
+		<th> Entreprise </th> <th> Utilisation </th>
+	</tr>
+	<tr>
+		<td> Alibaba </td> <td> Utilisation dans son produit ODPS Cloud Service. </td> 
+	</tr> 
+	<tr>
+		<td> Tencent </td> <td> Utilisation pour faire un choix de prédiction dans le publicités à proposer aux internautes. En particulier, l'équipe technique motive son choix par la facilité d'intégration et la clareté du design de XGBoost.</td> 
+	</tr> 
+	<tr>
+		<td> Auto Home </td> <td> L'utilisation est ici pour la publicité en ligne et son optimisation. </td> 
+	</tr>
+</table>
+<div class="img-label"><div class="fig-name">Tab. 5</div>Cas d'utilisation de XGBoost en entreprise, mis en avant par l'équipe de XGBoost</div>
+
+En plus de ces entreprises, on retrouve des intégrations de XGBoost parmis les plateformes de Machine Learning comme Anaconda, Dataiku ou encore H2Oai.
+
+<div class="subtitle">Entreprise détectée via les offres d'emploi</div>
+En regardant les offres sur les sites LinkedIn ainsi que sur Indeed, nous avons pu mettre en avant les entreprises de la Table 6, classées par secteurs d'activité.
+
+<table>
+	<tr>
+		<th> Secteur </th> <th> Entreprise </th>
+	</tr>
+	<tr>
+		<td> Banque, crédit et assurances </td> <td> AXA, Younited Crédit, Chubb, American Family Insurance </td> 
+	</tr> 
+	<tr>
+		<td> Éditeurs de jeux </td> <td> Pretty Simple, Kinect </td> 
+	</tr> 
+	<tr>
+		<td> Vente </td> <td> Expedia, Magnetic, Nativo, Seldon Technologies </td> 
+	</tr> 
+	<tr> 
+		<td> Consultants et services </td> <td> Sonsoft Inc, Service Titan, EDJ Analytics, Comma Soft, Intermont </td> 
+	</tr> 
+	<tr>
+		<td> Réseaux </td> <td> Sesco </td> 
+	</tr>
+</table>
+<div class="img-label"><div class="fig-name">Tab. 6</div>Entreprises demandant des compétences dans l'utilisation de XGBoost pour certaines de leurs annonces</div>
+
+On retrouve donc la plupart des « grands » secteurs d'activité, et on remarque la présence de quelques grandes entreprises comme AXA ou Expedia. De plus, la répartition géographique est assez homogène, avec des résultats en Asie, en Europe ou en Amérique.
+				</div>
+	</div>
+	</body>
+</html>
+
+<script src="../../sidebar.js"></script>
+<script src="../../assets/js/create_elements.js"></script>
