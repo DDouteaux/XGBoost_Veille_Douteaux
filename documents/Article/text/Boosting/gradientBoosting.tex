@@ -4,7 +4,7 @@
 Désormais que nous venons de voire l'importance de la perte et de la complexité engendrées par les modèles, nous allons voir comment les utiliser dans le cas du gradient boosting appliqué aux arbres.
 
 \subsubsection{Modèles à base d'arbres}
-Pour cette partie, nous considérerons un exemple proposé par les concepteurs de XGBoost et repris dans la documentation~\ref{bib:xgboost_main} et \ref{bib:xgboost-paper}. On considère donc la situation où on essaie de créer un modèle pour savoir si les membres d'une famille apprécient les jeux vidéos.
+Pour cette partie, nous considérerons un exemple proposé par les concepteurs de XGBoost et repris dans la documentation~\cite{bib:xgboost-main} et \cite{bib:xgboost-article}. On considère donc la situation où on essaie de créer un modèle pour savoir si les membres d'une famille apprécient les jeux vidéos.
 
 Les modèles qui seront pris en exemple sont des modèles à base d'arbre, car ils seront plus simple à visualiser et expliquer.
 
@@ -14,7 +14,7 @@ Un modèle pouvant convenir et obtenu par exemple avec la méthode CART est repr
 	\begin{margincap}
 	  \centering
 	  \input{images/Boosting/arbre}
-	  \caption{Arbre pouvant convenir pour expliquer la goût des jeux vidéos dans la famille (d'après~\cite{bib:xgboost_paper})}
+	  \caption{Arbre pouvant convenir pour expliquer la goût des jeux vidéos dans la famille (d'après~\cite{bib:xgboost-article})}
 	  \label{fig:arbre}
 	\end{margincap}
 \end{figure}
@@ -27,7 +27,7 @@ Par exemple, à la Figure~\ref{fig:arbres}, nous avons entraîné deux arbres, e
 	\begin{margincap}
 	  \centering
 	  \resizebox{.48\textwidth}{!}{\input{images/Boosting/arbre}}\hfill\resizebox{.48\textwidth}{!}{\input{images/Boosting/arbres}}
-	  \caption{Deux arbres utilisés conjointement pour obtenir le résultat (d'après~\cite{bib:xgboost_paper})}
+	  \caption{Deux arbres utilisés conjointement pour obtenir le résultat (d'après~\cite{bib:xgboost-article})}
 	  \label{fig:arbres}
 	\end{margincap}
 \end{figure}
@@ -54,7 +54,7 @@ Dans le cas de l'erreur MSE, la relation~(\ref{eqn:loss_n}) peut s'écrire \og s
 \label{eqn:obj_final}
 \end{equation}
 
-Quelle est la particularité de la relation~(\ref{eqn:obj_final})? Il s'agit de sa seule dépendance en les dérivée de la fonction de perte, il est donc simple d'utiliser des fonctions de perte particulières sans devoir changer tout le code. Ces dérivées sont donc tout simplement des paramètres du modèle final. Un exemple d'utilisation de ces fonctions de coûts personnalisées sera proposé à la Section~\ref{sec:couts-perso}.
+Quelle est la particularité de la relation~(\ref{eqn:obj_final})? Il s'agit de sa seule dépendance en les dérivée de la fonction de perte, il est donc simple d'utiliser des fonctions de perte particulières sans devoir changer tout le code. Ces dérivées sont donc tout simplement des paramètres du modèle final. Un exemple d'utilisation de ces fonctions de coûts personnalisées sera proposé à la Section~\ref{sec:cout-perso}.
 
 \subsubsection{Optimiser la complexité}
 \label{sec:opt_complexity}
@@ -73,7 +73,7 @@ On remarque que la relation~(\ref{eqn:complexity_expr}) a la particularité de p
 Nous savons désormais quelle fonction optimiser. Reste à savoir comment filtrer les arbres en fonction de cette formule.
 
 \subParagraphe{Solution naïve}
-La solution naïve consisterait à envisager \textit{toutes} les structures d'arbres possibles. Une fois cette énumération réalisée, on calculer la fonction objectif pour chacune de ces structures et on trouve ensuite celle fournissant la meilleure valeur pour l'objectif. Il resterait alors à optimiser les poids des feuilles pour cette structure. Des formules adaptées à ce cas existent et sont détaillées dans~\cite{bib:xgboost_article}.
+La solution naïve consisterait à envisager \textit{toutes} les structures d'arbres possibles. Une fois cette énumération réalisée, on calculer la fonction objectif pour chacune de ces structures et on trouve ensuite celle fournissant la meilleure valeur pour l'objectif. Il resterait alors à optimiser les poids des feuilles pour cette structure. Des formules adaptées à ce cas existent et sont détaillées dans~\cite{bib:xgboost-article}.
 
 \subParagraphe{Construction au coup par coup}
 Cependant, on se rend compte qu'en pratique cette solution est coûteuse en temps de calcul et n'est donc pas réaliste. La démarche proposée à la place est alors de construire les arbres au coût par coût.
@@ -97,7 +97,7 @@ Un exemple de découpage et une partie des calculs associés vous est présenté
 	\begin{margincap}
 	  \centering
 	  \input{images/Boosting/pruning}
-	  \caption{Comment déterminer le meilleur découpage à une étape donné (d'après~\cite{bib:xgboost_paper})}
+	  \caption{Comment déterminer le meilleur découpage à une étape donné (d'après~\cite{bib:xgboost-article})}
 	  \label{fig:pruning}
 	\end{margincap}
 \end{figure}

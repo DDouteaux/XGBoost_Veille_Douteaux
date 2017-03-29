@@ -1,11 +1,12 @@
 \subsection{Les paramètres}
+\label{sec:params}
 L'implémentation de XGBoost laisse comme nous l'avons déjà laissé supposer propose un nombre important de paramètres laissés libres à l'utilisation. Ces paramètres peuvent être regroupés en trois familles que nous détaillerons tour à tour dans cette section.
 \subsubsection{Paramètres génériques}
 Ces paramètres permettent de définir les grandes lignes de l'algorithme, comme la version de boosting utilisée et des aspects plus \og administratifs\fg. Trois paramètres principaux sont proposés.
 
 \subParagraphe{\texttt{Booster}}Il définit le type de boosting à employer pour l'entraînement du modèle. Nous avons présenté en Section~\ref{sec:gradient-boosting} la version de boosting associé aux arbres.
 \subParagraphe{\texttt{Silent}}Ce mode permet de préciser si l'on demande lors de l'entraînement l'affichage d'informations dans la console (il s'agit en fait d'un mode \textit{verbose}).
-\subParagraphe{\texttt{Nthread}}Ce paramètre permet de limiter le nombre de threads que l'algorithme va utiliser. En effet, comme nous l'avons évoqué à la Section~\ref{} cette méthode est optimisée pour utiliser au mieux les capacités de calcul de la machine.
+\subParagraphe{\texttt{Nthread}}Ce paramètre permet de limiter le nombre de threads que l'algorithme va utiliser. En effet, comme nous l'avons évoqué à la Section~\ref{sec:perf} cette méthode est optimisée pour utiliser au mieux les capacités de calcul de la machine.
 
 \subParagraphe{Valeurs usuelles}Les valeurs communes et celles par défaut associées à ces paramètres sont listées à la Table~\ref{tab:params-generiques}.
 
@@ -25,7 +26,7 @@ Ces paramètres permettent de définir les grandes lignes de l'algorithme, comme
 	\label{tab:params-generiques}
   \end{margincap}
 \end{table}
-D'autres paramètres existent pour rendre la liste exhaustive. Pour plus de détails sur ces paramètres restants XXX.
+D'autres paramètres existent pour rendre la liste exhaustive. Pour plus de détails sur ces paramètres restants on peut se reporter à la documentation \cite{bib:xgboost-main}.
 
 \subsubsection{Paramètres de Boosting}
 \label{sec:params-boosting}

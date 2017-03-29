@@ -62,6 +62,10 @@
 %								   %
 %% -------------------------------------------------------------- %%
 
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
 %
 % 1 - Début du document
 %
@@ -83,7 +87,7 @@
 \includeLOF{beginning}
 \includeLOT{beginning}
   
-%\newcommand{\sectionbreak}{\newpage}
+\newcommand{\sectionbreak}{\newpage}
 
 %
 % 4 - Résumé
@@ -147,11 +151,16 @@
 \section{Une solution d'avenir?}
 \input{text/avenir}
 
-\stepcounter{section}
-\addcontentsline{toc}{section}{Références}
+\nocite{*}
+%\stepcounter{section}
+%\addcontentsline{toc}{section}{Références}
+\section{Références}
 %\printbibliography
+\begingroup
+\renewcommand{\section}[2]{}%
 \bibliographystyle{unsrt}
 \bibliography{bib/xgboost}
+\endgroup
 
 %
 % 3 - Ajout table des matières et liste des figures ; tables

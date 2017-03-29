@@ -17,6 +17,9 @@ Pour commencer, l'idée est d'entraîner un premier classifieur. Cependant, pour
 
 \begin{figure}[h]
 	\begin{margincap}
+		\rule{\textwidth}{0pt}
+	\caption{Premier modèle appris sur les données (d'après~\cite{bib:elghazel})}
+	\end{margincap}
 	\begin{subfigure}{.45\textwidth}
 		\input{images/Boosting/ensemble_app_un}
 		\caption{Données d'apprentissage choisies aléatoirement ($\blacksquare$ \large{$\bullet$})}
@@ -27,8 +30,6 @@ Pour commencer, l'idée est d'entraîner un premier classifieur. Cependant, pour
 		\caption{Classifieur $h_1$ obtenu par entraînement sur l'ensemble $\blacksquare$ \large{$\bullet$}}
 		\label{fig:boosting_un_modele}
 	\end{subfigure}\hfill
-	\caption{Premier modèle appris sur les données (d'après~\cite{bib:elghazel})}
-	\end{margincap}
 \end{figure}
 
 Sans surprise, ce classifieur n'est pas parfait et réalise un certain nombre d'erreurs (indiquées en rouge sur la Figure~\ref{fig:boosting_un_modele}). Toute l'idée du Boosting est alors de créer de nouveaux modèles en changeant l'ensemble d'apprentissage de manière \og intelligente\fg. 
@@ -37,6 +38,9 @@ Dans notre cas, nous allons choisir un nouvel ensemble d'apprentissage qui regro
 
 \begin{figure}[h]
 	\begin{margincap}
+		\rule{\textwidth}{0pt}
+	\caption{Deuxième modèle appris sur les données (d'après~\cite{bib:elghazel})}
+	\end{margincap}
 	\begin{subfigure}{.45\textwidth}
 		\input{images/Boosting/ensemble_app_deux}
 		\caption{Données d'apprentissage pour le deuxième classifieur ($\blacksquare$ \large{$\bullet$})}
@@ -47,8 +51,6 @@ Dans notre cas, nous allons choisir un nouvel ensemble d'apprentissage qui regro
 		\caption{Classifieur $h_2$ obtenu par entraînement sur l'ensemble $\blacksquare$ \large{$\bullet$}}
 		\label{fig:boosting_deux_modele}
 	\end{subfigure}\hfill
-	\caption{Deuxième modèle appris sur les données (d'après~\cite{bib:elghazel})}
-	\end{margincap}
 \end{figure}
 
 On remarque qu'ici le modèle $h_2$ ne fait pas d'erreurs sur son ensemble d'apprentissage (qui est cependant peu fourni), ceci est un cas particulier et n'est pas automatique. À cette étape, nous disposons donc de deux modèles, le second permettant de \og rattraper\fg{} des erreurs du premier.
@@ -57,6 +59,9 @@ Nous continuons alors sur le même principe, en entraînant un troisième classi
 
 \begin{figure}[h]
 	\begin{margincap}
+		\rule{\textwidth}{0pt}
+		\caption{Troisième modèle appris sur les données (d'après~\cite{bib:elghazel})}
+	\end{margincap}
 	\begin{subfigure}{.45\textwidth}
 		\input{images/Boosting/ensemble_app_trois}
 		\caption{Données d'apprentissage pour le deuxième classifieur ($\blacksquare$ \large{$\bullet$})}
@@ -67,8 +72,6 @@ Nous continuons alors sur le même principe, en entraînant un troisième classi
 		\caption{Classifieur $h_2$ obtenu par entraînement sur l'ensemble $\blacksquare$ \large{$\bullet$}}
 		\label{fig:boosting_trois_modele}
 	\end{subfigure}\hfill
-		\caption{Troisième modèle appris sur les données (d'après~\cite{bib:elghazel})}
-	\end{margincap}
 \end{figure}
 
 À la fin de ce processus (qui aurait pu durer plus longtemps si nous l'avions désiré), nous obtenons trois classifieurs. Comme cela a été vu, ces derniers ont été créés de manière à ce qu'ils corrigent leurs erreurs entre eux, ce paramètre étant pris en compte par la construction des ensembles d'apprentissage. Ainsi, l'utilisation de tous ces classifieurs revient pour chaque point à réaliser une prédiction avec tous les classifieurs et d'attribuer la classe ayant le plus de vote. On moyenne ainsi les erreurs des classifieurs entre eux et on réduit ainsi le biais de la prédiction. Cette décision finale est illustrée à la Figure~\ref{fig:boosting_final}, où les erreurs sont précisées en rouge.

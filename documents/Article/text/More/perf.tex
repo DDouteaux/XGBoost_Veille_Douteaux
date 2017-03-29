@@ -26,14 +26,14 @@ Plusieurs études ont été menée pour comparer les performances de XGBoost vis
 	\begin{margincap}
 		\centering
 		\includegraphics[width=.6\textwidth]{images/More/perf_un}
-		\caption{Comparaison des temps d'apprentissage entre XGBoost et d'autres algorithmes importants de Machine Learning sur le challenge Kaggle du boson de Higgs}
+		\caption{Comparaison des temps d'apprentissage entre XGBoost et d'autres algorithmes importants de Machine Learning sur le challenge Kaggle du boson de Higgs \cite{bib:bench}}
 		\label{fig:perfun}
 	\end{margincap}
 \end{figure}
 
 Sur la Figure~\ref{fig:perfun}, les courbes \textit{Python-sklearn} et \textit{R-gbm} correspondent à des algorithmes GBM déjà existants sur ces plateformes, alors que XGBoost correspond à des essais avec l'algorithme nouvellement développé. L'influence du nombre de c\oe urs utilisés est également testé ici (tous les apprentissages se font à même paramétrage). On tire de ce graphe les conclusions suivantes :\begin{itemize}
 \itemperso{XGBoost et autres GBM}Mis à part pour un faible nombre d'arbres appris, XGBoost obtient des performances de bien meilleures (deux fois plus rapide) que les autres solutions de GBM.
-\itemperso{Influence du nombre de c\oe ur}Plus le nombre de c\oe urs pour paralléliser XGBoost est important, plus ce dernier est rapide, même si on observe un tassement passé quatre c\oe urs\mysidenote{Ceci est logique, car comme nous l'avons vu, il n'est pas possible de paralléliser tout le processus d'apprentissage, mais seulement une partie de ce dernier. Ainsi, il restera une partie que l'on ne peut réduire, d'où ce constat.}.
+\itemperso{Influence du nombre de c\oe ur}Plus le nombre de c\oe urs pour paralléliser XGBoost est important, plus ce dernier est rapide, même si on observe un tassement passé quatre c\oe urs\mysidenoteoffset{-4cm}{Ceci est logique, car comme nous l'avons vu, il n'est pas possible de paralléliser tout le processus d'apprentissage, mais seulement une partie de ce dernier. Ainsi, il restera une partie que l'on ne peut réduire, d'où ce constat.}.
 \end{itemize}
 
 \subsubsection{Benchmarking sur des implémentations de Random Forest}
@@ -43,7 +43,7 @@ Un autre Benchmarking a également visé à comparer les performances de XGBoost
 	\begin{margincap}
 		\centering
 		\includegraphics[width=\textwidth]{images/More/perf_deux}
-		\caption{Comparaison des temps d'apprentissage et des résultats entre XGBoost et différentes implémentations de Random Forest}
+		\caption{Comparaison des temps d'apprentissage et des résultats entre XGBoost et différentes implémentations de Random Forest \cite{bib:benchmarkin-rf}}
 		\label{fig:perfdeux}
 	\end{margincap}
 \end{figure}
@@ -51,6 +51,6 @@ Un autre Benchmarking a également visé à comparer les performances de XGBoost
 On retrouve également sur ces figures des conclusions similaires à celles du premier benchmarking, à savoir :
 \begin{itemize}
 	\itemperso{Temps d'exécution}Sur tous les cas testés (sauf un cas limite où les temps sont tous faibles), XGBoost était déjà (2015) l'implémentation la plus rapide lors de cette étude.
-	\itemperso{AUC}L'étude s'intéressait également aux performances via une mesure d'AUC. Cette dernière donne ici XGBoost au coude à coude avec l'implémentation de Random Forest de H2Oai, cette dernière étant même un peu meilleure sur des taux d'apprentissage plus élevés.
+	\itemperso{AUC}L'étude s'intéressait également aux performances via une mesure d'AUC. Ici, XGBoost au coude à coude avec l'implémentation de Random Forest de H2Oai, cette dernière étant même un peu meilleure sur des taux d'apprentissage plus élevés.
 \end{itemize}
 Quoiqu'il en soit, XGBoost apparaît dans ces différentes situtations comme un solution performante tant sur le point de vue des performances que sur celui des temps d'exécution.

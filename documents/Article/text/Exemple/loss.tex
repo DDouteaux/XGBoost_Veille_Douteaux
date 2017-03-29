@@ -1,4 +1,5 @@
 \subsection{Fonction de coût personnalisée}
+\label{sec:cout-perso}
 Nous avons à plusieurs reprise mentionné la possibilité d'utiliser les fonctions de pertes personnalisées avec XGBoost. Un exemple est fournit ci-dessous où l'on définit manuellement la fonction de log-vraissemblance pour la perte\mysidenote{La mesure de log-vraissemblance fait en réalité partie des options possibles par défaut dans XGBoost, elle est cependant présentée sous cette forme \og manuelle\fg{} ici à titre d'exemple. Pour mémoire, la manière de l'appeler serait de faire \texttt{objective = "binary:logistic".}}.
 
 Cet exemple est réalisé en R, mais le fonctionnement sera le même pour d'autres langages.
